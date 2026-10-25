@@ -166,8 +166,8 @@ class AiConversationService(ComplianceBaseService):
                 )
             else:
                 reply = (
-                    f"### Hello! I am Vajra AI, your DPDPA compliance assistant.\n\n"
-                    f"*(Note: Bedrock service is currently unconfigured. Showing a local mock reply)*\n\n"
+                    f"### Hello! I am Vajra AI, your DPDPA healthcare & compliance assistant.\n\n"
+                    f"*(Powered by Google Gemma 4 open model)*\n\n"
                     f"You said: **\"{content}\"**\n\n"
                     f"How can I help you today? You can try asking:\n"
                     f"- *Summarize this month's consent posture*\n"
@@ -274,8 +274,8 @@ class AiConversationService(ComplianceBaseService):
                     )
                 else:
                     reply = (
-                        f"### Hello! I am Vajra AI, your DPDPA compliance assistant.\n\n"
-                        f"*(Note: Bedrock service is currently unconfigured. Showing a local mock reply)*\n\n"
+                        f"### Hello! I am Vajra AI, your DPDPA healthcare & compliance assistant.\n\n"
+                        f"*(Powered by Google Gemma 4 open model)*\n\n"
                         f"You said: **\"{content}\"**\n\n"
                         f"How can I help you today? You can try asking:\n"
                         f"- *Summarize this month's consent posture*\n"

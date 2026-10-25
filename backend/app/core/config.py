@@ -169,9 +169,16 @@ class Settings(BaseSettings):
 
     @property
     def ai_provider(self) -> str:
-        """Active AI backend. Healthcare Gemma uses its own gateway."""
-        value = (self.SHIELD_AI_PROVIDER or self.AI_PROVIDER or "vertex").strip().lower()
-        return value if value in {"vertex", "bedrock"} else "vertex"
+        """Active AI backend: gemma (default via Gemini API), vertex, or bedrock."""
+        value = (self.AI_PROVIDER or "gemma").strip().lower()
+        if value in {"gemma", "vertex", "bedrock"}:
+            return value
+        return "gemma" if self.GEMINI_API_KEY.strip() else "vertex"
+
+    @property
+    def gemma_configured(self) -> bool:
+        """True when Gemini API key is set for Gemma 4."""
+        return bool(self.GEMINI_API_KEY.strip())
 
     @property
     def vertex_configured(self) -> bool:
@@ -190,12 +197,16 @@ class Settings(BaseSettings):
     @property
     def ai_configured(self) -> bool:
         """True when the active provider can serve Vajra AI requests."""
+        if self.ai_provider == "gemma":
+            return self.gemma_configured
         if self.ai_provider == "vertex":
             return self.vertex_configured
         return self.bedrock_configured
 
     @property
     def ai_model_id(self) -> str:
+        if self.ai_provider == "gemma":
+            return self.GEMMA_MODEL_ID.strip()
         if self.ai_provider == "vertex":
             return self.VERTEX_MODEL_ID.strip()
         return self.BEDROCK_MODEL_ID.strip()
@@ -241,6 +252,8 @@ class Settings(BaseSettings):
 
     @property
     def ai_vision_configured(self) -> bool:
+        if self.ai_provider == "gemma":
+            return self.gemma_configured
         if self.ai_provider == "vertex":
             return bool(self.resolved_vertex_vision_model_id and self.GOOGLE_CLOUD_PROJECT.strip())
         return self.bedrock_vision_configured

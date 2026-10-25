@@ -73,7 +73,7 @@ async def lifespan(_app: FastAPI):
     NoticeOrchestrationWorkers.start_workers(SessionLocal)
 
     # --- Vajra AI RAG: auto-index docs on startup ---
-    if settings.RAG_AUTO_INDEX_ON_STARTUP and settings.ai_configured:
+    if settings.RAG_AUTO_INDEX_ON_STARTUP and settings.ai_configured and settings.ai_provider in ("vertex", "bedrock"):
         import threading
 
         def _run_doc_indexing() -> None:

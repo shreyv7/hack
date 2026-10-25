@@ -60,6 +60,12 @@ class VisionAssistService:
         if len(image_bytes) > _MAX_IMAGE_BYTES:
             raise VajraAIError("Image is too large. Please capture a smaller region.")
 
+        if settings.ai_provider == "gemma":
+            try:
+                return self._answer_gemma(image_bytes, image_format, question)
+            finally:
+                del image_bytes
+
         if settings.ai_provider == "vertex":
             try:
                 return self._answer_vertex(image_bytes, image_format, question)
@@ -131,6 +137,45 @@ class VisionAssistService:
         if last_exc is not None:
             raise VajraAIError(_friendly_error(last_exc)) from last_exc
         raise VajraAIError("Vajra AI Vision is temporarily unavailable. Please try again.")
+
+    def _answer_gemma(self, image_bytes: bytes, image_format: str, question: str) -> str:
+        import requests
+        keys = getattr(settings, "all_gemini_api_keys", None) or ([settings.GEMINI_API_KEY] if settings.GEMINI_API_KEY.strip() else [])
+        if not keys:
+            raise VajraAIError("No GEMINI_API_KEY configured for Gemma 4.")
+
+        model = settings.GEMMA_MODEL_ID or "gemma-4-26b-a4b-it"
+        raw_b64 = base64.b64encode(image_bytes).decode("utf-8")
+        mime_type = f"image/{image_format}" if image_format != "jpg" else "image/jpeg"
+
+        for key in keys:
+            try:
+                url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+                payload = {
+                    "contents": [{
+                        "parts": [
+                            {"inlineData": {"mimeType": mime_type, "data": raw_b64}},
+                            {"text": f"{_VISION_SYSTEM_PROMPT}\n\nQuestion: {question}"}
+                        ]
+                    }],
+                    "generationConfig": {
+                        "temperature": 0.3,
+                        "maxOutputTokens": 1024,
+                    }
+                }
+                r = requests.post(url, json=payload, timeout=25)
+                if r.status_code == 200:
+                    res = r.json()
+                    parts = res.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+                    text_parts = [p.get("text", "") for p in parts if not p.get("thought")]
+                    ans = "".join(text_parts).strip()
+                    if ans:
+                        return ans
+            except Exception as exc:
+                logger.warning("Gemma 4 vision call failed with key: %s", exc)
+                continue
+
+        raise VajraAIError("Gemma 4 Vision could not analyze the image.")
 
     def _answer_vertex(self, image_bytes: bytes, image_format: str, question: str) -> str:
         from app.services.vertex_ai_client import generate_vision

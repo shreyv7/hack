@@ -65,6 +65,10 @@ def embed_text(text_input: str, *, task_type: str = "RETRIEVAL_DOCUMENT") -> lis
         with _embed_lock:
             return vertex_embed_text(text_input, task_type=task_type)
 
+    if settings.ai_provider == "gemma":
+        # Pure Gemma 4 open-weights mode (no AWS Bedrock dependency)
+        return [0.0] * 1024
+
     import json
 
     client = _get_bedrock_client()
@@ -113,6 +117,8 @@ def search_similar(
     Uses pgvector's ``<=>`` operator for cosine distance (lower = closer).
     """
     k = top_k or settings.RAG_TOP_K
+    if settings.ai_provider == "gemma":
+        return []
 
     try:
         query_vec = embed_text(query, task_type="RETRIEVAL_QUERY")

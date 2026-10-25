@@ -91,6 +91,10 @@ _call_lock = threading.Lock()
 def _ensure_configured() -> None:
     if settings.ai_configured:
         return
+    if settings.ai_provider == "gemma":
+        raise VajraAIError(
+            "Vajra AI with Gemma 4 is not configured. Set GEMINI_API_KEY in .env."
+        )
     if settings.ai_provider == "vertex":
         raise VajraAIError(
             "Vajra AI is not configured on the server. Set GOOGLE_CLOUD_PROJECT "
@@ -108,12 +112,12 @@ def converse(
     max_tokens: int | None = None,
     temperature: float | None = None,
 ) -> str:
-    """Send a conversation to the active AI provider and return its text.
-
-    ``messages`` is an ordered list of {"role", "content"} dicts. ``system`` is
-    an optional system prompt.
-    """
+    """Send a conversation to the active AI provider and return its text."""
     _ensure_configured()
+    if settings.ai_provider == "gemma":
+        return _converse_gemma(
+            messages, system=system, max_tokens=max_tokens, temperature=temperature
+        )
     if settings.ai_provider == "vertex":
         return _converse_vertex(
             messages, system=system, max_tokens=max_tokens, temperature=temperature
@@ -132,6 +136,11 @@ def converse_stream(
 ) -> Iterator[str]:
     """Yield text chunks from the active AI provider."""
     _ensure_configured()
+    if settings.ai_provider == "gemma":
+        yield from _converse_stream_gemma(
+            messages, system=system, max_tokens=max_tokens, temperature=temperature
+        )
+        return
     if settings.ai_provider == "vertex":
         yield from _converse_stream_vertex(
             messages, system=system, max_tokens=max_tokens, temperature=temperature
@@ -140,6 +149,68 @@ def converse_stream(
     yield from _converse_stream_bedrock(
         messages, system=system, max_tokens=max_tokens, temperature=temperature
     )
+
+
+def _converse_gemma(
+    messages: list[Message],
+    *,
+    system: str | None,
+    max_tokens: int | None,
+    temperature: float | None,
+) -> str:
+    import requests
+
+    keys = getattr(settings, "all_gemini_api_keys", None) or ([settings.GEMINI_API_KEY] if settings.GEMINI_API_KEY.strip() else [])
+    if not keys:
+        raise VajraAIError("No GEMINI_API_KEY configured for Gemma 4.")
+
+    contents = []
+    if system:
+        contents.append(f"System: {system}\n")
+    for m in messages:
+        role = "Model" if m.get("role") in {"assistant", "model"} else "User"
+        contents.append(f"{role}: {m.get('content', '')}")
+
+    prompt_text = "\n\n".join(contents)
+    model = settings.GEMMA_MODEL_ID or "gemma-4-26b-a4b-it"
+
+    for key in keys:
+        try:
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={key}"
+            payload = {
+                "contents": [{"parts": [{"text": prompt_text}]}],
+                "generationConfig": {
+                    "temperature": temperature if temperature is not None else 0.3,
+                    "maxOutputTokens": max_tokens or 2048,
+                },
+            }
+            r = requests.post(url, json=payload, timeout=25)
+            if r.status_code == 200:
+                res = r.json()
+                text = ""
+                for part in res.get("candidates", [{}])[0].get("content", {}).get("parts", []):
+                    if not part.get("thought"):
+                        text = part.get("text", "")
+                if text.strip():
+                    return text.strip()
+            else:
+                logger.warning("Gemma 4 API returned status %d: %s", r.status_code, r.text[:100])
+        except Exception as exc:
+            logger.warning("Gemma 4 converse call failed with key ...%s (%s)", key[-6:], type(exc).__name__)
+            continue
+
+    raise VajraAIError("Gemma 4 could not generate a response. Please check your API key.")
+
+
+def _converse_stream_gemma(
+    messages: list[Message],
+    *,
+    system: str | None,
+    max_tokens: int | None,
+    temperature: float | None,
+) -> Iterator[str]:
+    text = _converse_gemma(messages, system=system, max_tokens=max_tokens, temperature=temperature)
+    yield text
 
 
 def _converse_vertex(

@@ -1,7 +1,6 @@
 import type { FormEvent, ReactElement } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { Shield } from 'lucide-react';
 import { ApiError } from '@/lib/api/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
@@ -75,9 +74,11 @@ export function LoginPage({ onSwitchToSignup }: LoginPageProps): ReactElement {
 
       <div className="relative z-10 w-full max-w-[430px]">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="mb-4 flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#6f5ff0] to-[#8b5cf6] text-white shadow-[0_14px_38px_rgba(111,95,240,0.35)] ring-1 ring-white/50">
-            <Shield className="size-7" strokeWidth={2} />
-          </div>
+          <img
+            src="/assets/vajra/s3.png"
+            alt="Vajra emblem"
+            className="mb-2 h-auto w-[190px] object-contain drop-shadow-[0_16px_24px_rgba(30,27,75,0.22)] sm:w-[220px] dark:drop-shadow-[0_18px_28px_rgba(255,255,255,0.10)]"
+          />
           <h1 className="text-3xl font-semibold tracking-[-0.025em] text-[var(--text-primary)]">
             Vajra
           </h1>
