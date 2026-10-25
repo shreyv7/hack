@@ -1,0 +1,2642 @@
+🛡️ DPDPA Shield — 4-Week Development Plan
+Project: DPDPA Shield — DPDPA 2023 Compliance Platform
+Stack: React (Frontend — already designed) + FastAPI (Backend) + PostgreSQL + Redis
+Duration: 4 Weeks
+Week 4: Dedicated to Testing & Deployment
+Total Pages in Design: 52 screens
+
+Tech Stack Summary
+Layer
+
+Technology
+
+Purpose
+
+Backend
+
+FastAPI (Python 3.11+)
+
+REST API server
+
+Database
+
+PostgreSQL 15+
+
+Primary data store
+
+Cache/Queue
+
+Redis
+
+Session cache, background job queue
+
+ORM
+
+SQLAlchemy 2.0 + Alembic
+
+Database models & migrations
+
+Auth
+
+JWT (python-jose) + bcrypt
+
+Authentication & authorization
+
+Background Jobs
+
+Celery + Redis
+
+Scheduled scans, SLA reminders, email sending
+
+File Storage
+
+MinIO / S3
+
+Consent proofs, documents, exports
+
+Email
+
+SMTP (aiosmtplib)
+
+Breach notifications, DSAR acknowledgments
+
+AI
+
+OpenAI API / Azure OpenAI
+
+Shield AI chatbot
+
+Deployment
+
+Docker + Docker Compose
+
+Containerized deployment
+
+High-Level Timeline
+Week 1 (Days 1-7)
+
+▓▓▓▓▓▓▓
+
+Foundation + Consent Management
+
+Week 2 (Days 8-14)
+
+▓▓▓▓▓▓▓
+
+Data Protection + Rights + Breach
+
+Week 3 (Days 15-21)
+
+▓▓▓▓▓▓▓
+
+Governance + AI + Remaining Features
+
+Week 4 (Days 22-28)
+
+░░░░░░░
+
+Testing + QA + Deployment
+
+Database Schema Overview (Core Tables)
+
+[!NOTE]
+These are the core entities. Each module section below lists the specific tables it needs.
+tenants (multi-tenant workspaces)
+├── users (team members per tenant)
+├── roles (DPO, CISO, Admin, Viewer)
+├── consent_notices (notice versions, status)
+│
+
+├── consent_purposes (linked purposes)
+
+│
+
+└── consent_records (proof vault — who consented when)
+
+├── data_inventory (assets, databases, columns)
+│
+
+├── pii_scan_results (scanner findings)
+
+│
+
+└── data_sources (connections)
+
+├── dsar_requests (rights portal submissions)
+├── breach_incidents (breach reports)
+├── policies (privacy policies, versions)
+├── vendors (third-party processors)
+├── dpia_assessments (impact assessments)
+├── ropa_activities (processing activities)
+├── audit_logs (every action)
+├── scheduled_jobs (monitoring tasks)
+└── cookie_scans (cookie scan results)
+
+🗓️ WEEK 1: Foundation + Consent Management
+Goal: Backend scaffold, Auth, Workspace, and full Consent Management module
+
+Day 1 — Project Setup & Architecture
+#
+
+Task
+
+Details
+
+1
+
+Initialize FastAPI project structure
+
+app/ , routers/ , models/ , schemas/ ,
+services/ , core/
+
+2
+
+Set up PostgreSQL + SQLAlchemy +
+Alembic
+
+Database connection, migration setup
+
+3
+
+Set up Redis connection
+
+For caching and Celery broker
+
+4
+
+Configure environment
+management
+
+.env file, pydantic Settings class
+
+5
+
+Set up Docker Compose
+
+docker-compose.yml with FastAPI, Postgres, Redis
+
+#
+
+Task
+
+Details
+
+6
+
+Create base models
+
+BaseModel with id , created_at , updated_at ,
+tenant_id
+
+7
+
+Set up CORS middleware
+
+Allow React frontend to call backend
+
+8
+
+Health check endpoint
+
+GET /api/health
+
+Folder Structure:
+backend/
+├── app/
+│
+
+├── main.py
+
+# FastAPI app entry
+
+│
+
+├── core/
+
+│
+
+│
+
+├── config.py
+
+# Settings
+
+│
+
+│
+
+├── database.py
+
+# DB session
+
+│
+
+│
+
+├── security.py
+
+# JWT, hashing
+
+│
+
+│
+
+└── dependencies.py
+
+# Common deps
+
+│
+
+├── models/
+
+# SQLAlchemy models
+
+│
+
+├── schemas/
+
+# Pydantic schemas
+
+│
+
+├── routers/
+
+# API routes
+
+│
+
+├── services/
+
+# Business logic
+
+│
+
+└── utils/
+
+# Helpers
+
+├── alembic/
+
+# Migrations
+
+├── docker-compose.yml
+├── Dockerfile
+├── requirements.txt
+└── .env
+Deliverable:
+
+✅ Backend boots up, connects to DB, health check works
+
+Day 2 — Authentication & Multi-Tenancy
+#
+
+Task
+
+Details
+
+1
+
+Create tenants
+table
+
+id, name, slug, industry, plan, logo_url,
+created_at
+
+2
+
+Create users table
+
+id, tenant_id, email, password_hash, full_name,
+role, avatar_url
+
+3
+
+Create roles table
+
+id, tenant_id, name, permissions (JSON)
+
+4
+
+Implement signup
+flow
+
+POST /api/auth/signup — creates tenant + first admin user
+
+#
+
+Task
+
+Details
+
+5
+
+Implement login flow
+
+POST /api/auth/login — returns JWT access + refresh tokens
+
+6
+
+JWT middleware
+
+Extracts user & tenant from token on every request
+
+7
+
+Role-based access
+control
+
+Decorator/dependency: require_role("DPO")
+
+8
+
+Password reset flow
+
+POST /api/auth/forgot-password , POST
+/api/auth/reset-password
+
+APIs:
+POST
+
+/api/auth/signup
+
+POST
+
+/api/auth/login
+
+POST
+
+/api/auth/refresh
+
+POST
+
+/api/auth/forgot-password
+
+POST
+
+/api/auth/reset-password
+
+GET
+
+/api/auth/me
+
+Deliverable:
+
+✅ User can sign up, log in, get JWT, role-based protection works
+
+Day 3 — Workspace & Settings Module
+#
+
+Task
+
+Details
+
+1
+
+Workspace Info APIs
+
+CRUD for tenant profile (name, address, DPO details, logo)
+
+2
+
+Industry Config APIs
+
+Industry selection, compliance rule presets
+
+3
+
+DPDP Role Mapping APIs
+
+Map team members to DPDPA roles (DF, DP, SDF, DPO)
+
+4
+
+Deployment Settings APIs
+
+Banner deployment config (script tag, domain whitelist)
+
+5
+
+Create
+industry_configs
+table
+
+id, industry_name, default_retention_days,
+special_categories
+
+6
+
+Create role_mappings
+table
+
+id, tenant_id, user_id, dpdpa_role,
+responsibilities
+
+APIs:
+GET/PUT
+
+/api/workspace/info
+
+GET/PUT
+
+/api/workspace/industry-config
+
+GET/POST
+
+/api/workspace/role-mappings
+
+GET/PUT
+
+/api/workspace/deployment-settings
+
+Pages Covered: WorkspaceInfo , IndustryConfig , DPDPRoleMapping ,
+DeploymentSettings
+Deliverable:
+
+✅ Workspace setup flow works end-to-end
+
+Day 4 — Consent Notices & Purpose Registry
+#
+
+Task
+
+Details
+
+1
+
+Create
+consent_notice
+s table
+
+id, tenant_id, name, version, status, content,
+language, created_by
+
+2
+
+Create
+consent_purpos
+es table
+
+id, tenant_id, name, description, legal_basis,
+data_types, retention_days, is_active
+
+3
+
+Notice CRUD APIs
+
+Create, read, update, archive notices
+
+4
+
+Purpose CRUD APIs
+
+Create, read, update, deactivate purposes
+
+5
+
+Link purposes to
+notices
+
+notice_purposes junction table
+
+6
+
+Notice versioning
+
+Auto-increment version on edit, maintain history
+
+7
+
+Rule 3 compliance
+check
+
+Validate notice against DPDPA Section 5/6 requirements
+
+8
+
+Evidence pack export
+
+Generate PDF/ZIP of notice + purposes for audit
+
+APIs:
+GET/POST
+
+/api/consent/notices
+
+GET/PUT/DELETE /api/consent/notices/{id}
+POST
+
+/api/consent/notices/{id}/publish
+
+POST
+
+/api/consent/notices/{id}/archive
+
+GET/POST
+
+/api/consent/purposes
+
+GET/PUT/DELETE /api/consent/purposes/{id}
+POST
+
+/api/consent/notices/{id}/export
+
+Pages Covered: ConsentNoticesManager , PurposeRegistryNew , ConsentNoticesList ,
+NewConsentNotice
+Deliverable:
+
+✅ Can create, version, and publish consent notices with linked purposes
+
+Day 5 — Banner Builder & Cookie Management
+
+#
+
+Task
+
+Details
+
+1
+
+Create
+consent_banners
+table
+
+id, tenant_id, name, config_json (colors, text,
+layout), status, script_tag
+
+2
+
+Banner CRUD APIs
+
+Create/update banner design config
+
+3
+
+Banner deployment
+API
+
+Generate embeddable JS snippet
+
+4
+
+Create
+cookie_scans
+table
+
+id, tenant_id, domain, scan_date, status
+
+5
+
+Create cookies
+table
+
+id, scan_id, name, domain, category, purpose_id,
+expiry, description
+
+6
+
+Cookie scan trigger
+API
+
+POST /api/cookies/scan — initiates scan (background job)
+
+7
+
+Cookie categorization
+APIs
+
+Update cookie category (necessary/analytics/marketing)
+
+8
+
+Cookie-to-purpose
+linking
+
+Link each cookie to a consent purpose
+
+APIs:
+GET/POST
+
+/api/banners
+
+GET/PUT
+
+/api/banners/{id}
+
+POST
+
+/api/banners/{id}/deploy
+
+GET
+
+/api/banners/{id}/script
+
+POST
+
+/api/cookies/scan
+
+GET
+
+/api/cookies/scans
+
+GET
+
+/api/cookies/scans/{id}/results
+
+PUT
+
+/api/cookies/{id}/categorize
+
+Pages Covered: BannerBuilderDashboard , CreateBannerWizard , CookieScanner ,
+CookieTrackerManager
+Deliverable:
+
+✅ Banner builder config saved, cookie scan results stored
+
+Day 6 — Consent Withdrawal, Delivery Channels & Multi-Language
+#
+1
+
+Task
+Consent withdrawal API
+
+Details
+POST /api/consent/withdraw — revokes consent,
+propagates to integrations
+
+#
+
+Task
+
+Details
+
+2
+
+Create
+consent_withdrawal
+s table
+
+id, record_id, reason, withdrawn_at, channel
+
+3
+
+Delivery channels config
+
+channels table — email, SMS, WhatsApp, in-app, physical
+
+4
+
+Channel CRUD APIs
+
+Enable/disable/configure each channel
+
+5
+
+Multi-language support
+
+notice_translations table — notice_id,
+language_code, translated_content
+
+6
+
+Translation CRUD APIs
+
+Add/update translations for each notice
+
+7
+
+Consent Manager
+Integration APIs
+
+integrations table — webhook URLs, API keys for connected
+systems
+
+APIs:
+POST
+
+/api/consent/withdraw
+
+GET
+
+/api/consent/withdrawals
+
+GET/POST
+
+/api/delivery-channels
+
+PUT
+
+/api/delivery-channels/{id}
+
+GET/POST
+
+/api/notices/{id}/translations
+
+PUT
+
+/api/notices/{id}/translations/{lang}
+
+GET/POST
+
+/api/integrations
+
+PUT/DELETE
+
+/api/integrations/{id}
+
+POST
+
+/api/integrations/{id}/test
+
+Pages Covered: ConsentWithdrawalFlow , NoticeDeliveryChannels ,
+MultiLanguageEditor , ConsentManagerIntegration
+Deliverable:
+
+✅ Full consent management lifecycle complete
+
+Day 7 — Proof Vault & Week 1 Integration
+#
+
+Task
+
+Details
+
+1
+
+Create
+consent_
+records
+table
+
+id, tenant_id, notice_id, principal_email, principal_name,
+consent_given, consent_data (JSON), ip_address,
+user_agent, channel, timestamp, checksum
+
+2
+
+Record
+consent API
+
+POST /api/proof-vault/record — called by banner/SDK when user
+consents
+
+#
+
+Task
+
+Details
+
+3
+
+Proof listing
+& search
+
+GET /api/proof-vault/records with filters (date, status, principal)
+
+4
+
+Tamperproof
+checksum
+
+SHA-256 hash of record content, chain-linked (previous hash)
+
+5
+
+Export
+proof
+evidence
+
+PDF generation of consent proof for audit
+
+6
+
+Proof
+verification
+API
+
+GET /api/proof-vault/verify/{id} — validates checksum chain
+
+7
+
+Week 1
+integration
+testing
+
+Test all Week 1 APIs together, fix bugs
+
+8
+
+Connect
+frontend
+pages
+
+Wire up React pages to backend APIs for Consent module
+
+APIs:
+POST
+
+/api/proof-vault/record
+
+GET
+
+/api/proof-vault/records
+
+GET
+
+/api/proof-vault/records/{id}
+
+GET
+
+/api/proof-vault/verify/{id}
+
+POST
+
+/api/proof-vault/export
+
+GET
+
+/api/proof-vault/stats
+
+Pages Covered: ProofVault
+Deliverable:
+
+✅ End-to-end consent flow: Banner → Notice → Consent → Proof stored
+
+Week 1 Milestone Checklist
+Backend running with Docker
+Auth system (signup, login, JWT, roles)
+Workspace settings (info, industry, roles, deployment)
+Consent notices (CRUD, versioning, publishing)
+Purpose registry (CRUD, linking to notices)
+Banner builder (config, deploy script)
+Cookie scanner (scan, categorize, link to purposes)
+Consent withdrawal flow
+
+Delivery channels configuration
+Multi-language notice translations
+Consent manager integrations
+Proof vault (record, verify, export)
+Covers Excel Questions: 12-21 (Consent Management & Notice)
+
+🗓️ WEEK 2: Data Protection + Rights + Breach
+Goal: Data Inventory, PII Scanner, Rights Portal, DSAR tracking, Breach Manager
+
+Day 8 — Data Inventory & Data Sources
+#
+
+Task
+
+Details
+
+1
+
+Create
+data_sourc
+es table
+
+id, tenant_id, name, type (postgres/mysql/s3/api),
+connection_config (encrypted JSON), status, last_sync
+
+2
+
+Create
+data_asset
+s table
+
+id, source_id, name (table/collection), columns_metadata
+(JSON), record_count, pii_columns, classification
+
+3
+
+Data source
+CRUD APIs
+
+Add/edit/delete/test data source connections
+
+4
+
+Data inventory
+listing APIs
+
+List all assets, filter by source/classification
+
+5
+
+Asset
+classification
+APIs
+
+Tag assets as personal/sensitive/public
+
+6
+
+Connection
+test utility
+
+Test DB/API connectivity before saving
+
+APIs:
+GET/POST
+
+/api/data-sources
+
+GET/PUT/DELETE /api/data-sources/{id}
+POST
+
+/api/data-sources/{id}/test
+
+GET
+
+/api/data-inventory
+
+GET
+
+/api/data-inventory/{id}
+
+PUT
+
+/api/data-inventory/{id}/classify
+
+GET
+
+/api/data-inventory/stats
+
+Pages Covered: DataSources , DataInventory , EmptyStateDataSources
+
+Day 9 — PII Scanner & Data Masking
+#
+
+Task
+
+Details
+
+1
+
+Create
+pii_scans
+table
+
+id, tenant_id, source_id, status, started_at,
+completed_at, findings_count
+
+2
+
+Create
+pii_findin
+gs table
+
+id, scan_id, source_id, asset_name, column_name,
+pii_type, confidence, sample_masked, remediation_status
+
+3
+
+PII scan trigger
+(Celery job)
+
+Background job that scans connected sources for PII patterns
+
+4
+
+PII pattern
+detection logic
+
+Regex + ML patterns for Aadhaar, PAN, Email, Phone, Name, Health data
+
+5
+
+PII findings
+APIs
+
+List/filter/acknowledge findings
+
+6
+
+Data masking
+rules API
+
+Configure masking rules per PII type
+
+7
+
+Data
+anonymisation
+config API
+
+Anonymisation strategies (hash, k-anonymity, redact)
+
+APIs:
+POST
+
+/api/pii-scanner/scan
+
+GET
+
+/api/pii-scanner/scans
+
+GET
+
+/api/pii-scanner/scans/{id}
+
+GET
+
+/api/pii-scanner/findings
+
+PUT
+
+/api/pii-scanner/findings/{id}/acknowledge
+
+GET/POST
+
+/api/data-masking/rules
+
+GET/POST
+
+/api/data-anonymisation/strategies
+
+POST
+
+/api/data-anonymisation/preview
+
+Pages Covered: PIIScannerDashboard , DataAnonymisation
+
+Day 10 — Retention Policies & Children's Data
+#
+
+Task
+
+Details
+
+#
+
+Task
+
+Details
+
+1
+
+Create
+retention_poli
+cies table
+
+id, tenant_id, name, data_category, retention_days,
+auto_delete, legal_basis, status
+
+2
+
+Retention CRUD APIs
+
+Create/manage retention rules
+
+3
+
+Retention
+enforcement (Celery)
+
+Background job checking for data past retention period
+
+4
+
+Create
+childrens_data
+_records table
+
+id, tenant_id, principal_id, age,
+parental_consent_status, guardian_name,
+guardian_contact, restrictions
+
+5
+
+Age verification APIs
+
+Check/flag minors, require parental consent
+
+6
+
+Children's data
+restriction APIs
+
+Block marketing/profiling on children's records
+
+7
+
+Parental consent
+recording
+
+Record guardian consent with Proof Vault integration
+
+APIs:
+GET/POST
+
+/api/retention-policies
+
+GET/PUT/DELETE /api/retention-policies/{id}
+POST
+
+/api/retention-policies/{id}/run-check
+
+GET
+
+/api/childrens-data
+
+GET
+
+/api/childrens-data/stats
+
+POST
+
+/api/childrens-data/{id}/parental-consent
+
+PUT
+
+/api/childrens-data/{id}/restrictions
+
+Pages Covered: RetentionPolicyManager , ChildrensData
+Covers Excel Questions: 38-40 (Retention & Erasure), Question about Children's data from
+DPDPA Section 9
+
+Day 11 — Rights Portal (Public) & DSAR Submission
+#
+
+Task
+
+Details
+
+1
+
+Create
+dsar_reques
+ts table
+
+id, tenant_id, request_id (DSAR-XXXXXX), right_type,
+principal_name, principal_email, principal_phone,
+details, status, verification_status, created_at,
+due_date, closed_at
+
+2
+
+Public rights
+portal API (no
+auth)
+
+POST /api/public/{tenant_slug}/rights-request
+
+#
+
+Task
+
+Details
+
+3
+
+Request status
+check (public)
+
+GET /api/public/{tenant_slug}/rights-request/status
+
+4
+
+Identity
+verification flow
+
+Send OTP/email verification link
+
+5
+
+DSAR
+acknowledgment
+email
+
+Auto-send acknowledgment within 24hrs (Celery)
+
+6
+
+Rights types
+configuration
+
+Configure which rights are enabled per tenant
+
+7
+
+Public portal
+customization
+
+Tenant branding (logo, colors) for the public portal
+
+APIs:
+POST
+
+/api/public/{slug}/rights-request
+
+# No auth (public)
+
+GET
+
+/api/public/{slug}/rights-request/status
+
+# No auth (public)
+
+POST
+
+/api/public/{slug}/verify-identity
+
+# OTP verification
+
+GET
+
+/api/public/{slug}/portal-config
+
+# Branding config
+
+Pages Covered: DataRightsPortalPublic
+
+Day 12 — DSAR SLA Tracker & Internal Processing
+#
+
+Task
+
+Details
+
+1
+
+DSAR listing for DPO
+
+GET /api/dsar-requests with filters (status, right_type,
+due_date)
+
+2
+
+DSAR processing workflow
+
+Assign → Verify → Process → Review → Close
+
+3
+
+SLA countdown logic
+
+30-day timer, auto-reminders at 7, 3, 1 days remaining
+
+4
+
+DSAR status update API
+
+PUT /api/dsar-requests/{id}/status
+
+5
+
+SLA reminder Celery job
+
+Daily job checking DSARs nearing deadline
+
+6
+
+Closure document
+generation
+
+PDF of what was done to fulfill the request
+
+7
+
+DSAR analytics
+
+Average response time, open/closed counts, overdue count
+
+APIs:
+
+GET
+
+/api/dsar-requests
+
+GET
+
+/api/dsar-requests/{id}
+
+PUT
+
+/api/dsar-requests/{id}/status
+
+PUT
+
+/api/dsar-requests/{id}/assign
+
+POST
+
+/api/dsar-requests/{id}/close
+
+GET
+
+/api/dsar-requests/analytics
+
+POST
+
+/api/dsar-requests/{id}/export
+
+Pages Covered: DSARSLATracker , DataRightsPortal
+Covers Excel Questions: 22-27 (Data Principal Rights)
+
+Day 13 — Breach Manager
+#
+
+Task
+
+Details
+
+1
+
+Create
+breach_inc
+idents table
+
+id, tenant_id, incident_ref, severity, status,
+affected_count, data_types, discovery_date, deadline,
+special_categories, mitigation_actions
+
+2
+
+Create
+breach_not
+ifications
+table
+
+id, incident_id, notification_type (DPB/DP/Public),
+status, sent_at, content
+
+3
+
+Breach
+creation API
+
+POST /api/breaches — starts 72-hour countdown
+
+4
+
+5-step wizard
+APIs
+
+Save progress per step (Impact → DPB → DP → Public → Submit)
+
+5
+
+72-hour
+countdown
+timer
+
+Celery periodic task checking deadlines
+
+6
+
+DPB
+notification
+draft
+
+Auto-generate notification to Data Protection Board
+
+7
+
+DP notification
+dispatch
+
+Bulk email/SMS to affected individuals (Celery)
+
+8
+
+Breach
+analytics
+
+Dashboard stats (open, overdue, resolved)
+
+APIs:
+GET/POST
+
+/api/breaches
+
+GET
+
+/api/breaches/{id}
+
+PUT
+
+/api/breaches/{id}/step/{step_num}
+
+POST
+
+/api/breaches/{id}/submit
+
+POST
+
+/api/breaches/{id}/notify-dpb
+
+POST
+
+/api/breaches/{id}/notify-principals
+
+GET
+
+/api/breaches/analytics
+
+Pages Covered: BreachIncidentsList , IncidentDetail , BreachDisclosureWizard
+Covers Excel Questions: 34-37 (Breach Management)
+
+Day 14 — Security Safeguards & Week 2 Integration
+#
+
+Task
+
+Details
+
+1
+
+Create
+security_cont
+rols table
+
+id, tenant_id, control_name, category, framework
+(CIS/ISO/DPDPA), status, evidence, last_reviewed
+
+2
+
+Security
+safeguards CRUD
+
+Add/update/review security controls
+
+3
+
+Control mapping to
+frameworks
+
+Map each control to CIS, ISO 27001, and DPDPA sections
+
+4
+
+Evidence
+attachment
+
+Upload proof of control implementation
+
+5
+
+Safeguards
+dashboard stats
+
+Compliant/non-compliant/partial counts
+
+6
+
+Week 2 integration
+testing
+
+Test all Week 2 APIs, fix issues
+
+7
+
+Frontend wiring
+
+Connect React pages to backend for Rights, Breach, Data modules
+
+Pages Covered: SecuritySafeguardsHub
+Covers Excel Questions: 28-33 (Security Safeguards)
+
+Week 2 Milestone Checklist
+Data sources connection & inventory
+PII scanner (trigger, findings, masking rules)
+Data anonymisation strategies
+Retention policies with auto-enforcement
+Children's data protection module
+Public rights portal (citizen-facing)
+
+DSAR SLA tracker with 30-day enforcement
+Breach manager with 72-hour wizard
+Security safeguards hub
+
+🗓️ WEEK 3: Governance + AI + Remaining Features
+Goal: DPIA, RoPA, Compliance, AI Copilot, Vendor Risk, CISO, Policies, Monitoring
+
+Day 15 — Audit Log & Compliance Score
+#
+
+Task
+
+Details
+
+1
+
+Create
+audit_logs
+table
+
+id, tenant_id, user_id, action, resource_type,
+resource_id, details (JSON), ip_address, timestamp
+
+2
+
+Audit
+middleware
+
+Auto-log every create/update/delete action
+
+3
+
+Audit log
+listing API
+
+GET /api/audit-logs with filters (user, action, date range)
+
+4
+
+Audit log
+export
+
+CSV/PDF export for regulators
+
+5
+
+Compliance
+score engine
+
+Calculate score based on module completion (consent %, rights %, breaches,
+etc.)
+
+6
+
+Score
+breakdown API
+
+Per-module scores + overall weighted score
+
+7
+
+Compliance
+trend tracking
+
+Store daily score snapshots for trend chart
+
+APIs:
+GET
+
+/api/audit-logs
+
+POST
+
+/api/audit-logs/export
+
+GET
+
+/api/compliance/score
+
+GET
+
+/api/compliance/score/breakdown
+
+GET
+
+/api/compliance/score/trend
+
+POST
+
+/api/compliance/score/recalculate
+
+Pages Covered: AuditLog , ComplianceScoreDeepDive , ComplianceDashboardBuilder
+Covers Excel Questions: 41-42 (Governance & Audit)
+
+Day 16 — DPIA & RoPA Modules
+#
+
+Task
+
+Details
+
+1
+
+Create
+dpia_as
+sessmen
+ts table
+
+id, tenant_id, project_name, description, status (draft/inreview/approved/rejected), risk_level, data_types,
+processing_purpose, mitigation_plan, reviewer_id,
+created_by
+
+2
+
+DPIA CRUD
+APIs
+
+Full lifecycle (create → fill → review → approve)
+
+3
+
+DPIA risk
+scoring
+
+Auto-calculate risk based on data types and processing
+
+4
+
+Create
+ropa_ac
+tivitie
+s table
+
+id, tenant_id, activity_name, purpose, legal_basis,
+data_categories, retention_period, processor_name,
+transfer_details, status
+
+5
+
+RoPA
+CRUD APIs
+
+Full CRUD for processing activities register
+
+6
+
+RoPA
+export
+
+Generate formatted RoPA register for regulators
+
+APIs:
+GET/POST
+
+/api/dpia
+
+GET/PUT
+
+/api/dpia/{id}
+
+POST
+
+/api/dpia/{id}/submit-review
+
+POST
+
+/api/dpia/{id}/approve
+
+POST
+
+/api/dpia/{id}/reject
+
+GET/POST
+
+/api/ropa
+
+GET/PUT/DELETE /api/ropa/{id}
+POST
+
+/api/ropa/export
+
+Pages Covered: DPIAModule , RoPAModule
+Covers Excel Questions: 43-44 (DPIA & RoPA)
+
+Day 17 — Policy Manager & Vendor Risk Intelligence
+#
+
+Task
+
+1
+
+Create
+policies table
+
+Details
+id, tenant_id, title, content, version, status
+(draft/published/archived), category, review_date,
+published_at, created_by
+
+#
+
+Task
+
+Details
+
+2
+
+Create
+policy_acknow
+ledgements
+table
+
+id, policy_id, user_id, acknowledged_at
+
+3
+
+Policy CRUD APIs
+
+Create/version/publish/archive policies
+
+4
+
+Policy
+acknowledgement
+API
+
+Track who has read/acknowledged each policy
+
+5
+
+Create vendors
+table
+
+id, tenant_id, name, category, risk_score,
+dpa_status, dpa_expiry, security_rating,
+data_types_shared, contact_info
+
+6
+
+Vendor CRUD APIs
+
+Add/edit/remove vendors
+
+7
+
+Vendor risk
+scoring
+
+Auto-score based on DPA status, security cert, data sensitivity
+
+8
+
+DPA expiry alerts
+
+Celery job for upcoming DPA renewals
+
+APIs:
+GET/POST
+
+/api/policies
+
+GET/PUT/DELETE /api/policies/{id}
+POST
+
+/api/policies/{id}/publish
+
+POST
+
+/api/policies/{id}/acknowledge
+
+GET
+
+/api/policies/{id}/acknowledgements
+
+GET/POST
+
+/api/vendors
+
+GET/PUT/DELETE /api/vendors/{id}
+GET
+
+/api/vendors/risk-summary
+
+POST
+
+/api/vendors/{id}/reassess
+
+Pages Covered: PolicyManager , VendorRiskIntelligence
+
+Day 18 — CISO Command Center & Monitoring
+#
+
+Task
+
+Details
+
+1
+
+CISO
+dashboard
+aggregate
+API
+
+Single endpoint returning security posture (controls, threats, incidents, risk
+score)
+
+2
+
+19-control
+grid API
+
+Controls mapped to CIS/ISO/DPDPA frameworks with status
+
+#
+
+Task
+
+Details
+
+3
+
+Threat
+intelligence
+feed
+
+Mock/configurable threat alerts
+
+4
+
+Create
+scheduled
+_jobs table
+
+id, tenant_id, job_type
+(pii_scan/cookie_scan/policy_review/vendor_check),
+frequency (cron), last_run, next_run, status, config
+
+5
+
+Monitoring
+CRUD APIs
+
+Create/edit/delete/pause scheduled checks
+
+6
+
+Celery Beat
+integration
+
+Register scheduled jobs dynamically
+
+7
+
+Monitoring
+execution log
+
+Track each run's result
+
+APIs:
+GET
+
+/api/ciso/dashboard
+
+GET
+
+/api/ciso/controls-grid
+
+GET
+
+/api/ciso/threat-feed
+
+GET/POST
+
+/api/monitoring/schedules
+
+GET/PUT/DELETE /api/monitoring/schedules/{id}
+POST
+
+/api/monitoring/schedules/{id}/run-now
+
+GET
+
+/api/monitoring/execution-log
+
+Pages Covered: CISOCommandCenter , MonitoringScheduling
+
+Day 19 — Shield AI (Compliance Chatbot)
+#
+
+Task
+
+Details
+
+1
+
+Create
+ai_conversations table
+
+id, tenant_id, user_id, messages (JSON array),
+created_at
+
+2
+
+Chat endpoint
+
+POST /api/shield-ai/chat — sends message, gets AI
+response
+
+3
+
+Context injection
+
+Inject tenant's compliance data into AI prompt (score, gaps,
+pending items)
+
+4
+
+System prompt engineering
+
+DPDPA-specific system prompt with act sections, rules,
+guidelines
+
+5
+
+Quick action suggestions
+
+AI returns actionable suggestions (e.g., "Create a notice for this
+purpose")
+
+#
+
+Task
+
+Details
+
+6
+
+Chat history API
+
+GET /api/shield-ai/conversations
+
+7
+
+Auto-suggestions for
+notices
+
+AI generates consent notice text given purpose and data types
+
+APIs:
+POST
+
+/api/shield-ai/chat
+
+GET
+
+/api/shield-ai/conversations
+
+GET
+
+/api/shield-ai/conversations/{id}
+
+POST
+
+/api/shield-ai/generate-notice
+
+POST
+
+/api/shield-ai/analyze-breach
+
+POST
+
+/api/shield-ai/suggest-fix
+
+Pages Covered: ConsentCopilot (Shield AI page)
+
+Day 20 — Dashboard & Remaining Pages
+#
+
+Task
+
+Details
+
+1
+
+Dashboard aggregate API
+
+Single endpoint for all dashboard metrics
+
+2
+
+Module health API
+
+Status of each module (consent, data, rights, breach, etc.)
+
+3
+
+Recent activity feed API
+
+Last N actions across the tenant
+
+4
+
+Risk heatmap data API
+
+Risk by module/data category
+
+5
+
+Upcoming deadlines API
+
+DSARs due, DPAs expiring, policies for review
+
+6
+
+Data processing chart API
+
+Processing volume trends
+
+7
+
+Welcome/Setup flow API
+
+Track onboarding completion per tenant
+
+8
+
+Diagram data APIs
+
+Data for flow diagrams (Consent, PII, Compliance Score)
+
+APIs:
+GET
+
+/api/dashboard/summary
+
+GET
+
+/api/dashboard/module-health
+
+GET
+
+/api/dashboard/activity-feed
+
+GET
+
+/api/dashboard/risk-heatmap
+
+GET
+
+/api/dashboard/deadlines
+
+GET
+
+/api/dashboard/processing-trend
+
+GET
+
+/api/onboarding/status
+
+GET
+
+/api/diagrams/consent-flow
+
+GET
+
+/api/diagrams/pii-flow
+
+GET
+
+/api/diagrams/compliance-score
+
+Pages Covered: Dashboard , WelcomeSetup , DiagramConsentFlow , DiagramPIIFlow ,
+DiagramComplianceScore
+
+Day 21 — Full Frontend-Backend Integration & Week 3 Wrap
+#
+
+Task
+
+Details
+
+1
+
+Connect ALL React pages to APIs
+
+Replace hardcoded data with API calls
+
+2
+
+Error handling & loading states
+
+Add proper loading spinners, error toasts
+
+3
+
+File upload service
+
+For evidence, documents, logos (MinIO/S3)
+
+4
+
+PDF/Report generation service
+
+For exports (compliance report, DPIA, RoPA, audit log)
+
+5
+
+Email template system
+
+Templates for DSAR ack, breach notification, consent receipt
+
+6
+
+Notification service
+
+In-app notification bell (WebSocket or polling)
+
+7
+
+Full smoke test of all flows
+
+Walk through every page and ensure data loads
+
+Week 3 Milestone Checklist
+Audit log with auto-capture
+Compliance score engine + trends
+DPIA module (full lifecycle)
+RoPA register
+Policy manager with versioning & acknowledgements
+Vendor risk intelligence with DPA tracking
+CISO command center (19-control grid)
+Monitoring & scheduling with Celery Beat
+Shield AI chatbot
+Dashboard with all widgets
+All 52 pages connected to backend
+
+🗓️ WEEK 4: Testing + QA + Deployment
+Goal: Comprehensive testing, bug fixes, deployment to production
+
+Day 22-23 — API Testing & Bug Fixing
+#
+
+Task
+
+Details
+
+1
+
+Write API tests (pytest)
+
+Test every endpoint — happy path + edge cases
+
+2
+
+Auth tests
+
+Signup, login, token refresh, role access control
+
+3
+
+Consent flow tests
+
+Create notice → publish → record consent → verify proof
+
+4
+
+DSAR flow tests
+
+Submit request → process → SLA check → close
+
+5
+
+Breach flow tests
+
+Create → wizard steps → submit → notifications
+
+6
+
+Fix all discovered bugs
+
+From test results
+
+Target: 80%+ API endpoint test coverage
+
+Day 24 — Integration Testing & Security
+#
+
+Task
+
+Details
+
+1
+
+End-to-end flow testing
+
+Frontend → Backend → Database for critical flows
+
+2
+
+Multi-tenant isolation test
+
+Ensure Tenant A cannot access Tenant B's data
+
+3
+
+SQL injection testing
+
+Test all input fields
+
+4
+
+JWT security testing
+
+Token expiry, refresh flow, invalid tokens
+
+5
+
+Rate limiting
+
+Add rate limiting to public APIs (rights portal, banner)
+
+6
+
+Input validation audit
+
+Ensure all endpoints validate inputs properly
+
+Day 25 — Performance & Load Testing
+#
+
+Task
+
+Details
+
+1
+
+Database query optimization
+
+Add indexes, optimize slow queries
+
+2
+
+API response time benchmarks
+
+Target: < 200ms for most endpoints
+
+3
+
+Background job reliability
+
+Ensure Celery tasks complete reliably
+
+4
+
+Pagination verification
+
+All list endpoints properly paginated
+
+5
+
+File upload size limits
+
+Configure max upload sizes
+
+6
+
+Connection pooling
+
+Optimize DB connection pool settings
+
+Day 26 — Deployment Setup
+#
+
+Task
+
+Details
+
+1
+
+Production Docker images
+
+Optimize Dockerfile for production
+
+2
+
+Environment configuration
+
+Production .env with all secrets
+
+3
+
+Database migration script
+
+Production-safe Alembic migration
+
+4
+
+Nginx reverse proxy
+
+Set up Nginx for frontend + backend
+
+5
+
+SSL/HTTPS setup
+
+Configure TLS certificates
+
+6
+
+Logging setup
+
+Structured logging to file/service
+
+7
+
+Health check & monitoring
+
+/health endpoint for uptime monitoring
+
+Day 27 — Staging Deployment & UAT
+#
+
+Task
+
+Details
+
+1
+
+Deploy to staging server
+
+Full stack deployment
+
+2
+
+Smoke test on staging
+
+Walk through every flow
+
+3
+
+UAT (User Acceptance Testing)
+
+Team walkthrough of all features
+
+4
+
+Fix critical bugs
+
+From UAT feedback
+
+5
+
+Data seeding
+
+Create demo/seed data for presentation
+
+6
+
+Documentation
+
+API documentation (Swagger/ReDoc auto-generated)
+
+Day 28 — Production Deployment & Handover
+#
+
+Task
+
+Details
+
+1
+
+Production deployment
+
+Deploy final version
+
+2
+
+DNS & domain setup
+
+Point domain to production server
+
+3
+
+Final verification
+
+Full walkthrough on production
+
+4
+
+Backup configuration
+
+Set up automated DB backups
+
+5
+
+Monitoring alerts
+
+Set up uptime and error alerts
+
+#
+
+Task
+
+Details
+
+6
+
+Documentation handover
+
+API docs, deployment guide, admin guide
+
+7
+
+Demo preparation
+
+Prepare demo flow for presentation
+
+Week 4 Milestone Checklist
+All API tests passing
+Security audit completed
+Performance benchmarks met
+Staging deployment tested
+UAT completed with fixes
+Production deployed
+Documentation complete
+Demo-ready
+
+Excel Feature Coverage Map
+Excel #
+
+Feature Area
+
+Week
+
+Day
+
+9-11
+
+Role Mapping under DPDP Act
+
+Week 1
+
+Day 3
+
+12-21
+
+Consent Management & Notice
+
+Week 1
+
+Days 4-7
+
+22-27
+
+Data Principal Rights
+
+Week 2
+
+Days 11-12
+
+28-33
+
+Security Safeguards
+
+Week 2
+
+Day 14
+
+34-37
+
+Breach Management
+
+Week 2
+
+Day 13
+
+38-40
+
+Retention & Erasure
+
+Week 2
+
+Day 10
+
+41-44
+
+Governance & Audit (DPIA/RoPA)
+
+Week 3
+
+Days 15-16
+
+Feature → Plan Mapping
+Feature (from your list)
+
+Week
+
+Day(s)
+
+Consent Notice Builder
+
+Week 1
+
+Day 4-6
+
+Proof Vault
+
+Week 1
+
+Day 7
+
+Rights Portal
+
+Week 2
+
+Day 11
+
+Feature (from your list)
+
+Week
+
+Day(s)
+
+Rights SLA Engine
+
+Week 2
+
+Day 12
+
+Breach Manager
+
+Week 2
+
+Day 13
+
+Data Inventory & RoPA
+
+Week 2 Day 8 + Week 3 Day 16
+
+Split
+
+Shield AI
+
+Week 3
+
+Day 19
+
+Compliance Dashboard
+
+Week 3
+
+Day 15, 20
+
+CISO Command Center
+
+Week 3
+
+Day 18
+
+Policy Manager
+
+Week 3
+
+Day 17
+
+Children's Data
+
+Week 2
+
+Day 10
+
+Vendor Risk Intelligence
+
+Week 3
+
+Day 17
+
+Monitoring & Scheduling
+
+Week 3
+
+Day 18
+
+Cookie Scanner
+
+Week 1
+
+Day 5
+
+Risk & Mitigation
+Risk
+
+Impact
+
+Mitigation
+
+AI integration delays (OpenAI
+API)
+
+Shield AI
+delayed
+
+Use mock responses first, integrate real API
+later
+
+Database schema changes midsprint
+
+Migration
+conflicts
+
+Use Alembic migrations strictly, no manual DB
+changes
+
+Frontend-backend contract
+mismatch
+
+Integration
+bugs
+
+Define API schemas (Pydantic) first, share with
+frontend
+
+Celery job failures
+
+SLA alerts
+missed
+
+Add retry logic, dead-letter queue, monitoring
+
+Scope creep
+
+Timeline slip
+
+Stick to MVP features listed above, defer
+enhancements
+
+

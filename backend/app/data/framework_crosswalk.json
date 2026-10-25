@@ -1,0 +1,89 @@
+{
+  "primary_framework": "dpdpa",
+  "frameworks": {
+    "rbi": {
+      "label": "RBI Master Directions",
+      "description": "Banking IT framework, KYC, and outsourcing crosswalk overlay"
+    },
+    "iso27001": {
+      "label": "ISO/IEC 27001:2022",
+      "description": "Annex A control mapping overlay"
+    },
+    "nist": {
+      "label": "NIST Cybersecurity Framework",
+      "description": "GOVERN / PROTECT / RESPOND category overlay"
+    }
+  },
+  "mappings": {
+    "2-5": {
+      "title": "Notice",
+      "dpdpa_section": "§5",
+      "rbi": ["KYC-MD-3.1", "IT-Framework-6.2"],
+      "iso27001": ["A.5.34", "A.8.2"],
+      "nist": ["PR.PT-1", "PR.DS-1"]
+    },
+    "2-6": {
+      "title": "Consent",
+      "dpdpa_section": "§6",
+      "rbi": ["KYC-MD-4.2", "IT-Framework-6.3"],
+      "iso27001": ["A.5.34", "A.8.10"],
+      "nist": ["PR.PT-3", "GV.PO-1"]
+    },
+    "2-7": {
+      "title": "Legitimate uses",
+      "dpdpa_section": "§7",
+      "rbi": ["KYC-MD-2.1"],
+      "iso27001": ["A.5.34", "A.5.31"],
+      "nist": ["GV.RM-1", "PR.IP-1"]
+    },
+    "2-8": {
+      "title": "General obligations",
+      "dpdpa_section": "§8",
+      "rbi": ["IT-Framework-7.1", "Outsourcing-MD-3.4"],
+      "iso27001": ["A.5.1", "A.8.10", "A.8.11"],
+      "nist": ["PR.DS-1", "PR.IP-6", "DE.CM-1"]
+    },
+    "2-10": {
+      "title": "Significant Data Fiduciary",
+      "dpdpa_section": "§10 / Rules 4-5",
+      "rbi": ["IT-Framework-8.2", "Outsourcing-MD-5.1"],
+      "iso27001": ["A.5.7", "A.8.25"],
+      "nist": ["GV.RR-1", "ID.RA-1"]
+    },
+    "3-11": {
+      "title": "Right to access",
+      "dpdpa_section": "§11",
+      "rbi": ["KYC-MD-5.3"],
+      "iso27001": ["A.5.15", "A.8.2"],
+      "nist": ["RS.RP-1", "PR.PT-1"]
+    },
+    "3-12": {
+      "title": "Correction and erasure",
+      "dpdpa_section": "§12",
+      "rbi": ["IT-Framework-6.5"],
+      "iso27001": ["A.8.10", "A.8.11"],
+      "nist": ["PR.DS-2", "RS.MI-1"]
+    },
+    "3-13": {
+      "title": "Grievance redressal",
+      "dpdpa_section": "§13",
+      "rbi": ["IT-Framework-9.1"],
+      "iso27001": ["A.5.26"],
+      "nist": ["RS.CO-1", "RC.CO-1"]
+    },
+    "3-14": {
+      "title": "Right to nominate",
+      "dpdpa_section": "§14",
+      "rbi": [],
+      "iso27001": ["A.5.15"],
+      "nist": ["GV.PO-2"]
+    },
+    "4-16": {
+      "title": "Cross-border processing",
+      "dpdpa_section": "§16",
+      "rbi": ["Outsourcing-MD-4.1", "IT-Framework-10.2"],
+      "iso27001": ["A.5.23", "A.5.34"],
+      "nist": ["GV.SC-1", "PR.DS-1"]
+    }
+  }
+}

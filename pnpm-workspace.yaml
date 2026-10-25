@@ -1,0 +1,11 @@
+packages:
+  - 'frontend'
+
+allowBuilds:
+  '@tailwindcss/oxide': true
+  core-js: true
+  esbuild: true
+
+overrides:
+  '@types/react': '18.3.18'
+  '@types/react-dom': '18.3.5'

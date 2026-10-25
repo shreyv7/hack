@@ -1,0 +1,18 @@
+{{ product_name }} — Your workspace is approved
+================================================================================
+
+Hello {{ full_name }},
+
+A DPDPA Shield administrator has approved your workspace. You can sign in with
+the email and password you chose at signup.
+
+SIGN IN
+-------
+Open: {{ login_url }}
+Email: {{ email }}
+
+If you did not create this account, contact your administrator.
+
+---
+{{ product_name }}
+This is an automated message. Please do not reply to this email.

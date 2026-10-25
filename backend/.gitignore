@@ -1,0 +1,55 @@
+# Backend-local ignores (root .gitignore also applies to the monorepo)
+
+# Secrets — copy .env.example to .env; never commit .env
+# Includes AWS Bedrock keys (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, BEDROCK_MODEL_ID)
+.env
+.env.local
+.env.*
+!.env.example
+
+# Never commit credential overrides or exported env dumps
+.env.bedrock
+.env.aws
+*.env.backup
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Uploaded data-source files (see UPLOAD_DIR in config)
+uploads/
+
+# Generated CISO board-report PDFs (runtime output in templates/)
+templates/report_*.pdf
+
+# Local databases
+*.db
+*.sqlite3
+dpdpa_shield.db
+
+# Test / coverage / tooling
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Ephemeral API integration test overrides (default: http://127.0.0.1:8000/api)
+.test_api_base.local
+
+.DS_Store
+Thumbs.db
+
+backend/platform_docs/
+scratch/
+

@@ -1,0 +1,141 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies (root + workspaces)
+node_modules/
+**/node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Figma export clone (local design sync reference)
+.figma-export/
+
+# -----------------------------------------------------------------------------
+# Environment & secrets — NEVER commit real credentials
+# -----------------------------------------------------------------------------
+# Local env files (use .env.example as templates only)
+# AWS Bedrock / Shield AI credentials belong in backend/.env only — never commit
+.env
+.env.local
+.env.*.local
+.env.bedrock
+.env.aws
+*.env.backup
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Allow committed templates (placeholders only, no real passwords)
+!.env.example
+!**/.env.example
+
+# -----------------------------------------------------------------------------
+# Frontend (Vite + React)
+# -----------------------------------------------------------------------------
+frontend/dist/
+frontend/dist-ssr/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+frontend/*.local
+frontend/*.tsbuildinfo
+
+# Legacy paths (if tools still write to repo root)
+dist/
+dist-ssr/
+build/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# -----------------------------------------------------------------------------
+# Backend (FastAPI + Python)
+# -----------------------------------------------------------------------------
+backend/.venv/
+backend/venv/
+backend/env/
+backend/**/__pycache__/
+backend/**/*.py[cod]
+backend/**/*.egg-info/
+backend/.eggs/
+backend/**/build/
+backend/**/dist/
+backend/*.db
+backend/*.sqlite3
+backend/dpdpa_shield.db
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/.mypy_cache/
+backend/.ruff_cache/
+
+# Python at repo root (if any)
+.venv/
+venv/
+__pycache__/
+
+# -----------------------------------------------------------------------------
+# Editor / IDE
+# -----------------------------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# -----------------------------------------------------------------------------
+# OS files
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Coverage / test output
+# -----------------------------------------------------------------------------
+coverage/
+**/coverage/
+*.lcov
+
+# Smoke-test PDF scratch files (frontend/scripts/test-*-pdfs.mjs, etc.)
+**/_test-*.pdf
+
+# -----------------------------------------------------------------------------
+# Agent / browser E2E artifacts (Cursor MCP Playwright)
+# -----------------------------------------------------------------------------
+.playwright-mcp/
+
+# Excluded audit and setup docs
+docs/API&WEBHOOKS_audit.md
+docs/ciso_audit.md
+docs/cisr_remaining_setup.md
+docs/dpia_module_remaining_setup.md
+docs/proof_vault_remaining_setup.md
+docs/legitimate_audit.md
+
+# Generated PDFs
+backend/templates/*.pdf
+
+# Local testing playgrounds
+frontend/public/local_test.html
+
+# Fino UAT checklists — local only, do not publish
+docs/REQ*_UAT.md
+
+

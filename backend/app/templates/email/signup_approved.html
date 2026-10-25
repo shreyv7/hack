@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ product_name }} — Workspace approved</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f1f5f9;font-family:Inter,Arial,Helvetica,sans-serif;color:#1e293b;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#f1f5f9;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(15,23,42,0.08);">
+          <tr>
+            <td style="background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%);padding:28px 32px;">
+              <div style="font-size:20px;font-weight:700;color:#ffffff;letter-spacing:-0.02em;">{{ product_name }}</div>
+              <div style="font-size:13px;color:rgba(255,255,255,0.85);margin-top:2px;">DPDPA compliance platform</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:32px;">
+              <p style="margin:0 0 16px;font-size:16px;line-height:1.5;">Hello <strong>{{ full_name }}</strong>,</p>
+              <p style="margin:0 0 24px;font-size:15px;line-height:1.6;color:#475569;">
+                A DPDPA Shield administrator has approved your workspace. Sign in with the email and password you chose when you registered.
+              </p>
+              <table role="presentation" cellspacing="0" cellpadding="0" style="margin-bottom:24px;">
+                <tr>
+                  <td style="border-radius:8px;background:linear-gradient(135deg,#6f5ff0,#5a4fe6);">
+                    <a href="{{ login_url }}" style="display:inline-block;padding:14px 28px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">Sign in to {{ product_name }}</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0;font-size:13px;line-height:1.5;color:#64748b;">
+                Or open this link: <a href="{{ login_url }}" style="color:#4f46e5;">{{ login_url }}</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:20px 32px;background:#f8fafc;border-top:1px solid #e2e8f0;">
+              <p style="margin:0;font-size:12px;line-height:1.5;color:#94a3b8;">
+                If you did not create this account, contact your administrator.
+              </p>
+              <p style="margin:8px 0 0;font-size:12px;color:#94a3b8;">
+                © {{ year }} {{ product_name }}. Automated message — please do not reply.
+              </p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

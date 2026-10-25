@@ -1,0 +1,27 @@
+{{ product_name }} — Your account is ready
+================================================================================
+
+Hello {{ full_name }},
+
+An administrator has created a {{ product_name }} account for you.
+
+SIGN IN
+-------
+Open: {{ login_url }}
+Email: {{ email }}
+
+TEMPORARY PASSWORD
+------------------
+{{ temp_password }}
+
+On first sign-in you must set a new password. This temporary password expires
+after you change it.
+
+SECURITY
+--------
+- Do not share this email or password.
+- If you did not expect this invitation, contact your organization administrator.
+
+---
+{{ product_name }}
+This is an automated message. Please do not reply to this email.

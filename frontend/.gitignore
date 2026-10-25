@@ -1,0 +1,23 @@
+# Local env (templates live in .env.example at repo root)
+.env
+.env.local
+.env.*.local
+
+# Vite / build (also listed in root .gitignore)
+dist/
+dist-ssr/
+build/
+.vite/
+.cache/
+.firebase/
+*.tsbuildinfo
+
+# Smoke-test PDF scratch files from scripts/test-compliance-pdfs.mjs, test-dsar-pdfs.mjs
+scripts/_test-*.pdf
+
+# CMP SDK — source is private, public/cmp.js is the minified build artifact
+# Edit scripts/cmp.source.js then run `npm run build:cmp` to regenerate public/cmp.js
+scripts/cmp.source.js
+public/cmp.js
+public/cmp.min.js
+public/cmp.manifest.json

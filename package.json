@@ -1,0 +1,14 @@
+{
+  "name": "dpdpa-shield",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "pnpm --dir frontend dev",
+    "dev:frontend": "pnpm --dir frontend dev",
+    "build": "pnpm --dir frontend build",
+    "preview": "pnpm --dir frontend preview",
+    "typecheck": "pnpm --dir frontend typecheck",
+    "dead-code:frontend": "pnpm --dir frontend dead-code",
+    "dead-code:backend": "cd backend && .venv/bin/vulture app --min-confidence 80 && .venv/bin/deptry ."
+  }
+}

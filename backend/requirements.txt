@@ -1,0 +1,81 @@
+# ============================================================
+# DPDPA Shield — Backend dependencies
+# Install with:  pip install -r requirements.txt
+# ============================================================
+
+# --- Core API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+pydantic-settings==2.7.1
+email-validator==2.2.0
+
+# --- Database (PostgreSQL + ORM + migrations) ---
+sqlalchemy==2.0.36
+alembic==1.14.0
+psycopg2-binary==2.9.10
+
+# --- External data-source connectors (real connection tests + scan) ---
+pymysql==1.2.0    # MySQL / MariaDB sources
+pymongo==4.17.0   # MongoDB / MongoDB Atlas sources
+oracledb>=2.4     # Oracle (thin mode — no Oracle client needed)
+pymssql>=2.3      # Microsoft SQL Server / Azure SQL Database
+paramiko>=3.4     # SFTP / FTP sources
+# Cloud storage / logging SDKs (credentials entered per-source)
+azure-storage-blob>=12.20   # Azure Blob Storage
+azure-identity>=1.18        # Azure AD auth (Monitor)
+azure-monitor-query>=1.4    # Azure Monitor / Log Analytics
+google-cloud-storage>=2.18  # Google Cloud Storage
+google-cloud-logging>=3.11  # Google Cloud Logging
+google-auth>=2.35           # service-account credentials for the above
+# boto3 (AWS S3 / RDS / CloudWatch) and httpx (REST/GraphQL/SOAP/Splunk/Drive)
+# are already listed below / present.
+playwright==1.60.0  # cookie/page scanning (teammate module)
+
+# --- Auth / Security (helpers only — no routes wired yet) ---
+python-jose[cryptography]==3.3.0
+cryptography==48.0.0   # Fernet field encryption (data-source passwords)
+
+# --- PII detection / anonymisation (Data Masking & Anonymisation) ---
+presidio-analyzer==2.2.362    # free-text NER detection (spaCy)
+presidio-anonymizer==2.2.362  # masking/anonymisation operators
+spacy==3.8.14
+# After install, download the spaCy model:  python -m spacy download en_core_web_sm
+# (the analyzer falls back to regex if the model is missing — see masking_service.py)
+passlib[bcrypt]==1.7.4
+bcrypt==4.0.1   # pinned: passlib 1.7.4 logs a harmless warning with bcrypt>=4.1
+python-multipart==0.0.20
+
+# --- Uploaded-file PII scanning (parse files registered as data sources) ---
+openpyxl>=3.1     # .xlsx spreadsheets
+pypdf>=5.1        # .pdf text extraction
+python-docx>=1.1  # .docx documents
+# .csv / .tsv / .json / .txt / .log use the standard library.
+
+# --- Config ---
+python-dotenv==1.0.1
+
+# --- Shield AI (Vertex AI via ADC, plus AWS Bedrock kept as a switch) ---
+# google-genai talks to Vertex / Gemini. ADC supplies credentials.
+google-genai>=1.40.0,<2
+# >=1.40 is required so the SDK understands newer models' reasoning content
+# blocks (otherwise they arrive as SDK_UNKNOWN_MEMBER and can't be read).
+boto3>=1.40.0
+pgvector>=0.3.0       # PostgreSQL vector similarity search (Shield AI RAG)
+
+# --- PDF generation (CISO board reports, DPIA exports) ---
+reportlab>=4.2
+python-pptx>=1.0.0
+
+# --- Notice Delivery SDK / HTTP Client ---
+httpx==0.28.1
+twilio==9.5.0
+
+# ------------------------------------------------------------
+# Optional — uncomment when the relevant module is implemented
+# ------------------------------------------------------------
+# redis==5.2.1          # caching + Celery broker
+redis==5.2.1
+# celery==5.4.0         # background jobs (SLA reminders, scans)
+# aiosmtplib==3.0.2     # async email (breach / DSAR notifications)
+# boto3==1.35.90        # S3 / MinIO file storage

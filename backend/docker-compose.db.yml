@@ -1,0 +1,33 @@
+# ============================================================
+# Postgres + Redis in Docker  (OPTIONAL convenience for local dev)
+# ------------------------------------------------------------
+#     docker compose -f docker-compose.db.yml up -d
+#     docker compose -f docker-compose.db.yml down
+#
+# Your .env DATABASE_URL stays pointed at localhost:5432.
+# Set REDIS_URL=redis://localhost:6379/0 for decision caching.
+# ============================================================
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: dpdpa_postgres
+    environment:
+      POSTGRES_USER: dpdpa
+      POSTGRES_PASSWORD: dpdpa
+      POSTGRES_DB: dpdpa_shield
+    ports:
+      - "5432:5432"
+    volumes:
+      - dpdpa_pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: dpdpa_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - dpdpa_redis_data:/data
+
+volumes:
+  dpdpa_pgdata:
+  dpdpa_redis_data:

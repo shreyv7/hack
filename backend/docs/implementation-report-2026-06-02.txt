@@ -1,0 +1,86 @@
+DPDPA Shield
+Implementation Report — 2 June 2026
+Generated automatically from the CMP-DPDP codebase. Commit: fix consent notice edit/auto-fix/preview UX and
+add PDF evidence exports.
+
+Executive Summary
+This report documents work completed on DPDPA Shield for 2 June 2026, centred on Tier 1.1 Consent Management
+(Purpose Registry + Consent Notice Builder), supporting UX fixes, and PDF evidence export capabilities across
+consent pages.
+The delivery includes a full backend API with immutable notice versioning, org-scoped CRUD, compliance warnings
+aligned to DPDPA Sections 5–6, a three-step notice wizard wired to live data, and automated test coverage (33+
+checks passing).
+
+1. Tier 1.1 — Backend (Consent Management)
+• Database models: Purpose, ConsentNotice, ConsentNoticeVersion, notice_version_purposes junction table.
+• Alembic migration: 20260605_consent_notices_purposes.py — applied successfully.
+• Pydantic schemas in app/schemas/consent.py for all request/response shapes.
+• ConsentService (app/services/consent_service.py): org-scoped CRUD, notice versioning, publish/archive,
+draft-from-live, compliance warnings, auto-fix.
+• REST router at /api/consent registered in app/main.py.
+• Design documentation: backend/docs/CONSENT_MANAGEMENT_DESIGN.md.
+• Demo seed script: app/scripts/seed_consent_demo.py.
+• Test suite: app/scripts/test_consent_api.py — service layer, HTTP admin flow, read-only 403, superadmin org
+context (all passed).
+
+2. Tier 1.1 — Frontend (Consent Management)
+• Types and API client: frontend/src/types/consent.ts, frontend/src/lib/api/consent.ts.
+• Hook: frontend/src/hooks/useConsentManagement.ts — data loading, CRUD, org context for superadmin.
+• ConsentManagementGate — shared org selector and loading/error states.
+• PurposeRegistryNew — live purpose CRUD, details modal, linked notices count.
+• ConsentNoticesManager — list, view, archive, auto-fix, edit (draft-from-live for live notices).
+• NewConsentNotice — 3-step wizard: Basic Info !’ Add Purposes !’ Preview & Publish.
+• Components: NoticePurposePicker, NoticeComplianceWarnings, NoticeForm, NoticePreview, Stepper.
+• App.tsx navigation wired between manager and wizard via editingNotice state.
+
+3. Versioning & Compliance Rules
+• Create notice !’ draft v1; edit draft only; publish !’ live (prior live archived).
+• Edit published notice !’ POST draft-from-live creates new immutable draft version.
+• Live versions are never mutated.
+
+DPDPA Shield — Implementation Report — 2 June 2026 — Page 1
+
+• Compliance warning codes: MISSING_DPO_CONTACT, MISSING_OPENING_STATEMENT,
+NO_PURPOSES_LINKED, CONSENT_WITHOUT_WITHDRAWAL, SPECIAL_CATEGORY_REVIEW.
+• Publish blocked when compliance warnings remain unresolved.
+
+4. Bug Fixes & UX Improvements (Today)
+• Sidebar label: "Purpose Registry (New)" renamed to "Purpose Registry".
+• Notice wizard language selector: functional dropdown bound to form data; 23 Eighth Schedule languages; "+ Add
+language" navigates to Multi-Language Editor.
+• Auto-fix (CONSENT_WITHOUT_WITHDRAWAL): backend now appends withdrawal language when rights text
+exists but lacks keywords; fills default opening statement and complaint text; frontend always reloads form and
+shows clear toast feedback.
+• Edit notice flow: fixed step resetting to "Add Purposes" after every save; boot load runs once per notice; edit
+opens on Step 1 with data loaded; sticky footer keeps Back/Next/Save visible; breadcrumb shows "Edit Consent
+Notice".
+• Notice preview: device size toggles (desktop / tablet / mobile) now resize the preview frame; email channel tab
+shows alternate layout.
+• Export Evidence Pack: dropdown added to Consent Notices Manager and Purpose Registry; section export
+(page-specific PDF) and full export (notices + purposes combined PDF).
+
+5. Key Files Added or Modified
+• Backend: app/models/consent.py, app/services/consent_service.py, app/routers/consent.py,
+app/schemas/consent.py, alembic migration, test_consent_api.py.
+• Frontend: useConsentManagement.ts, PurposeRegistryNew.tsx, ConsentNoticesManager.tsx,
+NewConsentNotice.tsx, NoticePreview.tsx, NoticeForm.tsx.
+• New: ConsentEvidenceExportButtons.tsx, consentEvidencePackPdf.ts, noticeLanguages.ts,
+ConsentManagementGate.tsx.
+
+6. Testing Status
+• Backend: python -m app.scripts.test_consent_api — all checks passed (including
+CONSENT_WITHOUT_WITHDRAWAL auto-fix cases).
+• Frontend: npm run typecheck — passed.
+• Manual verification recommended: notice wizard end-to-end, edit live notice !’ draft, auto-fix, preview device
+sizes, PDF evidence export downloads.
+
+7. Out of Scope / Not Yet Wired
+• Banner Builder, cookie trackers, Proof Vault events — still mock UI.
+• Multi-Language Editor — navigation-only from notice wizard; translations not persisted to notice versions yet.
+
+End of report. For technical details see backend/docs/CONSENT_MANAGEMENT_DESIGN.md and the consent API
+test script.
+
+DPDPA Shield — Implementation Report — 2 June 2026 — Page 2
+
+

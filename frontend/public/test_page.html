@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACME Corporation - Demo Site</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 40px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #1a1a1a; }
+        .tracker-status { padding: 16px; margin: 20px 0; border-radius: 8px; border: 1px solid #ddd; background: #f9f9f9; }
+        .loaded { color: #008000; font-weight: bold; }
+        .blocked { color: #cc0000; font-weight: bold; }
+    </style>
+    
+    <!-- ZeroShield CMP SDK injected manually for testing -->
+    <script 
+        src="http://localhost:8000/api/public/v1/integrations/cmp.js" 
+        data-property-id="REPLACE_WITH_PROPERTY_ID" 
+        data-api-key="REPLACE_WITH_API_KEY"
+        data-api-url="http://localhost:8000/api/public/v1"
+        defer>
+    </script>
+    
+    <!-- Google Analytics Tracker (Marketing) -->
+    <!-- It uses type="text/plain" and data-zsk-category to utilize our CMP auto-unblocker -->
+    <script type="text/plain" data-zsk-category="marketing">
+        console.log("MARKETING SCRIPT EXECUTED!");
+        document.getElementById("marketing-status").className = "loaded";
+        document.getElementById("marketing-status").innerText = "EXECUTED (Consent Granted)";
+    </script>
+
+    <!-- Analytics Tracker -->
+    <script type="text/plain" data-zsk-category="analytics">
+        console.log("ANALYTICS SCRIPT EXECUTED!");
+        document.getElementById("analytics-status").className = "loaded";
+        document.getElementById("analytics-status").innerText = "EXECUTED (Consent Granted)";
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>ACME Corporation</h1>
+        <p>Welcome to our demo website. The ZeroShield CMP is installed on this page.</p>
+        
+        <h2>Tracker Status</h2>
+        <div class="tracker-status">
+            <p>Marketing Tracker (e.g., Facebook Pixel): <span id="marketing-status" class="blocked">BLOCKED (Pending Consent)</span></p>
+            <p>Analytics Tracker (e.g., Google Analytics): <span id="analytics-status" class="blocked">BLOCKED (Pending Consent)</span></p>
+        </div>
+        
+        <p><i>Note: Refresh the page after accepting to see the consent state persist.</i></p>
+    </div>
+</body>
+</html>

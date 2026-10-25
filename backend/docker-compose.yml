@@ -1,0 +1,54 @@
+# ============================================================
+# DPDPA Shield — FULL stack with Docker  (FOR LATER)
+# ------------------------------------------------------------
+# Use this ONLY when you are ready to dockerize everything.
+# It runs Postgres + the FastAPI backend together.
+#
+#     docker compose up --build
+#
+# While developing locally you do NOT need this file. See README
+# "Option B" if you only want Postgres in Docker (db service below).
+# ============================================================
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: dpdpa_postgres
+    environment:
+      POSTGRES_USER: dpdpa
+      POSTGRES_PASSWORD: dpdpa
+      POSTGRES_DB: dpdpa_shield
+    ports:
+      - "5432:5432"
+    volumes:
+      - dpdpa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dpdpa -d dpdpa_shield"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: dpdpa_backend
+    # Inside Docker, the DB host is the service name "db", not localhost.
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://dpdpa:dpdpa@db:5432/dpdpa_shield
+      AI_PROVIDER: vertex
+      GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-adc.json
+      SHIELD_AI_DOCS_DIR: /app/platform_docs
+    volumes:
+      - ../docs:/app/platform_docs:ro
+      - type: bind
+        source: ${GOOGLE_ADC_HOST:-${APPDATA}/gcloud/application_default_credentials.json}
+        target: /tmp/gcp-adc.json
+        read_only: true
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  dpdpa_pgdata:
