@@ -5,7 +5,7 @@ Run:
     .venv\\Scripts\\python.exe -m app.scripts.seed_dsar_tracker_test
 
 Optional:
-    .venv\\Scripts\\python.exe -m app.scripts.seed_dsar_tracker_test --org-slug zeroshield-sandbox-org
+    .venv\\Scripts\\python.exe -m app.scripts.seed_dsar_tracker_test --org-slug vajra-sandbox-org
 """
 
 from __future__ import annotations

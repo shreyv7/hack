@@ -49,7 +49,7 @@ const PROPERTIES: ScannerProperty[] = [
 ];
 
 const SDK_CHECKS: SdkCheck[] = [
-  { id: 1, name: 'SDK script loaded', status: 'pass', detail: 'ConsentIQ SDK v3.2.1 detected' },
+  { id: 1, name: 'SDK script loaded', status: 'pass', detail: 'Vajra SDK v3.2.1 detected' },
   { id: 2, name: 'SDK loaded before tracking scripts', status: 'pass', detail: 'Loads 200ms before analytics' },
   { id: 3, name: 'SDK version current', status: 'pass', detail: 'v3.2.1 (latest)' },
   { id: 4, name: 'Pre-consent blocker active', status: 'pass', detail: 'Blocks 12 tracker categories' },
@@ -294,9 +294,9 @@ export function CookieScanner(): ReactElement {
               </div>
               <div className="relative">
                 <pre className="p-4 rounded font-mono text-sm overflow-x-auto bg-[var(--surface-raised)] text-[var(--text-primary)]">
-                  {`<script src="https://cdn.consentiq.com/sdk/v3.2.1/consentiq.js"></script>
+                  {`<script src="https://cdn.vajra.com/sdk/v3.2.1/vajra.js"></script>
 <script>
-  ConsentIQ.init({
+  Vajra.init({
     apiKey: 'your_api_key_here',
     domain: 'acmeretail.in'
   });
@@ -452,7 +452,7 @@ export function CookieScanner(): ReactElement {
                 type="button"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-lg text-lg font-medium text-white transition-opacity hover:opacity-90 bg-[var(--brand-primary)]"
               >
-                Fix everything with ConsentIQ — Free 14-day trial
+                Fix everything with Vajra — Free 14-day trial
                 <ExternalLink className="w-5 h-5" strokeWidth={1.5} />
               </button>
             </div>

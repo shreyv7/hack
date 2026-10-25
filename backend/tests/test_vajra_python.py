@@ -1,4 +1,4 @@
-"""Tests for zeroshield-python enforcement helpers."""
+"""Tests for vajra-python enforcement helpers."""
 
 import os
 import sys
@@ -6,19 +6,19 @@ import unittest
 from pathlib import Path
 from uuid import uuid4
 
-PKG_ROOT = Path(__file__).resolve().parents[2] / "packages" / "zeroshield-python"
+PKG_ROOT = Path(__file__).resolve().parents[2] / "packages" / "vajra-python"
 sys.path.insert(0, str(PKG_ROOT))
 
-from zeroshield.config import ZeroShieldConfig  # noqa: E402
-from zeroshield.enforcement import evaluate_consent  # noqa: E402
-from zeroshield.token import mint_decision_token  # noqa: E402
+from vajra.config import VajraConfig  # noqa: E402
+from vajra.enforcement import evaluate_consent  # noqa: E402
+from vajra.token import mint_decision_token  # noqa: E402
 
 
-class ZeroShieldMiddlewareTests(unittest.TestCase):
+class VajraMiddlewareTests(unittest.TestCase):
     def setUp(self) -> None:
         self.property_id = uuid4()
         self.secret = "phase4-test-secret"
-        self.config = ZeroShieldConfig(
+        self.config = VajraConfig(
             property_id=str(self.property_id),
             decision_secret=self.secret,
             api_url="http://localhost:65535/public/v1",
@@ -26,7 +26,7 @@ class ZeroShieldMiddlewareTests(unittest.TestCase):
         )
 
     def test_token_path_allows_without_network(self) -> None:
-        from zeroshield.token import mint_decision_token as mint
+        from vajra.token import mint_decision_token as mint
 
         token, _ = mint(
             property_id=self.property_id,

@@ -68,17 +68,21 @@ cd backend
 python -m app.scripts.seed_rbac_users
 ```
 
-Demo password: `RoleDemo@12345` (one user per role at `*@zeroshield.in`).
+Demo password: `Vajra@2026Demo!` (one user per role at `*@vajra.dev`).
 
 | Role | Email |
 |------|-------|
-| CISO | `ciso@zeroshield.in` |
-| Legal Head | `legal.head@zeroshield.in` |
-| Legal Counsel | `legal.counsel@zeroshield.in` |
-| Compliance Officer | `compliance@zeroshield.in` |
-| Grievance Officer | `grievance@zeroshield.in` |
-| Security Analyst | `security@zeroshield.in` |
-| Data Steward | `steward@zeroshield.in` |
-| Auditor | `auditor@zeroshield.in` |
-| **DPO** | `dpo@zeroshield.in` |
-| **IT Admin** | `itadmin@zeroshield.in` |
+| Superadmin | `superadmin@vajra.dev` |
+| Admin | `admin@vajra.dev` |
+| User | `user@vajra.dev` |
+| CISO | `ciso@vajra.dev` |
+| Legal Head | `legal.head@vajra.dev` |
+| Legal Counsel | `legal.counsel@vajra.dev` |
+| Compliance Officer | `compliance@vajra.dev` |
+| Grievance Officer | `grievance@vajra.dev` |
+| Security Analyst | `security@vajra.dev` |
+| Data Steward | `steward@vajra.dev` |
+| Auditor | `auditor@vajra.dev` |
+| **DPO** | `dpo@vajra.dev` |
+| **IT Admin** | `itadmin@vajra.dev` |
+| Branch Operator | `branch.operator@vajra.dev` |

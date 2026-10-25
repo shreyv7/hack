@@ -190,7 +190,7 @@ export function HowToUse(): ReactElement {
                 Get DPDPA-Compliant in {stepStates.length} Steps
               </h1>
               <p className="text-base text-[#b9b6cf] leading-relaxed">
-                Welcome to DPDPA Shield. Follow this structured roadmap to configure your workspace, register your digital properties, set up legal consent notices, set up translations, and deploy compliant consent banners.
+                Welcome to Vajra. Follow this structured roadmap to configure your workspace, register your digital properties, set up legal consent notices, set up translations, and deploy compliant consent banners.
               </p>
               <div className="flex gap-4">
                 <Button
@@ -587,7 +587,7 @@ export function HowToUse(): ReactElement {
               <div className="space-y-2">
                 <h4 className="font-bold text-sm text-[var(--text-primary)]">Support & Guidance</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  Have questions about DPDPA guidelines? Talk to our compliance experts or use the Shield AI Copilot.
+                  Have questions about DPDPA guidelines? Talk to our compliance experts or use the Vajra AI Copilot.
                 </p>
                 <span onClick={() => navigate('/ai/copilot')} className="text-xs font-bold text-[var(--brand-primary)] hover:underline inline-flex items-center gap-1 cursor-pointer">
                   Ask Copilot <ArrowRight className="w-3 h-3" />

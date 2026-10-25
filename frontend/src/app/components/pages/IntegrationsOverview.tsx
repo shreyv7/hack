@@ -78,7 +78,7 @@ export function IntegrationsOverview({ onNavigate }: { onNavigate?: (page: Page)
       description: 'Native iOS/Android Swift & Kotlin SDKs plus React Native, Flutter, Unity, Cordova wrappers.',
       chip: 'Ch.2 §6',
       status: { type: 'warning', text: '✓ Android & iOS connected, React Native pending' },
-      snippetPreview: `import ZeroShieldSDK\nZeroShieldSDK.configure(propertyId: "PROP_ID")`,
+      snippetPreview: `import VajraSDK\nVajraSDK.configure(propertyId: "PROP_ID")`,
       navTarget: 'integration-mobile',
     },
     {
@@ -118,7 +118,7 @@ export function IntegrationsOverview({ onNavigate }: { onNavigate?: (page: Page)
       description: 'Self-hosted Docker container agent & Python CLI scanner tool for internal DB data discovery.',
       chip: 'Ch.2 §8(5)',
       status: { type: 'success', text: '✓ Docker Container Agent connected' },
-      snippetPreview: `docker run -d -e ZEROSHIELD_API_KEY="KEY" zeroshield/pii-scanner-agent:latest`,
+      snippetPreview: `docker run -d -e VAJRA_API_KEY="KEY" vajra/pii-scanner-agent:latest`,
       navTarget: 'integration-pii-agent',
     },
     {
@@ -128,7 +128,7 @@ export function IntegrationsOverview({ onNavigate }: { onNavigate?: (page: Page)
       description: 'Email opt-in tracking pixel, SMS / WhatsApp webhook listener, and branch POS terminal SDK.',
       chip: 'Ch.2 §6',
       status: { type: 'success', text: '✓ Email pixel & SMS webhook listening' },
-      snippetPreview: `<img src="https://api.zeroshield.io/v1/consent/pixel.png?cid=CAMP_01" width="1" height="1" />`,
+      snippetPreview: `<img src="https://api.vajra.io/v1/consent/pixel.png?cid=CAMP_01" width="1" height="1" />`,
       navTarget: 'integration-campaign-tracking',
     },
     {
@@ -138,7 +138,7 @@ export function IntegrationsOverview({ onNavigate }: { onNavigate?: (page: Page)
       description: 'API key management, real-time event webhooks (consent.given, dsar.created), and server SDKs.',
       chip: 'Ch.2 §6(1) +1',
       status: { type: 'success', text: '✓ Active (4,287 API calls / 24h)' },
-      snippetPreview: `POST https://api.zeroshield.io/v1/consent/record\nAuthorization: Bearer zsk_live_...`,
+      snippetPreview: `POST https://api.vajra.io/v1/consent/record\nAuthorization: Bearer zsk_live_...`,
       navTarget: 'integration-api',
     },
   ];

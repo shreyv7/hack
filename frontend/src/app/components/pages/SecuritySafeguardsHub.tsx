@@ -11,7 +11,7 @@ import {
   downloadSecurityEvidencePackPdf,
 } from '@/lib/compliance/securitySafeguardsPdf';
 import { getSecurityChecklistSource } from '@/lib/compliance/securityChecklistSources';
-import { fetchShieldAiStatus, shieldAiChat, type ShieldAiStatus } from '@/lib/api/shieldAi';
+import { fetchVajraAiStatus, vajraAiChat, type VajraAiStatus } from '@/lib/api/vajraAi';
 import { ApiError } from '@/lib/api/client';
 import type { SecurityControl, SecurityPostureMetric, SecuritySafeguardsSummary } from '@/types/compliance';
 import { Popover, PopoverContent, PopoverTrigger } from '@/app/components/ui/popover';
@@ -197,12 +197,12 @@ export function SecuritySafeguardsHub(): ReactElement {
     setSelectedOrgId,
   } = useSecuritySafeguards();
   const [expandedControl, setExpandedControl] = useState<string | null>(null);
-  const [shieldAiControlId, setShieldAiControlId] = useState<string | null>(null);
-  const [shieldAiQuery, setShieldAiQuery] = useState('');
-  const [shieldAiReply, setShieldAiReply] = useState<string | null>(null);
-  const [shieldAiLoading, setShieldAiLoading] = useState(false);
-  const [shieldAiError, setShieldAiError] = useState<string | null>(null);
-  const [shieldAiStatus, setShieldAiStatus] = useState<ShieldAiStatus | null>(null);
+  const [vajraAiControlId, setVajraAiControlId] = useState<string | null>(null);
+  const [vajraAiQuery, setVajraAiQuery] = useState('');
+  const [vajraAiReply, setVajraAiReply] = useState<string | null>(null);
+  const [vajraAiLoading, setVajraAiLoading] = useState(false);
+  const [vajraAiError, setVajraAiError] = useState<string | null>(null);
+  const [vajraAiStatus, setVajraAiStatus] = useState<VajraAiStatus | null>(null);
 
   const data = safeguards.data;
   const controls = data?.controls ?? [];
@@ -212,71 +212,71 @@ export function SecuritySafeguardsHub(): ReactElement {
 
   useEffect(() => {
     if (!hasOrg) return;
-    void fetchShieldAiStatus()
-      .then(setShieldAiStatus)
-      .catch(() => setShieldAiStatus({ configured: false, model_id: null, region: null }));
+    void fetchVajraAiStatus()
+      .then(setVajraAiStatus)
+      .catch(() => setVajraAiStatus({ configured: false, model_id: null, region: null }));
   }, [hasOrg]);
 
-  const openShieldAi = useCallback(
+  const openVajraAi = useCallback(
     (query: string) => {
       navigate('/ai/copilot', { state: { query } });
     },
     [navigate],
   );
 
-  const askShieldAi = useCallback(
+  const askVajraAi = useCallback(
     async (query: string, control: SecurityControl): Promise<void> => {
       const trimmed = query.trim();
       if (!trimmed) return;
 
-      if (!shieldAiStatus?.configured) {
-        notify('Shield AI is not configured. Please contact your administrator.');
-        openShieldAi(trimmed);
+      if (!vajraAiStatus?.configured) {
+        notify('Vajra AI is not configured. Please contact your administrator.');
+        openVajraAi(trimmed);
         return;
       }
 
-      setShieldAiLoading(true);
-      setShieldAiError(null);
-      setShieldAiReply(null);
-      setShieldAiQuery(trimmed);
+      setVajraAiLoading(true);
+      setVajraAiError(null);
+      setVajraAiReply(null);
+      setVajraAiQuery(trimmed);
 
       try {
         const context = buildControlShieldContext(control, orgName, summary);
-        const { reply } = await shieldAiChat([{ role: 'user', content: trimmed }], context);
-        setShieldAiReply(reply);
+        const { reply } = await vajraAiChat([{ role: 'user', content: trimmed }], context);
+        setVajraAiReply(reply);
       } catch (err) {
-        setShieldAiError(
-          err instanceof ApiError ? err.message : 'Could not reach Shield AI. Please try again.',
+        setVajraAiError(
+          err instanceof ApiError ? err.message : 'Could not reach Vajra AI. Please try again.',
         );
       } finally {
-        setShieldAiLoading(false);
+        setVajraAiLoading(false);
       }
     },
-    [shieldAiStatus?.configured, orgName, summary, openShieldAi],
+    [vajraAiStatus?.configured, orgName, summary, openVajraAi],
   );
 
   const toggleExpand = useCallback((controlId: string) => {
     if (expandedControl === controlId) {
       setExpandedControl(null);
-      if (shieldAiControlId === controlId) {
-        setShieldAiControlId(null);
+      if (vajraAiControlId === controlId) {
+        setVajraAiControlId(null);
       }
       return;
     }
     setExpandedControl(controlId);
-  }, [expandedControl, shieldAiControlId]);
+  }, [expandedControl, vajraAiControlId]);
 
-  const openControlShieldAi = useCallback((control: SecurityControl) => {
+  const openControlVajraAi = useCallback((control: SecurityControl) => {
     setExpandedControl(control.id);
-    if (shieldAiControlId === control.id) {
-      setShieldAiControlId(null);
+    if (vajraAiControlId === control.id) {
+      setVajraAiControlId(null);
       return;
     }
-    setShieldAiControlId(control.id);
-    setShieldAiQuery('');
-    setShieldAiReply(null);
-    setShieldAiError(null);
-  }, [shieldAiControlId]);
+    setVajraAiControlId(control.id);
+    setVajraAiQuery('');
+    setVajraAiReply(null);
+    setVajraAiError(null);
+  }, [vajraAiControlId]);
 
   return (
     <ConsentManagementGate
@@ -410,7 +410,7 @@ export function SecuritySafeguardsHub(): ReactElement {
       <div className="space-y-4 mb-6">
         {controls.map((control) => {
           const isExpanded = expandedControl === control.id;
-          const isShieldAiOpen = shieldAiControlId === control.id;
+          const isVajraAiOpen = vajraAiControlId === control.id;
 
           return (
           <div
@@ -457,15 +457,15 @@ export function SecuritySafeguardsHub(): ReactElement {
                 <div className="inline-flex h-9 items-stretch rounded-md border border-[var(--border-strong)] overflow-hidden bg-[var(--surface-card)]">
                   <button
                     type="button"
-                    onClick={() => openControlShieldAi(control)}
+                    onClick={() => openControlVajraAi(control)}
                     className={`inline-flex items-center gap-1.5 px-3 text-sm whitespace-nowrap transition-colors ${
-                      isShieldAiOpen
+                      isVajraAiOpen
                         ? 'bg-violet-500/10 text-violet-700'
                         : 'text-[var(--text-primary)] hover:bg-[var(--surface-raised)]'
                     }`}
                   >
                     <Sparkles className="size-3.5 text-violet-500" />
-                    Ask Shield AI
+                    Ask Vajra AI
                   </button>
                   <button
                     type="button"
@@ -488,7 +488,7 @@ export function SecuritySafeguardsHub(): ReactElement {
 
             {isExpanded ? (
               <div className="mt-4 space-y-4">
-                {isShieldAiOpen ? (
+                {isVajraAiOpen ? (
               <div
                 className="rounded-lg border border-violet-500/20 bg-violet-500/5 p-4"
               >
@@ -497,50 +497,50 @@ export function SecuritySafeguardsHub(): ReactElement {
                     <Sparkles className="size-5 flex-shrink-0 text-violet-500" />
                     <div>
                       <h4 className="text-sm font-semibold text-[var(--text-primary)]">
-                        Shield AI — {control.name}
+                        Vajra AI — {control.name}
                       </h4>
                       <p className="text-xs text-[var(--text-secondary)] mt-1">
-                        {shieldAiStatus?.configured
+                        {vajraAiStatus?.configured
                           ? 'Get tailored guidance for this control'
-                          : 'Shield AI is not configured — contact your administrator'}
+                          : 'Vajra AI is not configured — contact your administrator'}
                       </p>
                     </div>
                   </div>
                   <button
                     type="button"
                     onClick={() =>
-                      openShieldAi(
-                        shieldAiQuery ||
+                      openVajraAi(
+                        vajraAiQuery ||
                           `How should ${orgName} document and improve "${control.name}" under DPDPA Section 8(5)?`,
                       )
                     }
                     className="px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 hover:opacity-90 bg-violet-500/10 text-violet-600"
                   >
-                    Open Shield AI →
+                    Open Vajra AI →
                   </button>
                 </div>
 
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    void askShieldAi(shieldAiQuery, control);
+                    void askVajraAi(vajraAiQuery, control);
                   }}
                   className="flex gap-2 mb-3"
                 >
                   <input
                     type="text"
-                    value={shieldAiControlId === control.id ? shieldAiQuery : ''}
-                    onChange={(e) => setShieldAiQuery(e.target.value)}
+                    value={vajraAiControlId === control.id ? vajraAiQuery : ''}
+                    onChange={(e) => setVajraAiQuery(e.target.value)}
                     placeholder={`e.g., "What evidence do we need for ${control.name}?"`}
-                    disabled={shieldAiLoading}
+                    disabled={vajraAiLoading}
                     className="flex-1 min-w-0 px-3 py-2 rounded-lg border text-sm border-violet-500/30 text-[var(--text-primary)] bg-[var(--surface-raised)] disabled:opacity-60"
                   />
                   <button
                     type="submit"
-                    disabled={shieldAiLoading || !shieldAiQuery.trim()}
+                    disabled={vajraAiLoading || !vajraAiQuery.trim()}
                     className="px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap shrink-0 hover:opacity-90 bg-violet-600 text-white disabled:opacity-50"
                   >
-                    {shieldAiLoading ? (
+                    {vajraAiLoading ? (
                       <span className="inline-flex items-center gap-2">
                         <Loader2 className="size-4 animate-spin" />
                         Asking…
@@ -551,12 +551,12 @@ export function SecuritySafeguardsHub(): ReactElement {
                   </button>
                 </form>
 
-                {shieldAiError ? <p className="text-sm text-amber-700 mb-3">{shieldAiError}</p> : null}
+                {vajraAiError ? <p className="text-sm text-amber-700 mb-3">{vajraAiError}</p> : null}
 
-                {shieldAiReply ? (
+                {vajraAiReply ? (
                   <div className="mb-3 p-4 rounded-lg bg-[var(--surface-raised)] border border-violet-500/20">
-                    <p className="text-xs font-medium text-violet-600 mb-2">Shield AI</p>
-                    <MarkdownMessage>{shieldAiReply}</MarkdownMessage>
+                    <p className="text-xs font-medium text-violet-600 mb-2">Vajra AI</p>
+                    <MarkdownMessage>{vajraAiReply}</MarkdownMessage>
                   </div>
                 ) : null}
 
@@ -565,8 +565,8 @@ export function SecuritySafeguardsHub(): ReactElement {
                     <button
                       key={prompt.label}
                       type="button"
-                      disabled={shieldAiLoading}
-                      onClick={() => void askShieldAi(prompt.query, control)}
+                      disabled={vajraAiLoading}
+                      onClick={() => void askVajraAi(prompt.query, control)}
                       className="px-3 py-1.5 rounded-full text-xs font-medium border border-violet-500/30 text-violet-700 hover:bg-violet-500/10 disabled:opacity-50"
                     >
                       {prompt.label}
@@ -576,7 +576,7 @@ export function SecuritySafeguardsHub(): ReactElement {
               </div>
                 ) : null}
 
-                <div className={isShieldAiOpen ? 'pt-4 border-t border-[var(--border-default)]' : undefined}>
+                <div className={isVajraAiOpen ? 'pt-4 border-t border-[var(--border-default)]' : undefined}>
                   <h4 className="text-sm font-medium text-[var(--text-primary)] mb-3">
                     Implementation checklist
                   </h4>

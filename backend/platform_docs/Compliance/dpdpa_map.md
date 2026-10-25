@@ -1,6 +1,6 @@
-# DPDPA Shield — DPDPA Map Technical Specification
+# Vajra — DPDPA Map Technical Specification
 
-This document serves as the **single source of truth** for the **DPDPA Map** (Compliance Coverage Map) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **DPDPA Map** (Compliance Coverage Map) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -105,7 +105,7 @@ The DPDPA Map page (Route: `/compliance/map`) follows a list-accordion layout:
     *   *Sub-Rows (Expanded Sections)*: Section reference code, section title, mapped features count, and Status badge (Implemented, Partial, Advisory, NA).
 3.  **Section Detail Panel (Slide-out Drawer or Modal)**:
     *   Renders the full statute text.
-    *   *Columns*: Mapped ZeroShield feature name, current implementation status (e.g. `implemented` if evidence count > 0), last verified date, evidence count, and "Configure" link.
+    *   *Columns*: Mapped Vajra feature name, current implementation status (e.g. `implemented` if evidence count > 0), last verified date, evidence count, and "Configure" link.
     *   *Footer*: Displays statutory maximum penalty exposure.
 
 ---
@@ -123,7 +123,7 @@ The DPDPA Map page (Route: `/compliance/map`) follows a list-accordion layout:
 | `penalty_mitigated_crores`| Integer | Avoided penalty estimates | `125` |
 | `penalty_worst_crores` | Integer | Max statutory penalty exposure | `250` |
 | `last_reviewed_at` | DateTime | Timestamp of last admin review | `"2026-06-25T13:00:00Z"` |
-| `last_reviewed_by` | String | Email or name of reviewer | `"compliance@zeroshield.in"` |
+| `last_reviewed_by` | String | Email or name of reviewer | `"compliance@vajra.dev"` |
 
 ---
 

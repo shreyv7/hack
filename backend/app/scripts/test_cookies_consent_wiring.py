@@ -20,7 +20,7 @@ def test_wiring():
     db = SessionLocal()
     try:
         # 1. Fetch sandbox org and test admin
-        org = db.query(Organization).filter(Organization.slug == "zeroshield-sandbox-org").first()
+        org = db.query(Organization).filter(Organization.slug == "vajra-sandbox-org").first()
         assert org is not None, "Sandbox org not found"
         
         admin = db.query(User).filter(User.role == UserRole.admin).first()

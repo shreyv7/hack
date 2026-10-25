@@ -41,7 +41,7 @@ def seed_banners_and_containers(db: Session, org: Organization):
         if not prop:
             prop = IntegrationProperty(
                 organization_id=org.id,
-                domain="www.zeroshield.ai",
+                domain="www.vajra.ai",
                 display_name="Main Corporate Site",
                 property_type=PropertyType.website,
                 environment=PropertyEnvironment.production,
@@ -80,9 +80,9 @@ def seed_banners_and_containers(db: Session, org: Organization):
                 cta_accept="Accept All",
                 cta_reject="Reject All",
                 cta_customize="Customize",
-                privacy_policy_url="https://www.zeroshield.ai/privacy",
-                cookie_policy_url="https://www.zeroshield.ai/cookies",
-                dpo_email="dpo@zeroshield.ai",
+                privacy_policy_url="https://www.vajra.ai/privacy",
+                cookie_policy_url="https://www.vajra.ai/cookies",
+                dpo_email="dpo@vajra.ai",
                 show_language_switcher=True,
                 properties=[str(prop.id)],
             )

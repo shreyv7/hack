@@ -1,6 +1,6 @@
-# DPDPA Shield — Notice Delivery Channels Technical Specification
+# Vajra — Notice Delivery Channels Technical Specification
 
-This document serves as the **single source of truth** for the **Notice Delivery Channels** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Notice Delivery Channels** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 

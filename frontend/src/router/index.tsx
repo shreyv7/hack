@@ -275,6 +275,15 @@ const PublicGovernanceDashboardPage = lazy(() =>
     default: m.PublicGovernanceDashboardPage,
   })),
 );
+const PatientConsentPortal = lazy(() =>
+  import('@/app/healthcare/PatientConsentPortal').then((m) => ({ default: m.PatientConsentPortal })),
+);
+const ClinicianAccessView = lazy(() =>
+  import('@/app/healthcare/ClinicianAccessView').then((m) => ({ default: m.ClinicianAccessView })),
+);
+const HealthcareAuditDashboard = lazy(() =>
+  import('@/app/healthcare/HealthcareAuditDashboard').then((m) => ({ default: m.HealthcareAuditDashboard })),
+);
 
 export const router = createBrowserRouter([
   {
@@ -331,6 +340,9 @@ export const router = createBrowserRouter([
               { path: '/dashboard', element: <Dashboard /> },
               { path: '/compliance/score', element: <ComplianceScoreDeepDive /> },
               { path: '/overview/automation', element: <AutomationCoverage /> },
+              { path: '/healthcare/patient', element: withSuspense(<PatientConsentPortal />) },
+              { path: '/healthcare/clinician', element: withSuspense(<ClinicianAccessView />) },
+              { path: '/healthcare/audit', element: withSuspense(<HealthcareAuditDashboard />) },
               { path: '/consent/banner', element: <BannerBuilderDashboardRoute /> },
               { path: '/consent/notices', element: <ConsentNoticesManagerRoute /> },
               { path: '/consent/notices/approvals', element: <NoticeApprovalsRoute /> },

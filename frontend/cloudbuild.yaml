@@ -5,7 +5,7 @@ steps:
       - '--build-arg'
       - 'VITE_API_BASE_URL=${_API_URL}'
       - '-t'
-      - 'asia-south1-docker.pkg.dev/dpdpashield-500607/dpdpa-shield-repo/frontend:latest'
+      - 'asia-south1-docker.pkg.dev/dpdpashield-500607/vajra-repo/frontend:latest'
       - '.'
 images:
-  - 'asia-south1-docker.pkg.dev/dpdpashield-500607/dpdpa-shield-repo/frontend:latest'
+  - 'asia-south1-docker.pkg.dev/dpdpashield-500607/vajra-repo/frontend:latest'

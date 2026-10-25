@@ -381,7 +381,7 @@ export const tagManagerApi = {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = 'zeroshield-gtm-template.json';
+    anchor.download = 'vajra-gtm-template.json';
     anchor.click();
     URL.revokeObjectURL(url);
   },

@@ -37,7 +37,7 @@ def upgrade() -> None:
         sa.Column("property_id", sa.UUID(), nullable=False),
         sa.Column("consent_mode_v2", sa.Boolean(), nullable=False, server_default="true"),
         sa.Column("auto_blocker_strict", sa.Boolean(), nullable=False, server_default="true"),
-        sa.Column("datalayer_event_prefix", sa.String(length=50), nullable=False, server_default="zeroshield"),
+        sa.Column("datalayer_event_prefix", sa.String(length=50), nullable=False, server_default="vajra"),
         sa.Column("blocked_purposes", postgresql.JSONB(astext_type=sa.Text()), nullable=False, server_default="[]"),
         sa.Column("updated_by", sa.UUID(), nullable=True),
         sa.Column("id", sa.UUID(), nullable=False),

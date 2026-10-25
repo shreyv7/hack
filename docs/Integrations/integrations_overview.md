@@ -1,6 +1,6 @@
-# DPDPA Shield — Integrations Overview Technical Specification
+# Vajra — Integrations Overview Technical Specification
 
-This document serves as the **single source of truth** for the **Integrations Overview** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Integrations Overview** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -102,7 +102,7 @@ The Integrations Overview page consists of three functional regions:
 
 ### 4.1 Header Health Summary
 *   **System Status Pill**: Displays overall status (`System Healthy`, `Degraded Channels Alert`, or `Disconnected Alert`).
-*   **Active Properties Metric**: Number of websites and apps currently connected to ZeroShield (e.g. `24 active`).
+*   **Active Properties Metric**: Number of websites and apps currently connected to Vajra (e.g. `24 active`).
 *   **Global Connection Success Rate**: Percentage of webhook and API requests completing successfully over the past 24 hours (e.g. `99.94%`).
 *   **Diagnostics Log Shortcut**: Link to view the central raw health event history.
 
@@ -208,7 +208,7 @@ async def execute_property_diagnostics(db, property_id: str) -> dict:
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
             # Check script loader URL
-            response = await client.get(f"https://cdn.zeroshield.in/sdk/{property.client_token}.js")
+            response = await client.get(f"https://cdn.vajra.in/sdk/{property.client_token}.js")
             if response.status_code == 200:
                 status = "active"
             else:

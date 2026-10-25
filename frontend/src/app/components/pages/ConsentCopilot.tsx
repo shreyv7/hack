@@ -26,14 +26,14 @@ import { useComplianceOrg } from '@/hooks/useComplianceOrg';
 import {
   createConversation,
   deleteConversation,
-  fetchShieldAiContext,
-  fetchShieldAiStatus,
+  fetchVajraAiContext,
+  fetchVajraAiStatus,
   getConversation,
   listConversations,
   streamConversationMessage,
   type ConversationSummary,
-  type ShieldAiContextItem,
-} from '@/lib/api/shieldAi';
+  type VajraAiContextItem,
+} from '@/lib/api/vajraAi';
 
 interface ChatMsg {
   role: 'user' | 'assistant';
@@ -87,8 +87,8 @@ function sanitizeFilename(name: string): string {
 }
 
 /**
- * Shield AI Consent Copilot — persistent conversations, real workspace context,
- * and a chat workspace powered by Shield AI.
+ * Vajra AI Consent Copilot — persistent conversations, real workspace context,
+ * and a chat workspace powered by Vajra AI.
  */
 export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactElement {
   const location = useLocation();
@@ -104,7 +104,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [referenced, setReferenced] = useState<string[]>([]);
 
-  const [contextItems, setContextItems] = useState<ShieldAiContextItem[]>([]);
+  const [contextItems, setContextItems] = useState<VajraAiContextItem[]>([]);
   const [isSending, setIsSending] = useState(false);
   const [isLoadingDetail, setIsLoadingDetail] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -167,7 +167,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
 
   useEffect(() => {
     let cancelled = false;
-    fetchShieldAiStatus()
+    fetchVajraAiStatus()
       .then((s) => !cancelled && setAiConfigured(s.configured))
       .catch(() => !cancelled && setAiConfigured(false));
     return () => {
@@ -186,7 +186,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
 
   const refreshContext = useCallback(() => {
     if (!hasOrg) return;
-    fetchShieldAiContext(orgIdParam)
+    fetchVajraAiContext(orgIdParam)
       .then((r) => setContextItems(r.items))
       .catch(() => setContextItems([]));
   }, [hasOrg, orgIdParam]);
@@ -314,7 +314,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
         setError(
           err instanceof Error
             ? err.message
-            : 'Something went wrong reaching Shield AI. Please try again.',
+            : 'Something went wrong reaching Vajra AI. Please try again.',
         );
         // Remove optimistic messages if failed before stream starts, or keep whatever we have
         setMessages((prev) => {
@@ -370,9 +370,9 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
 
   const handleDownload = (): void => {
     if (messages.length === 0) return;
-    const title = activeConversation?.title ?? 'Shield AI conversation';
+    const title = activeConversation?.title ?? 'Vajra AI conversation';
     const body = messages
-      .map((m) => `## ${m.role === 'user' ? 'You' : 'Shield AI'}\n\n${m.content}\n`)
+      .map((m) => `## ${m.role === 'user' ? 'You' : 'Vajra AI'}\n\n${m.content}\n`)
       .join('\n');
     const md = `# ${title}\n\n_Exported ${new Date().toLocaleString()}_\n\n${body}`;
     const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
@@ -412,7 +412,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
   if (isSuperadmin && !hasOrg) {
     return (
       <div className="size-full flex items-center justify-center bg-[var(--surface-app)] text-[var(--text-secondary)]">
-        <p className="text-sm">Select an organization to use Shield AI.</p>
+        <p className="text-sm">Select an organization to use Vajra AI.</p>
       </div>
     );
   }
@@ -560,19 +560,19 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                     <Sparkles className="w-7 h-7 text-white" strokeWidth={2} />
                   </div>
                   <h2 className="text-xl font-semibold text-[var(--text-primary)] mb-2">
-                    How can Shield AI help today?
+                    How can Vajra AI help today?
                   </h2>
                   <p className="text-sm text-[var(--text-secondary)] max-w-md">
                     Ask about your compliance posture, draft DPDPA notices, or analyze risks.
                     {useCompanyData
-                      ? ' Your workspace context is shared with Shield AI.'
+                      ? ' Your workspace context is shared with Vajra AI.'
                       : ' Enable “Use my company’s data” for personalized answers.'}
                   </p>
                   {aiConfigured === false && (
                     <div className="mt-6 flex items-start gap-2 max-w-md text-left px-4 py-3 rounded-xl bg-[var(--status-warning-bg)] text-[var(--status-warning)]">
                       <AlertTriangle className="w-4 h-4 mt-0.5 flex-shrink-0" strokeWidth={2} />
                       <span className="text-xs">
-                        Shield AI isn&apos;t configured yet. Please contact your administrator to
+                        Vajra AI isn&apos;t configured yet. Please contact your administrator to
                         enable it.
                       </span>
                     </div>
@@ -606,7 +606,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                         ) : isSending && index === messages.length - 1 ? (
                           <div className="flex items-center gap-2 pt-1 text-sm text-[var(--text-tertiary)]">
                             <Loader2 className="w-4 h-4 animate-spin" strokeWidth={2} />
-                            Shield AI is thinking&hellip;
+                            Vajra AI is thinking&hellip;
                           </div>
                         ) : null}
                       </div>
@@ -648,7 +648,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                   <textarea
                     value={messageInput}
                     onChange={(e) => setMessageInput(e.target.value)}
-                    placeholder="Ask Shield AI anything about your compliance posture…"
+                    placeholder="Ask Vajra AI anything about your compliance posture…"
                     rows={3}
                     onKeyDown={handleKeyDown}
                     className="w-full px-4 py-3 pr-14 rounded-xl resize-none border transition-colors focus:outline-none focus:border-[var(--brand-primary)] bg-[var(--surface-raised)] border-[var(--border-default)] text-[var(--text-primary)]"
@@ -668,7 +668,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                 </div>
 
                 <p className="text-xs text-center text-[var(--text-tertiary)]">
-                  Shield AI can make mistakes. Verify legal language with your DPO.
+                  Vajra AI can make mistakes. Verify legal language with your DPO.
                 </p>
               </div>
             </div>
@@ -714,7 +714,7 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                     </button>
                   </div>
                   <p className="text-xs text-[var(--text-tertiary)]">
-                    When on, Shield AI grounds answers in your live workspace data below.
+                    When on, Vajra AI grounds answers in your live workspace data below.
                   </p>
                 </div>
 
@@ -759,8 +759,8 @@ export function ConsentCopilot({ onNavigate }: ConsentCopilotProps = {}): ReactE
                   {referenced.length === 0 ? (
                     <p className="text-xs text-[var(--text-tertiary)]">
                       {useCompanyData
-                        ? 'Once you send a message, the workspace data Shield AI used appears here as quick links.'
-                        : 'Turn on “Use my company’s data” so Shield AI can ground answers in your workspace — sources will be listed here.'}
+                        ? 'Once you send a message, the workspace data Vajra AI used appears here as quick links.'
+                        : 'Turn on “Use my company’s data” so Vajra AI can ground answers in your workspace — sources will be listed here.'}
                     </p>
                   ) : (
                     <div className="flex flex-wrap gap-1.5">

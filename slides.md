@@ -1,4 +1,4 @@
-# Slide 1: ZeroShield DPDPA
+# Slide 1: Vajra DPDPA
 ## Enterprise Compliance & Trust Automation Platform
 
 *   **The Mission**: Transforming complex regulatory requirements into automated, real-time software guardrails.
@@ -21,7 +21,7 @@
 ---
 
 # Slide 3: Platform Architecture & Integration
-## How ZeroShield Works
+## How Vajra Works
 
 *   **Seeded Compliance Database**: Maps seeded statute rules and chapters against operational system data.
 *   **Low-Code Integration**: Integrates directly with web properties, mobile apps, database engines, and third-party SaaS tools via our Javascript SDK, API Webhooks, and secure database connectors.

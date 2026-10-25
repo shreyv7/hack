@@ -1,5 +1,5 @@
 """
-Shield AI — provider-agnostic chat, generation, and RAG helpers.
+Vajra AI — provider-agnostic chat, generation, and RAG helpers.
 
 The active backend is selected by ``AI_PROVIDER``:
   * ``vertex``  — Gemini on Vertex AI via Application Default Credentials
@@ -24,8 +24,8 @@ from app.core.config import settings
 logger = logging.getLogger(__name__)
 
 
-class ShieldAIError(RuntimeError):
-    """Raised when Shield AI is misconfigured or a provider call fails."""
+class VajraAIError(RuntimeError):
+    """Raised when Vajra AI is misconfigured or a provider call fails."""
 
 
 # A message is {"role": "user"|"assistant", "content": str}
@@ -42,7 +42,7 @@ def _get_client() -> Any:
     try:
         import boto3  # imported lazily so the app boots without boto3 installed
     except ImportError as exc:  # pragma: no cover - depends on environment
-        raise ShieldAIError(
+        raise VajraAIError(
             "boto3 is not installed. Run: pip install -r requirements.txt"
         ) from exc
 
@@ -77,8 +77,8 @@ def _bedrock_credentials_available() -> bool:
 def _ensure_bedrock_credentials() -> None:
     if _bedrock_credentials_available():
         return
-    raise ShieldAIError(
-        "Shield AI is not configured on the server. Your administrator must set "
+    raise VajraAIError(
+        "Vajra AI is not configured on the server. Your administrator must set "
         "AWS_REGION and AWS credentials (or an instance role), and enable a Bedrock "
         "model — see BEDROCK_MODEL_ID and BEDROCK_VISION_MODEL_ID in .env.example."
     )
@@ -92,12 +92,12 @@ def _ensure_configured() -> None:
     if settings.ai_configured:
         return
     if settings.ai_provider == "vertex":
-        raise ShieldAIError(
-            "Shield AI is not configured on the server. Set GOOGLE_CLOUD_PROJECT "
+        raise VajraAIError(
+            "Vajra AI is not configured on the server. Set GOOGLE_CLOUD_PROJECT "
             "and VERTEX_MODEL_ID, and authenticate with Application Default Credentials."
         )
-    raise ShieldAIError(
-        "Shield AI is not configured on the server. Please contact your administrator."
+    raise VajraAIError(
+        "Vajra AI is not configured on the server. Please contact your administrator."
     )
 
 
@@ -159,10 +159,10 @@ def _converse_vertex(
             temperature=temperature,
         )
     except Exception as exc:
-        logger.exception("Shield AI Vertex call failed")
-        raise ShieldAIError(_friendly_error(exc)) from exc
+        logger.exception("Vajra AI Vertex call failed")
+        raise VajraAIError(_friendly_error(exc)) from exc
     if not reply:
-        raise ShieldAIError("Shield AI returned an empty response. Please try again.")
+        raise VajraAIError("Vajra AI returned an empty response. Please try again.")
     return reply
 
 
@@ -183,8 +183,8 @@ def _converse_stream_vertex(
             temperature=temperature,
         )
     except Exception as exc:
-        logger.exception("Shield AI Vertex stream call failed")
-        raise ShieldAIError(_friendly_error(exc)) from exc
+        logger.exception("Vajra AI Vertex stream call failed")
+        raise VajraAIError(_friendly_error(exc)) from exc
 
 
 def _converse_bedrock(
@@ -202,7 +202,7 @@ def _converse_bedrock(
         if m.get("content")
     ]
     if not bedrock_messages:
-        raise ShieldAIError("No message content to send.")
+        raise VajraAIError("No message content to send.")
 
     request: dict[str, Any] = {
         "modelId": settings.BEDROCK_MODEL_ID,
@@ -221,12 +221,12 @@ def _converse_bedrock(
         with _call_lock:
             response = client.converse(**request)
     except Exception as exc:  # boto ClientError, EndpointConnectionError, …
-        logger.exception("Shield AI provider call failed")
-        raise ShieldAIError(_friendly_error(exc)) from exc
+        logger.exception("Vajra AI provider call failed")
+        raise VajraAIError(_friendly_error(exc)) from exc
 
     reply = _extract_text(response)
     if not reply:
-        raise ShieldAIError("Shield AI returned an empty response. Please try again.")
+        raise VajraAIError("Vajra AI returned an empty response. Please try again.")
     return reply
 
 
@@ -245,7 +245,7 @@ def _converse_stream_bedrock(
         if m.get("content")
     ]
     if not bedrock_messages:
-        raise ShieldAIError("No message content to send.")
+        raise VajraAIError("No message content to send.")
 
     request: dict[str, Any] = {
         "modelId": settings.BEDROCK_MODEL_ID,
@@ -270,8 +270,8 @@ def _converse_stream_bedrock(
                 if "text" in delta:
                     yield delta["text"]
     except Exception as exc:
-        logger.exception("Shield AI provider stream call failed")
-        raise ShieldAIError(_friendly_error(exc)) from exc
+        logger.exception("Vajra AI provider stream call failed")
+        raise VajraAIError(_friendly_error(exc)) from exc
 
 
 
@@ -315,10 +315,10 @@ def _friendly_error(exc: Exception) -> str:
     """Map a provider exception to a generic message (never names the backend)."""
     lowered = str(exc).lower()
     if "could not connect" in lowered or "endpoint" in lowered:
-        return "Could not reach the Shield AI service. Please try again shortly."
+        return "Could not reach the Vajra AI service. Please try again shortly."
     if "accessdenied" in lowered or "not authorized" in lowered:
         return (
-            "Shield AI is not permitted to run this request. Please contact your "
+            "Vajra AI is not permitted to run this request. Please contact your "
             "administrator to enable access."
         )
     # Credential/token problems must be checked before the generic "invalid"
@@ -331,16 +331,16 @@ def _friendly_error(exc: Exception) -> str:
         or "signature" in lowered
     ):
         return (
-            "Shield AI credentials are invalid or inactive. Please contact your "
+            "Vajra AI credentials are invalid or inactive. Please contact your "
             "administrator."
         )
     if "throttl" in lowered or "too many requests" in lowered:
-        return "Shield AI is busy right now. Please try again in a moment."
+        return "Vajra AI is busy right now. Please try again in a moment."
     if "validationexception" in lowered or "model" in lowered:
-        return "Shield AI could not process this request. Please contact your administrator."
+        return "Vajra AI could not process this request. Please contact your administrator."
     if "unable to locate credentials" in lowered:
         return (
-            "Shield AI is not configured on the server. Please contact your administrator "
+            "Vajra AI is not configured on the server. Please contact your administrator "
             "to set AWS Bedrock credentials."
         )
     if (
@@ -350,15 +350,15 @@ def _friendly_error(exc: Exception) -> str:
         or "could not automatically determine credentials" in lowered
     ):
         return (
-            "Shield AI credentials are invalid or inactive. Please contact your "
+            "Vajra AI credentials are invalid or inactive. Please contact your "
             "administrator."
         )
     if "permissiondenied" in lowered or "403" in lowered or "iam" in lowered:
         return (
-            "Shield AI is not permitted to run this request. Please contact your "
+            "Vajra AI is not permitted to run this request. Please contact your "
             "administrator to enable access."
         )
-    return "Shield AI is temporarily unavailable. Please try again."
+    return "Vajra AI is temporarily unavailable. Please try again."
 
 
 def _is_retryable_model_error(exc: Exception) -> bool:
@@ -393,12 +393,12 @@ def _is_retryable_model_error(exc: Exception) -> bool:
 # --- High-level helpers -----------------------------------------------------
 
 _DPDPA_PERSONA = (
-    "You are Shield AI, the in-product compliance assistant for DPDPA Shield, a "
+    "You are Vajra AI, the in-product compliance assistant for Vajra, a "
     "platform that helps Indian organisations comply with the Digital Personal "
     "Data Protection Act, 2023 (DPDPA) and its Rules.\n\n"
     "You have TWO areas of expertise:\n"
     "1. DPDPA Legal Knowledge — cite section numbers, explain obligations, draft templates.\n"
-    "2. Platform Navigation — guide users step-by-step through DPDPA Shield features "
+    "2. Platform Navigation — guide users step-by-step through Vajra features "
     "(consent notices, PII scanning, DSAR management, breach disclosure, etc.) using "
     "the PLATFORM DOCUMENTATION provided below.\n\n"
     "Rules:\n"
@@ -468,7 +468,7 @@ def chat(
     context: str | None = None,
     db: Any | None = None,
 ) -> str:
-    """General Shield AI chat (used by the Consent Copilot)."""
+    """General Vajra AI chat (used by the Consent Copilot)."""
     last_user_msg = next(
         (m["content"] for m in reversed(messages) if m.get("role") == "user"),
         None,
@@ -485,7 +485,7 @@ def chat_stream(
     context: str | None = None,
     db: Any | None = None,
 ) -> Iterator[str]:
-    """Yield general Shield AI chat reply chunks (used by the Consent Copilot)."""
+    """Yield general Vajra AI chat reply chunks (used by the Consent Copilot)."""
     last_user_msg = next(
         (m["content"] for m in reversed(messages) if m.get("role") == "user"),
         None,
@@ -505,7 +505,7 @@ def recommendations(
 ) -> list[str]:
     """Return a list of short, actionable recommendation bullets.
 
-    Used by the purple Shield AI recommendation cards (DPIA, RoPA, Breach).
+    Used by the purple Vajra AI recommendation cards (DPIA, RoPA, Breach).
     """
     instruction = (
         f"Produce {count} short, specific, actionable {topic} for the scenario "
@@ -642,10 +642,10 @@ def generate_policy_from_ropa(
     )
     parsed = _parse_json_object(raw)
     if not parsed.get("content"):
-        raise ShieldAIError("Shield AI returned an empty policy draft.")
+        raise VajraAIError("Vajra AI returned an empty policy draft.")
     return {
         "title": str(parsed.get("title") or label).strip(),
-        "summary": str(parsed.get("summary") or f"Shield AI draft generated from RoPA for {org_name}.").strip(),
+        "summary": str(parsed.get("summary") or f"Vajra AI draft generated from RoPA for {org_name}.").strip(),
         "content": str(parsed["content"]).strip(),
     }
 
@@ -756,7 +756,7 @@ def retrieve_relevant_chunks(document_text: str, queries: list[str], top_k_per_q
 def draft_consent_notice_from_context(*, context: str, language: str = "English") -> dict[str, str]:
     """Generate DPDPA consent notice draft using the active AI provider."""
     system_prompt = (
-        "You are Shield AI, the DPDPA compliance assistant.\n"
+        "You are Vajra AI, the DPDPA compliance assistant.\n"
         "Your task is to draft a structured, comprehensive DPDPA-compliant consent notice based on the provided document context.\n\n"
         "Generate a JSON object with EXACTLY the following keys:\n"
         '- "notice_title": a short internal name for the consent notice (e.g. "Employee Consent Notice")\n'

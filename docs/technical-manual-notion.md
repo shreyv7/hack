@@ -1,6 +1,6 @@
-# DPDPA Shield — Technical & Integration Manual
+# Vajra — Technical & Integration Manual
 
-A hands-on setup and integration guide for the teams that connect DPDPA Shield to your systems: **developers** wiring the consent banner, SDKs, and APIs into your websites and apps, and **IT / DevOps / governance admins** connecting data sources, running assessments, and configuring compliance operations.
+A hands-on setup and integration guide for the teams that connect Vajra to your systems: **developers** wiring the consent banner, SDKs, and APIs into your websites and apps, and **IT / DevOps / governance admins** connecting data sources, running assessments, and configuring compliance operations.
 
 > This document is the technical companion to the **User Manual**. The User Manual explains *what each screen is*; this manual explains *how to set it up, how the flow works, and what you achieve* at each step.
 
@@ -48,11 +48,11 @@ Sections marked **[Dev]** are for engineers; **[IT]** for infrastructure owners;
 
 # 1. Platform & Access Concepts
 
-**What you'll achieve:** a clear mental model of how DPDPA Shield plugs into your stack, and the credentials you need before writing any code. Read this first — every later part builds on it.
+**What you'll achieve:** a clear mental model of how Vajra plugs into your stack, and the credentials you need before writing any code. Read this first — every later part builds on it.
 
 ## 1.1 The building blocks
 
-DPDPA Shield sits between your systems and your end users. You register the surfaces you own (a website, an app), attach a consent experience to them, and the platform records every decision as tamper-evident evidence.
+Vajra sits between your systems and your end users. You register the surfaces you own (a website, an app), attach a consent experience to them, and the platform records every decision as tamper-evident evidence.
 
 | Concept | What it is | Why it matters |
 |---------|-----------|----------------|
@@ -78,10 +78,10 @@ Use these production values. Your exact Public API base is also printed in **Int
 
 | Name | Production URL |
 |------|----------------|
-| **App (dashboard)** | `https://dpdplawshield.zeroshield.ai` |
-| **CMP script** | `https://dpdplawshield.zeroshield.ai/cmp.js` |
+| **App (dashboard)** | `https://dpdplawshield.vajra.ai` |
+| **CMP script** | `https://dpdplawshield.vajra.ai/cmp.js` |
 | **Public API base** (`{API_BASE}`) | `https://dpdpa-backend-290927690790.asia-south1.run.app/public/v1` |
-| **Public rights portal** | `https://dpdplawshield.zeroshield.ai/portal/{ORG_SLUG}` |
+| **Public rights portal** | `https://dpdplawshield.vajra.ai/portal/{ORG_SLUG}` |
 
 Throughout this manual, `{API_BASE}` means the Public API base above.
 
@@ -153,7 +153,7 @@ Server-to-server APIs (children's data, retention) are not fixed-rate but should
 Paste this as high in the `<head>` as possible, before any third-party tags. The app generates this exact snippet for you under **Integrations → property → Install**.
 
 ```html
-<script async src="https://dpdplawshield.zeroshield.ai/cmp.js"
+<script async src="https://dpdplawshield.vajra.ai/cmp.js"
   data-property-id="{PROPERTY_ID}"
   data-api-key="{YOUR_API_KEY}"
   data-banner-id="{BANNER_ID}"
@@ -196,16 +196,16 @@ Note the `type="text/plain"` — that stops the browser from running the tag unt
 
 ## 2.4 Step 3 — React to consent in your own code
 
-For logic you control (not `<script>` tags), read consent directly. The script exposes a global `ZeroShield` object and fires an event whenever consent changes.
+For logic you control (not `<script>` tags), read consent directly. The script exposes a global `Vajra` object and fires an event whenever consent changes.
 
 ```javascript
 // One-off check
-if (window.ZeroShield && window.ZeroShield.hasConsent('analytics')) {
+if (window.Vajra && window.Vajra.hasConsent('analytics')) {
   // safe to initialize analytics
 }
 
 // Live updates (fires when the visitor accepts, rejects, or changes preferences)
-window.addEventListener('zeroshield_consent_changed', function (event) {
+window.addEventListener('vajra_consent_changed', function (event) {
   const purposes = event.detail.purposes; // { necessary: true, analytics: true, marketing: false }
   if (purposes.marketing) {
     // fire marketing tags
@@ -217,17 +217,17 @@ window.addEventListener('zeroshield_consent_changed', function (event) {
 
 The CMP is a **standalone browser script** — there is no framework package to install. In every framework you load the same `cmp.js` with the same `data-*` attributes; only *where you put it* differs. Generate the exact snippet under **Install** on the property page.
 
-**React / Vue / Angular (SPA)** — the simplest and recommended approach is to put the HTML snippet from 2.2 into your app's HTML shell (`index.html` / `public/index.html`) inside `<head>`. It loads once for the whole app, and you read consent anywhere via the global `window.ZeroShield` API (see 2.4).
+**React / Vue / Angular (SPA)** — the simplest and recommended approach is to put the HTML snippet from 2.2 into your app's HTML shell (`index.html` / `public/index.html`) inside `<head>`. It loads once for the whole app, and you read consent anywhere via the global `window.Vajra` API (see 2.4).
 
 If you must load it from component code instead, inject it once:
 
 ```javascript
 // Run once at app startup (e.g. React useEffect([]), Vue onMounted, Angular ngOnInit)
-if (!document.getElementById('zeroshield-cmp')) {
+if (!document.getElementById('vajra-cmp')) {
   const s = document.createElement('script');
-  s.id = 'zeroshield-cmp';
+  s.id = 'vajra-cmp';
   s.async = true;
-  s.src = 'https://dpdplawshield.zeroshield.ai/cmp.js';
+  s.src = 'https://dpdplawshield.vajra.ai/cmp.js';
   s.setAttribute('data-property-id', '{PROPERTY_ID}');
   s.setAttribute('data-api-key', '{YOUR_API_KEY}');
   s.setAttribute('data-api-url', 'https://dpdpa-backend-290927690790.asia-south1.run.app/public/v1');
@@ -248,7 +248,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <Script
-          src="https://dpdplawshield.zeroshield.ai/cmp.js"
+          src="https://dpdplawshield.vajra.ai/cmp.js"
           strategy="afterInteractive"
           data-property-id="{PROPERTY_ID}"
           data-api-key="{YOUR_API_KEY}"
@@ -269,8 +269,8 @@ export default function RootLayout({ children }) {
 
 If you manage tags through GTM, you don't need to touch page code — enforce consent inside GTM instead.
 
-- Import the ready-made ZeroShield template: **Templates → Tag Templates → Import** using `{API_BASE}/integrations/gtm/template.tpl`.
-- Create a tag from *ZeroShield Consent Banner* and set your **Property ID** and **API Key**.
+- Import the ready-made Vajra template: **Templates → Tag Templates → Import** using `{API_BASE}/integrations/gtm/template.tpl`.
+- Create a tag from *Vajra Consent Banner* and set your **Property ID** and **API Key**.
 - With **Google Consent Mode v2**, the CMP updates `analytics_storage` / `ad_storage` signals as the visitor consents. Configure the mapping under **Integrations → Tag Manager**. **Matomo** is supported from the same screen.
 
 > **Screenshot** — Integrations → Tag Manager: the GTM / Matomo / Consent Mode v2 configuration panel with the tag-blocking rules.
@@ -639,7 +639,7 @@ From **Cookie & Tracker Manager**, run the scanner against a domain to discover 
 Configure your public portal under **Data Principal Rights → Rights Portal**: branding, which rights you accept (access, correction, erasure, grievance), form fields, and OTP settings. The hosted portal is available at:
 
 ```
-https://dpdplawshield.zeroshield.ai/portal/{ORG_SLUG}
+https://dpdplawshield.vajra.ai/portal/{ORG_SLUG}
 ```
 
 Identity is verified by **OTP** before a request is logged into the DSAR SLA Tracker.
@@ -728,7 +728,7 @@ Start at **Governance → Governance Guide** — a module-by-module map with a "
 
 **How the flow works:**
 
-1. **Discover vendors** — run a **scan** that surfaces processors from your data flows and trackers; **investigate** a discovered vendor (Shield AI compiles a GRC snapshot), or **block** one to disable its trackers.
+1. **Discover vendors** — run a **scan** that surfaces processors from your data flows and trackers; **investigate** a discovered vendor (Vajra AI compiles a GRC snapshot), or **block** one to disable its trackers.
 2. **Assess** — **trigger** an assessment questionnaire to the vendor contact and record the **submitted** answers; the vendor gets a **risk score**.
 3. **Govern the relationship** — track **DPA status**, link supporting **evidence**, and review the vendor's **data flows**.
 
@@ -835,11 +835,11 @@ Start at **Governance → Governance Guide** — a module-by-module map with a "
 
 | Resource | URL |
 |----------|-----|
-| App (dashboard) | `https://dpdplawshield.zeroshield.ai` |
-| CMP script | `https://dpdplawshield.zeroshield.ai/cmp.js` |
+| App (dashboard) | `https://dpdplawshield.vajra.ai` |
+| CMP script | `https://dpdplawshield.vajra.ai/cmp.js` |
 | Public API base | `https://dpdpa-backend-290927690790.asia-south1.run.app/public/v1` |
 | GTM template | `{API_BASE}/integrations/gtm/template.tpl` |
-| Public rights portal | `https://dpdplawshield.zeroshield.ai/portal/{ORG_SLUG}` |
+| Public rights portal | `https://dpdplawshield.vajra.ai/portal/{ORG_SLUG}` |
 
 ## 9.2 Glossary
 
@@ -895,4 +895,4 @@ Capture these while assembling the manual (technical screens only — far fewer 
 
 ---
 
-*Technical & Integration Manual · Companion to the DPDPA Shield User Manual · Last updated: July 2026*
+*Technical & Integration Manual · Companion to the Vajra User Manual · Last updated: July 2026*

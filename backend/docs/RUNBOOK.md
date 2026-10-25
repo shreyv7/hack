@@ -1,4 +1,4 @@
-# 🏃 DPDPA Shield Backend — RUNBOOK (team sync & daily workflow)
+# 🏃 Vajra Backend — RUNBOOK (team sync & daily workflow)
 
 > The single page everyone keeps open. It answers: **"Someone changed code — how
 > do I get it running with the same database here?"** and the **reverse**: **"I

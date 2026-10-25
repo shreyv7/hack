@@ -7,7 +7,7 @@
 
 ## What this module does in the portal
 
-This is the **front door and tenancy layer** for DPDPA Shield. Every customer organization gets its own isolated workspace. Users sign in once and only see data belonging to their organization (unless they are a platform superadmin).
+This is the **front door and tenancy layer** for Vajra. Every customer organization gets its own isolated workspace. Users sign in once and only see data belonging to their organization (unless they are a platform superadmin).
 
 The module answers three business questions:
 

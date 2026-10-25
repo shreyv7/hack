@@ -497,7 +497,7 @@ As the Data Fiduciary is registered as an SDF, the Offshore Data Processor agree
             [
                 Paragraph(
                     f"<b>Document Status:</b> {version.status.upper()}<br/>"
-                    f"<b>Executed By:</b> DPDPA Shield Legal Engine<br/>"
+                    f"<b>Executed By:</b> Vajra Legal Engine<br/>"
                     f"<b>Verification Hash:</b> {hash(version.content)}",
                     body_style,
                 )

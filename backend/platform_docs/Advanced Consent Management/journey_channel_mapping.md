@@ -1,4 +1,4 @@
-# DPDPA Shield — Journey & Channel Mapping Technical Specification
+# Vajra — Journey & Channel Mapping Technical Specification
 
 This document covers the **Journey & Channel Mapping** page (`/consent/banking/journeys`) within the Advanced Consent Management cluster.
 

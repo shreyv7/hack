@@ -1,4 +1,4 @@
-# DPDPA Shield — Pending Approvals Technical Specification
+# Vajra — Pending Approvals Technical Specification
 
 This document covers the **Pending Approvals** administration page for superadmin users.
 

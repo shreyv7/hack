@@ -23,8 +23,8 @@ import { formatActiveSince } from '@/types/consent';
 import { fetchNoticeActivities } from '@/lib/api/consent';
 import { cn } from '@/lib/utils';
 import { integrationsApi } from '@/lib/api/integrations';
-import { ShieldAIDraftModal } from '@/app/components/notices/ShieldAIDraftModal';
-import type { ConsentDraftResult } from '@/lib/api/shieldAi';
+import { VajraAIDraftModal } from '@/app/components/notices/VajraAIDraftModal';
+import type { ConsentDraftResult } from '@/lib/api/vajraAi';
 import { fetchWorkspace } from '@/lib/api/workspace';
 import { buildPublicPortalUrl } from '@/lib/dsar/portalSlug';
 
@@ -338,7 +338,7 @@ export function ConsentNoticesManager({
                     className="px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-sm hover:from-violet-700 hover:to-indigo-700 flex items-center gap-2"
                   >
                     <Sparkles className="size-4" />
-                    Draft with Shield AI
+                    Draft with Vajra AI
                   </button>
                   <button type="button" onClick={onCreateNew} className={consentToolbarPrimaryBtn}>
                     <Plus className="size-4" />
@@ -622,7 +622,7 @@ export function ConsentNoticesManager({
           </div>
         )}
         {showAiModal && (
-          <ShieldAIDraftModal
+          <VajraAIDraftModal
             onClose={() => setShowAiModal(false)}
             onDraftReady={handleDraftReady}
           />

@@ -1,6 +1,6 @@
-# DPDPA Shield — DPDP Role Mapping Technical Specification
+# Vajra — DPDP Role Mapping Technical Specification
 
-This document serves as the **single source of truth** for the **DPDP Role Mapping** page of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this role configuration pane.
+This document serves as the **single source of truth** for the **DPDP Role Mapping** page of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this role configuration pane.
 
 ---
 

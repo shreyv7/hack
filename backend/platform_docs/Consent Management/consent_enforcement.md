@@ -1,6 +1,6 @@
-# DPDPA Shield — Consent Enforcement Technical Specification
+# Vajra — Consent Enforcement Technical Specification
 
-This document serves as the **single source of truth** for the **Consent Enforcement** module of the ZeroShield DPDPA compliance platform. It explains how consent decisions made in the banner or preference centre change what happens to a **write** in the customer's own backend systems — not just whether a tracker script fires — and how every enforcement action is provable in the Proof Vault.
+This document serves as the **single source of truth** for the **Consent Enforcement** module of the Vajra DPDPA compliance platform. It explains how consent decisions made in the banner or preference centre change what happens to a **write** in the customer's own backend systems — not just whether a tracker script fires — and how every enforcement action is provable in the Proof Vault.
 
 ---
 
@@ -23,8 +23,8 @@ To ensure that marketing opt-outs, analytics denials, and purpose withdrawals ar
 
 ```mermaid
 graph TD
-    SDK[ZeroShield SDK / Banner] -->|Consent capture + decision token| Client[Customer Backend]
-    Client -->|X-ZS-Decision-Token or Decision API fallback| ZS[ZeroShield Backend]
+    SDK[Vajra SDK / Banner] -->|Consent capture + decision token| Client[Customer Backend]
+    Client -->|X-ZS-Decision-Token or Decision API fallback| ZS[Vajra Backend]
     ZS -->|Evaluate receipt + legal basis| Decision[ConsentDecisionService]
     Decision -->|Log decision| Events[Enforcement Events]
     Decision -->|Seal| PV[Proof Vault]
@@ -36,7 +36,7 @@ graph TD
 
 ### 1.5 Target Users
 *   **Data Protection Officers (DPOs)**: Configure enforcement modes, review shadow-mode evidence, approve promotion to enforced mode, sign off on purpose→field mappings.
-*   **Engineering / Integration leads**: Install `zeroshield-python` middleware, configure signing secrets, annotate collection points.
+*   **Engineering / Integration leads**: Install `vajra-python` middleware, configure signing secrets, annotate collection points.
 *   **Compliance engineers**: Monitor coverage metrics, event logs, and pending remediation tasks.
 
 ---
@@ -63,7 +63,7 @@ sequenceDiagram
     actor DPO as DPO / Compliance
     actor Eng as Engineering Lead
     participant FE as Consent Enforcement UI
-    participant BE as ZeroShield Backend
+    participant BE as Vajra Backend
     participant Cust as Customer Backend
 
     DPO->>FE: Open Consent Enforcement (/consent/enforcement)
@@ -74,8 +74,8 @@ sequenceDiagram
   DPO->>FE: Configure deny behavior per purpose
     DPO->>FE: Promote property to Shadow mode
     Eng->>BE: Retrieve signing secret for property
-    Eng->>Cust: Install zeroshield-python @require_consent decorator
-    Eng->>Cust: Configure ZEROSHIELD_DECISION_SECRET env var
+    Eng->>Cust: Install vajra-python @require_consent decorator
+    Eng->>Cust: Configure VAJRA_DECISION_SECRET env var
     DPO->>FE: Review Event Log for 7+ days shadow evidence
     DPO->>FE: Promote property and purposes to Enforced
 ```
@@ -85,7 +85,7 @@ sequenceDiagram
 1. User grants or denies consent via banner/SDK → consent receipt stored in Proof Vault.
 2. SDK mints a short-lived **decision token** (15-minute TTL) bound to principal fingerprint and purpose decisions.
 3. Customer backend receives write request with `X-ZS-Decision-Token` header.
-4. `zeroshield-python` middleware verifies token locally (no network call on hot path).
+4. `vajra-python` middleware verifies token locally (no network call on hot path).
 5. If token missing/expired → fallback to Decision API (`POST /public/v1/integrations/{property_id}/consent/decision`).
 6. If purpose denied and mode is `enforced` → reject (403), strip fields, or queue pending per `deny_behavior`.
 7. Every evaluation logged to `enforcement_events` (fingerprint only, never raw email/phone).
@@ -194,7 +194,7 @@ stateDiagram-v2
 *   Payload: principal fingerprint (`prn`), purpose decisions (`prp`), property ID (`prop`)
 *   TTL: 15 minutes (configurable via `DECISION_TOKEN_TTL_SECONDS`)
 *   Minted on consent capture and via `GET /consent/decision-token`
-*   Verified locally by `zeroshield-python` — no network call per request
+*   Verified locally by `vajra-python` — no network call per request
 
 ### 6.2 Decision API (Fallback Path)
 *   Accepts **raw** `principal_email` and `principal_phone` (server hashes — never client-side)
@@ -225,7 +225,7 @@ Purposes with `legal_basis` of `contract`, `legitimate_use`, or `legal_obligatio
 | **Integrations (Website/Mobile/API)** | Integration properties carry `enforcement_mode` and signing secrets |
 | **Received Consents** | Source of consent receipts evaluated by Decision API |
 | **Consent Withdrawal Flow** | UI copy for withdrawal; real remediation runs via enforcement engine |
-| **zeroshield-python package** | Reference middleware (`@require_consent` decorator) for customer backends |
+| **vajra-python package** | Reference middleware (`@require_consent` decorator) for customer backends |
 
 ---
 
@@ -233,9 +233,9 @@ Purposes with `legal_basis` of `contract`, `legitimate_use`, or `legal_obligatio
 
 ### 8.1 CMP SDK Additions
 ```javascript
-ZeroShield.getDecisionToken()           // cached token, refreshes if expired
-ZeroShield.hasConsent(purpose)          // client-side purpose check
-ZeroShield.guardSubmit(form, purpose)   // blocks submit + inline JIT prompt if denied
+Vajra.getDecisionToken()           // cached token, refreshes if expired
+Vajra.hasConsent(purpose)          // client-side purpose check
+Vajra.guardSubmit(form, purpose)   // blocks submit + inline JIT prompt if denied
 ```
 
 ### 8.2 Form Annotation
@@ -246,7 +246,7 @@ Only optional/marketing forms should be annotated. Checkout and fulfillment form
 
 ### 8.3 Python Middleware
 ```python
-from zeroshield import require_consent
+from vajra import require_consent
 
 @app.post("/newsletter/subscribe")
 @require_consent("marketing_newsletter")

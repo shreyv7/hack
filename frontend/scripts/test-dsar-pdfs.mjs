@@ -37,7 +37,7 @@ const receipt = buildReceiptPdf({
 });
 const closure = buildClosurePdf(
   'REQ-2026-TEST01',
-  'DPDPA Shield closure letter.\nRequest completed under DPDPA 2023.'
+  'Vajra closure letter.\nRequest completed under DPDPA 2023.'
 );
 
 if (receipt.length < 500) throw new Error('Receipt PDF too small');

@@ -1,4 +1,4 @@
-"""Shield AI — persisted conversation CRUD and message exchange."""
+"""Vajra AI — persisted conversation CRUD and message exchange."""
 
 from __future__ import annotations
 
@@ -11,8 +11,8 @@ from sqlalchemy.orm import Session
 
 from app.models.ai_conversation import AiConversation, AiMessage
 from app.models.user import User
-from app.services import shield_ai_service
-from app.services.shield_ai_service import ShieldAIError
+from app.services import vajra_ai_service
+from app.services.vajra_ai_service import VajraAIError
 from app.services.ai_context_service import AiContextService
 from app.services.compliance_base import ComplianceBaseService
 
@@ -99,7 +99,7 @@ class AiConversationService(ComplianceBaseService):
         use_company_data: bool = True,
         org_id: UUID | None = None,
     ) -> AiConversation:
-        """Add the user's turn, call Shield AI, persist the reply, and return the
+        """Add the user's turn, call Vajra AI, persist the reply, and return the
         refreshed conversation. Nothing is persisted if the AI call fails."""
         conv = self._get_owned(user, org_id, conversation_id)
 
@@ -113,8 +113,8 @@ class AiConversationService(ComplianceBaseService):
                 user, org_id=org_id
             )
         try:
-            reply = shield_ai_service.chat(outgoing, context=context_prompt, db=self.db)
-        except ShieldAIError:
+            reply = vajra_ai_service.chat(outgoing, context=context_prompt, db=self.db)
+        except VajraAIError:
             # Fallback mock chatbot responses for demo/test environments
             query_lower = content.lower()
             if "consent" in query_lower:
@@ -141,9 +141,9 @@ class AiConversationService(ComplianceBaseService):
                     " - Categories of Data: [e.g., Contact, Transaction Info]\n"
                     " - Purpose of Processing: Service Fulfillment\n"
                     " - Third-Party Transfers: [Fiduciaries/Processors details]\n\n"
-                    "Should you have any grievances, you can reach out to our Grievance Officer at grievance@zeroshield.in.\n\n"
+                    "Should you have any grievances, you can reach out to our Grievance Officer at grievance@vajra.dev.\n\n"
                     "Sincerely,\n"
-                    "Data Protection Office, ZEROSHIELD DPDPA\n"
+                    "Data Protection Office, VAJRA DPDPA\n"
                     "```"
                 )
             elif "risk" in query_lower or "compliance" in query_lower:
@@ -166,7 +166,7 @@ class AiConversationService(ComplianceBaseService):
                 )
             else:
                 reply = (
-                    f"### Hello! I am Shield AI, your DPDPA compliance assistant.\n\n"
+                    f"### Hello! I am Vajra AI, your DPDPA compliance assistant.\n\n"
                     f"*(Note: Bedrock service is currently unconfigured. Showing a local mock reply)*\n\n"
                     f"You said: **\"{content}\"**\n\n"
                     f"How can I help you today? You can try asking:\n"
@@ -219,10 +219,10 @@ class AiConversationService(ComplianceBaseService):
         full_reply_parts = []
         try:
             try:
-                for chunk in shield_ai_service.chat_stream(outgoing, context=context_prompt, db=self.db):
+                for chunk in vajra_ai_service.chat_stream(outgoing, context=context_prompt, db=self.db):
                     full_reply_parts.append(chunk)
                     yield chunk
-            except ShieldAIError:
+            except VajraAIError:
                 # Fallback mock chatbot responses for demo/test environments
                 query_lower = content.lower()
                 if "consent" in query_lower:
@@ -249,9 +249,9 @@ class AiConversationService(ComplianceBaseService):
                         " - Categories of Data: [e.g., Contact, Transaction Info]\n"
                         " - Purpose of Processing: Service Fulfillment\n"
                         " - Third-Party Transfers: [Fiduciaries/Processors details]\n\n"
-                        "Should you have any grievances, you can reach out to our Grievance Officer at grievance@zeroshield.in.\n\n"
+                        "Should you have any grievances, you can reach out to our Grievance Officer at grievance@vajra.dev.\n\n"
                         "Sincerely,\n"
-                        "Data Protection Office, ZEROSHIELD DPDPA\n"
+                        "Data Protection Office, VAJRA DPDPA\n"
                         "```"
                     )
                 elif "risk" in query_lower or "compliance" in query_lower:
@@ -274,7 +274,7 @@ class AiConversationService(ComplianceBaseService):
                     )
                 else:
                     reply = (
-                        f"### Hello! I am Shield AI, your DPDPA compliance assistant.\n\n"
+                        f"### Hello! I am Vajra AI, your DPDPA compliance assistant.\n\n"
                         f"*(Note: Bedrock service is currently unconfigured. Showing a local mock reply)*\n\n"
                         f"You said: **\"{content}\"**\n\n"
                         f"How can I help you today? You can try asking:\n"

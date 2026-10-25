@@ -1,14 +1,14 @@
-# DPDPA Shield — How to Use Guide
+# Vajra — How to Use Guide
 
-This guide helps new users navigate the DPDPA Shield platform and understand the recommended implementation order for achieving DPDPA compliance.
+This guide helps new users navigate the Vajra platform and understand the recommended implementation order for achieving DPDPA compliance.
 
 **Route:** `/how-to-use`
 
 ---
 
-## 1. Welcome to DPDPA Shield
+## 1. Welcome to Vajra
 
-DPDPA Shield is an enterprise compliance platform for the **Digital Personal Data Protection Act, 2023 (DPDPA)**. It helps Indian organizations manage consent, protect personal data, respond to data principal rights, and demonstrate compliance to regulators.
+Vajra is an enterprise compliance platform for the **Digital Personal Data Protection Act, 2023 (DPDPA)**. It helps Indian organizations manage consent, protect personal data, respond to data principal rights, and demonstrate compliance to regulators.
 
 ---
 
@@ -28,7 +28,7 @@ The sidebar is organized into these sections:
 | **Governance** | RoPA, DPIA, policies, vendor risk, cross-border, CISO |
 | **Settings** | Workspace, deployment, industry config, role mapping |
 | **Administration** | Organizations, approvals, team management (role-gated) |
-| **Shield AI** | AI compliance assistant with platform knowledge |
+| **Vajra AI** | AI compliance assistant with platform knowledge |
 
 ---
 
@@ -93,9 +93,9 @@ Register sources first, then build your inventory from schema introspection or m
 
 ---
 
-## 5. Using Shield AI
+## 5. Using Vajra AI
 
-Click **Shield AI** in the sidebar footer to open the compliance copilot. Shield AI can:
+Click **Vajra AI** in the sidebar footer to open the compliance copilot. Vajra AI can:
 *   Answer DPDPA legal questions with section citations.
 *   Guide you step-by-step through platform features.
 *   Summarize your compliance posture using live workspace data.
@@ -104,7 +104,7 @@ Click **Shield AI** in the sidebar footer to open the compliance copilot. Shield
 **Tips:**
 *   Toggle "Use company data" to include live workspace context.
 *   Use suggestion chips for common questions.
-*   Shield AI references platform documentation — ask "How do I set up consent enforcement?" for step-by-step guidance.
+*   Vajra AI references platform documentation — ask "How do I set up consent enforcement?" for step-by-step guidance.
 
 ---
 
@@ -112,8 +112,8 @@ Click **Shield AI** in the sidebar footer to open the compliance copilot. Shield
 
 *   Each module has an in-app **Playbook** (right drawer) with prerequisites, implementation steps, and troubleshooting.
 *   **Compliance Guide**, **Data Protection Guide**, and **Governance Guide** provide section-specific onboarding.
-*   Use **Shield AI** for interactive guidance.
-*   Contact your DPO or ZeroShield support for legal interpretation questions.
+*   Use **Vajra AI** for interactive guidance.
+*   Contact your DPO or Vajra support for legal interpretation questions.
 
 ---
 

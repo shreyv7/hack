@@ -66,7 +66,7 @@ class ConsentBanner(Base, BaseModel):
     ab_test_duration_days = Column(Integer, nullable=False, default=14)
     ab_test_started_at = Column(DateTime(timezone=True), nullable=True)
     
-    # Developer Mode — expose window.ZeroShield programmatic API on the live site
+    # Developer Mode — expose window.Vajra programmatic API on the live site
     developer_mode = Column(Boolean, nullable=False, default=False)
 
     # Consent Persistence - duration choice

@@ -2,9 +2,9 @@ import json
 from uuid import UUID
 from sqlalchemy.orm import Session
 from app.models.dpia import Dpia, DpiaVersion
-from app.services import shield_ai_service
+from app.services import vajra_ai_service
 
-from app.services.shield_ai_service import ShieldAIError
+from app.services.vajra_ai_service import VajraAIError
 
 class DpiaAiService:
     @staticmethod
@@ -58,8 +58,8 @@ class DpiaAiService:
         )
         
         try:
-            return shield_ai_service.generate(task=task, context=context, max_tokens=1500)
-        except ShieldAIError:
+            return vajra_ai_service.generate(task=task, context=context, max_tokens=1500)
+        except VajraAIError:
             # Fallback mock compliance evaluation against DPDPA data localization rules
             answers = DpiaAiService._get_answers_dict(db, dpia_id)
             
@@ -72,7 +72,7 @@ class DpiaAiService:
             activity_name = answers.get("activity_name", "Processing Activity")
             business_purpose = answers.get("business_purpose", "Not specified")
 
-            report_md = f"""### 🛡️ DPDPA Shield AI Compliance Analysis (Simulated Mode)
+            report_md = f"""### 🛡️ DPDPA Vajra AI Compliance Analysis (Simulated Mode)
 
 *Note: AWS Bedrock is currently offline or unconfigured. Showing a simulated compliance analysis powered by the local DPDPA Risk Engine.*
 
@@ -159,12 +159,12 @@ Based on the initial processing attributes, we evaluated the compliance posture 
         context = DpiaAiService._build_context(db, dpia_id)
         
         try:
-            return shield_ai_service.recommendations(
+            return vajra_ai_service.recommendations(
                 topic="DPDPA compliance mitigation recommendations",
                 context=context,
                 count=count
             )
-        except ShieldAIError:
+        except VajraAIError:
             # Fallback mock recommendations based on answers
             answers = DpiaAiService._get_answers_dict(db, dpia_id)
             recs = []

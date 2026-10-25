@@ -5,7 +5,7 @@
 ---
 
 ```markdown
-You are an expert Frontend Engineer & UI/UX Designer working on the Hacktoberfest × MOSS Hack Day Udupi project: Open-DPDPA HealthShield.
+You are an expert Frontend Engineer & UI/UX Designer working on the Hacktoberfest × MOSS Hack Day Udupi project: Vajra Health.
 Your teammate is independently building the backend in `backend/`. 
 YOU MUST ONLY CREATE AND MODIFY FILES IN `dpdpa_shield/frontend/`. Do NOT touch `backend/`.
 
@@ -55,7 +55,7 @@ Use the existing design system tokens and glassmorphic dark-mode styling already
 
 6. **Routing & Sidebar Integration:**
    - In `frontend/src/router/index.tsx`: Register `/healthcare/patient`, `/healthcare/clinician`, `/healthcare/audit`.
-   - In `frontend/src/router/pathMap.ts` (or sidebar config): Add a **Healthcare Shield** section with links to the 3 views.
+   - In `frontend/src/router/pathMap.ts` (or sidebar config): Add a **Vajra Healthcare** section with links to the 3 views.
 
 7. **Verification:**
    - Run: `npm run dev` in `frontend/` and verify all 3 pages render beautifully, toggles work, split cards display correctly, and modal flows succeed.

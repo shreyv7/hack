@@ -114,7 +114,7 @@ export function VisionCapturePanel({
             <div className={cn(overlayCardClass, 'flex gap-2 items-start text-xs text-gray-800')}>
               <Info className="h-4 w-4 shrink-0 mt-0.5 text-[var(--status-ai)]" />
               <div className="flex-1">
-                <p className="font-medium text-gray-900">Shield AI Vision</p>
+                <p className="font-medium text-gray-900">Vajra AI Vision</p>
                 <p className="mt-0.5">
                   Capture any part of this screen and ask what a feature is for or how to use it.
                   Chats and screenshots are not saved.
@@ -154,7 +154,7 @@ export function VisionCapturePanel({
             type="button"
             onClick={() => setShowInfo(true)}
             className={cn('p-1.5 rounded-xl', overlayBtnClass)}
-            aria-label="About Shield AI Vision"
+            aria-label="About Vajra AI Vision"
           >
             <Info className="h-4 w-4" />
           </button>
@@ -176,7 +176,7 @@ export function VisionCapturePanel({
               </div>
               <div className={cn(overlayCardClass, 'text-sm text-gray-900 bg-[var(--status-ai)]/10')}>
                 <span className="text-[10px] uppercase tracking-wide text-[var(--status-ai)] font-medium">
-                  Shield AI
+                  Vajra AI
                 </span>
                 <p className="mt-0.5 whitespace-pre-wrap">{ex.answer}</p>
               </div>

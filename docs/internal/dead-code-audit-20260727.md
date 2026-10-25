@@ -85,7 +85,7 @@ Unused deps flagged: `@emotion/react`, `@emotion/styled`, `@mui/*`, `@popperjs/c
 |--------|----------|---------------|
 | `integrations_public.py` | `GET /public/v1/integrations/cmp.js` | Served to external sites |
 | `notice_delivery.py` | Twilio/Shiprocket webhooks | External callbacks |
-| `shield_ai.py` | `POST /ai/admin/reindex-docs` | Admin/maintenance |
+| `vajra_ai.py` | `POST /ai/admin/reindex-docs` | Admin/maintenance |
 | `users.py` | notifications, scopes | Partial frontend coverage |
 | `proof_vault.py` | lookup | May use dynamic paths |
 

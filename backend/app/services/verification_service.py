@@ -86,10 +86,10 @@ class VerificationService:
                         scripts = await page.locator("script").evaluate_all(
                             "elements => elements.map(e => e.src || e.innerHTML)"
                         )
-                        snippet_detected = any("cmp.js" in s or "window.ZeroShield" in s for s in scripts)
+                        snippet_detected = any("cmp.js" in s or "window.Vajra" in s for s in scripts)
                         
-                        # 2. Check if ZeroShield is initialized
-                        zs_state = await page.evaluate("() => window.ZeroShield ? { propertyId: window.ZeroShield.propertyId, initialized: window.ZeroShield.state.initialized } : null")
+                        # 2. Check if Vajra is initialized
+                        zs_state = await page.evaluate("() => window.Vajra ? { propertyId: window.Vajra.propertyId, initialized: window.Vajra.state.initialized } : null")
                         
                         if zs_state:
                             if zs_state.get("propertyId") == str(prop.id):
@@ -98,7 +98,7 @@ class VerificationService:
                                 errors.append(f"Property ID mismatch. Found: {zs_state.get('propertyId')}")
                         
                         # 3. Check if banner is rendered
-                        banner_count = await page.locator("zeroshield-consent-banner").count()
+                        banner_count = await page.locator("vajra-consent-banner").count()
                         if banner_count > 0:
                             banner_rendered = True
                             

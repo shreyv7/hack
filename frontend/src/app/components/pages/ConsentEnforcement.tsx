@@ -473,7 +473,7 @@ export function ConsentEnforcement(): ReactElement {
             <div className="font-medium mb-1">Marketing send filter (bulk suppression check)</div>
             <p className="text-[var(--text-secondary)] text-xs mb-2">
               Before a campaign send, POST a batch of emails/phones to filter out principals who denied
-              consent for a purpose. Use <code className="px-1 rounded bg-[var(--surface-card)]">zeroshield.filter_consented()</code> or call directly:
+              consent for a purpose. Use <code className="px-1 rounded bg-[var(--surface-card)]">vajra.filter_consented()</code> or call directly:
             </p>
             <code className="block text-xs p-2 rounded bg-[var(--surface-card)] border overflow-x-auto">
               POST {suppressionCheckUrl}

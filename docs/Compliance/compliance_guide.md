@@ -1,4 +1,4 @@
-# DPDPA Shield — Compliance Guide
+# Vajra — Compliance Guide
 
 This guide provides an onboarding path for the **Compliance** module cluster, helping organizations monitor regulatory posture, manage security safeguards, and respond to data breaches.
 
@@ -6,7 +6,7 @@ This guide provides an onboarding path for the **Compliance** module cluster, he
 
 ---
 
-## 1. What is Compliance in DPDPA Shield?
+## 1. What is Compliance in Vajra?
 
 The Compliance cluster helps you understand, measure, and demonstrate your DPDPA compliance posture through structured assessments, regulatory mapping, and incident response workflows.
 
@@ -68,7 +68,7 @@ The compliance score (0–100) is calculated from weighted section scores:
 | Governance | 15% | RoPA completeness, DPIA coverage, vendor assessments |
 | Breach Readiness | 10% | Wizard completion, incident response plan |
 
-Recalculate the score after completing module setup. Shield AI can explain specific gaps and recommend remediation steps.
+Recalculate the score after completing module setup. Vajra AI can explain specific gaps and recommend remediation steps.
 
 ---
 
@@ -78,7 +78,7 @@ The DPDPA Map visualizes each statutory section with:
 *   **Status**: Compliant (green), Partial (amber), Gap (red), Not Applicable (grey)
 *   **Evidence links**: Direct links to relevant module pages
 *   **Gap descriptions**: What's missing and how to fix it
-*   **Shield AI recommendations**: AI-generated remediation suggestions
+*   **Vajra AI recommendations**: AI-generated remediation suggestions
 
 Click any section to see detailed requirements and linked modules.
 
@@ -137,7 +137,7 @@ A: Aim for 70+ before going live with consent enforcement. 85+ indicates strong 
 A: After any significant module change. Weekly during initial setup, monthly in steady state.
 
 **Q: Does the platform guarantee DPDPA compliance?**
-A: No tool can guarantee compliance. DPDPA Shield provides evidence, workflows, and gap visibility. Legal review by qualified counsel is always recommended.
+A: No tool can guarantee compliance. Vajra provides evidence, workflows, and gap visibility. Legal review by qualified counsel is always recommended.
 
 **Q: What triggers a breach notification requirement?**
 A: Under DPDPA Rules, notification to the Data Protection Board is required when a personal data breach is likely to affect data principals. The wizard helps assess this threshold.

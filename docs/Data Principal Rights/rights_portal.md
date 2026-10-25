@@ -1,6 +1,6 @@
-# DPDPA Shield — Rights Portal (Public) Technical Specification
+# Vajra — Rights Portal (Public) Technical Specification
 
-This document serves as the **single source of truth** for the **Data Principal Rights Portal** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the public-facing portal.
+This document serves as the **single source of truth** for the **Data Principal Rights Portal** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the public-facing portal.
 
 ---
 

@@ -1,6 +1,6 @@
-# DPDPA Shield — Children's Data Technical Specification
+# Vajra — Children's Data Technical Specification
 
-This document serves as the **single source of truth** for the **Children's Data** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain children's data protections.
+This document serves as the **single source of truth** for the **Children's Data** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain children's data protections.
 
 ---
 

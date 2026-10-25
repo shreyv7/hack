@@ -1,6 +1,6 @@
 # Workspace & Settings (Tier 0.2)
 
-Org-scoped workspace configuration for DPDPA Shield. Each active organization has one `organization_settings` row (auto-created on org signup or superadmin create) plus optional `data_processors` entries. Obligation comparison rows come from a seeded `dpdp_obligation_definitions` catalog.
+Org-scoped workspace configuration for Vajra. Each active organization has one `organization_settings` row (auto-created on org signup or superadmin create) plus optional `data_processors` entries. Obligation comparison rows come from a seeded `dpdp_obligation_definitions` catalog.
 
 ## Question mapping (Q1–Q11)
 

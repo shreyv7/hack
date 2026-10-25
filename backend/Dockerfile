@@ -1,5 +1,5 @@
 # ============================================================
-# DPDPA Shield — Backend image  (FOR LATER — not needed for local dev)
+# Vajra — Backend image  (FOR LATER — not needed for local dev)
 # Build:  docker build -t dpdpa-backend .
 # This is here so dockerizing later is a no-op. Ignore it while
 # you are running everything locally with uvicorn.

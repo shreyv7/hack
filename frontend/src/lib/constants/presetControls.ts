@@ -193,7 +193,7 @@ export const DEFAULT_PRESET_CIS_CONTROLS: CisoControl[] = [
   {
     id: 'cis-17', organization_id: '', control_key: 'CIS-17', title: 'Incident Response Management',
     description: 'Establish incident response program to quickly contain and resolve breaches.',
-    tech_explanation: 'Deploy incident response wizard inside DPDPA Shield to guide CISO notifications.',
+    tech_explanation: 'Deploy incident response wizard inside Vajra to guide CISO notifications.',
     business_explanation: 'Ensures DPO initiates containment and notifies authorities within statutory timelines.',
     why_required: 'CIS Control 17.1 / ISO A.5.1 / NIST DE.CM-1 / DPDPA Sec.8.5', penalty_if_absent: 'Strict penalties for failure to notify data breaches under DPDPA rules.',
     status: 'not_configured', priority: 'low', category: 'Administrative', maturity: 'Managed', tags: ['Incidents', 'Incident Response', 'Breach'],

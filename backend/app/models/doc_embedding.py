@@ -1,6 +1,6 @@
 """
 Document Embedding — stores chunked platform documentation with vector
-embeddings for Shield AI's RAG (Retrieval-Augmented Generation) pipeline.
+embeddings for Vajra AI's RAG (Retrieval-Augmented Generation) pipeline.
 
 Each row is a single chunk of a Markdown documentation file.  The
 ``embedding`` column holds a 1 024-dimension vector (Titan V2 or Vertex

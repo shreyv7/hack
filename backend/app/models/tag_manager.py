@@ -171,7 +171,7 @@ class TagManagerSettings(Base, BaseModel):
     )
     consent_mode_v2 = Column(Boolean, nullable=False, default=True)
     auto_blocker_strict = Column(Boolean, nullable=False, default=True)
-    datalayer_event_prefix = Column(String(50), nullable=False, default="zeroshield")
+    datalayer_event_prefix = Column(String(50), nullable=False, default="vajra")
     blocked_purposes = Column(JSONB, nullable=False, server_default="[]")
     updated_by = Column(
         UUID(as_uuid=True),

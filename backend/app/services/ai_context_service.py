@@ -1,4 +1,4 @@
-"""Aggregates real workspace data for Shield AI's context panel & grounding.
+"""Aggregates real workspace data for Vajra AI's context panel & grounding.
 
 Both the UI "Current data access" panel and the prompt context the model sees
 are built from the SAME source here, so what the user is told is shared matches

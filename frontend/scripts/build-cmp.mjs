@@ -15,7 +15,7 @@ const outputFile = path.join(publicDir, 'cmp.js');
 const manifestFile = path.join(publicDir, 'cmp.manifest.json');
 
 async function build() {
-  console.log('📦 Building & Obfuscating ZeroShield CMP SDK...');
+  console.log('📦 Building & Obfuscating Vajra CMP SDK...');
 
   if (!fs.existsSync(sourceFile)) {
     // The CMP source is proprietary and git-ignored, so it isn't present in fresh
@@ -44,11 +44,11 @@ async function build() {
       passes: 2,
     },
     mangle: {
-      toplevel: false, // preserve window.ZeroShield API interface
-      reserved: ['ZeroShield', 'ZeroShieldBanner'],
+      toplevel: false, // preserve window.Vajra API interface
+      reserved: ['Vajra', 'VajraBanner'],
     },
     output: {
-      comments: /^!|ZeroShield CMP SDK/,
+      comments: /^!|Vajra CMP SDK/,
     },
   });
 

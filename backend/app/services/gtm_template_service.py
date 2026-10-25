@@ -1,4 +1,4 @@
-"""Generate GTM custom template JSON for ZeroShield consent integration."""
+"""Generate GTM custom template JSON for Vajra consent integration."""
 
 from uuid import UUID
 
@@ -31,7 +31,7 @@ class GtmTemplateService:
             slug = purpose.name.lower().replace(" ", "_")
             purpose_vars.append(
                 {
-                    "name": f"ZeroShield - {purpose.name} Status",
+                    "name": f"Vajra - {purpose.name} Status",
                     "type": "variable",
                     "parameter": [
                         {"type": "template", "key": "purposeName", "value": purpose.name},
@@ -39,13 +39,13 @@ class GtmTemplateService:
                     "sandboxScript": (
                         "const getWindowProperty = require('getWindowProperty');\n"
                         "const purposeName = data.purposeName;\n"
-                        "const zeroShield = getWindowProperty('ZeroShield');\n"
-                        f"if (zeroShield && zeroShield.consent && zeroShield.consent[purposeName] === true) {{\n"
+                        "const vajra = getWindowProperty('Vajra');\n"
+                        f"if (vajra && vajra.consent && vajra.consent[purposeName] === true) {{\n"
                         "  return true;\n"
                         "}\n"
                         "return false;"
                     ),
-                    "slug": f"zeroshield_{slug}_status",
+                    "slug": f"vajra_{slug}_status",
                 }
             )
 
@@ -56,36 +56,36 @@ class GtmTemplateService:
                 "path": "accounts/0/containers/0/versions/0",
                 "accountId": "0",
                 "containerId": "0",
-                "name": "ZeroShield DPDPA Consent Integration",
+                "name": "Vajra DPDPA Consent Integration",
                 "description": (
-                    "Auto-generated ZeroShield consent variables and triggers. "
+                    "Auto-generated Vajra consent variables and triggers. "
                     "Import into GTM and map to your tag firing conditions."
                 ),
-                "fingerprint": "zeroshield-dpdpa",
+                "fingerprint": "vajra-dpdpa",
                 "tag": [],
                 "trigger": [
                     {
-                        "name": "ZeroShield - Consent Init",
+                        "name": "Vajra - Consent Init",
                         "type": "customEvent",
                         "customEventFilter": [
                             {
                                 "type": "equals",
                                 "parameter": [
                                     {"type": "template", "key": "arg0", "value": "{{_event}}"},
-                                    {"type": "template", "key": "arg1", "value": "zeroshield_consent_init"},
+                                    {"type": "template", "key": "arg1", "value": "vajra_consent_init"},
                                 ],
                             }
                         ],
                     },
                     {
-                        "name": "ZeroShield - Consent Update",
+                        "name": "Vajra - Consent Update",
                         "type": "customEvent",
                         "customEventFilter": [
                             {
                                 "type": "equals",
                                 "parameter": [
                                     {"type": "template", "key": "arg0", "value": "{{_event}}"},
-                                    {"type": "template", "key": "arg1", "value": "zeroshield_consent_update"},
+                                    {"type": "template", "key": "arg1", "value": "vajra_consent_update"},
                                 ],
                             }
                         ],
@@ -98,6 +98,6 @@ class GtmTemplateService:
                 "property_id": str(property_id) if property_id else None,
                 "organization_id": str(organization_id),
                 "purpose_count": len(purpose_vars),
-                "datalayer_events": ["zeroshield_consent_init", "zeroshield_consent_update"],
+                "datalayer_events": ["vajra_consent_init", "vajra_consent_update"],
             },
         }

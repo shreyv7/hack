@@ -1,5 +1,5 @@
 # 🏥 Software Requirements Specification (SRS) & System Architecture
-## Open-DPDPA HealthShield — Universal Healthcare Consent & Data Governance Gateway
+## Vajra Health — Universal Healthcare Consent & Data Governance Gateway
 
 **Document Version:** 2.0.0  
 **Event:** Hacktoberfest × MOSS Hack Day Udupi (Sunday, 25 October 2026, 9:00 AM – 7:30 PM IST)  
@@ -23,8 +23,8 @@ Under India's **Digital Personal Data Protection Act (DPDPA), 2023**:
 
 Currently, hospital systems operate with an **"All-or-Nothing" access paradigm**: when an orthopedist, dermatologist, or radiologist opens a patient's chart, they gain unrestricted visibility into their entire psychiatric and reproductive history. This violates DPDPA Section 6, exposes hospitals to regulatory penalties up to ₹250 Crores, and destroys patient trust.
 
-### 1.2 The Solution: Open-DPDPA HealthShield
-**HealthShield** is a zero-trust, open-source Healthcare Consent Enforcement Gateway and Audit Vault that sits between hospital EHR/EMR databases and healthcare providers. It provides:
+### 1.2 The Solution: Vajra Health
+**Vajra Health** is a zero-trust, open-source Healthcare Consent Enforcement Gateway and Audit Vault that sits between hospital EHR/EMR databases and healthcare providers. It provides:
 1. **Dynamic Purpose-Based Consent Filtering:** Automatically evaluates patient consent against the clinician's stated clinical purpose (`treatment`, `diagnostics`, `research`, `insurance`, `emergency`, `public_health`), deterministically redacting unconsented categories with visible badges (`[REDACTED — no consent for {purpose}]`).
 2. **Break-the-Glass Emergency Protocol:** Enables life-saving access under DPDPA Section 7 with mandatory justification, ephemeral tokens, high-priority audit flagging, and patient notifications.
 3. **Cryptographic Proof Vault:** Every consent grant, withdrawal, and clinical data access decision is sealed in an immutable SHA-256 block-chained audit ledger with Merkle tree verification.
@@ -38,7 +38,7 @@ flowchart TD
         PaperForms["📄 Paper Consent Forms"]
     end
 
-    subgraph HealthShield["🛡️ Open-DPDPA HealthShield Core Gateway"]
+    subgraph Vajra Health["🛡️ Vajra Health Core Gateway"]
         direction TB
         Adapter["🔌 EHR FHIR Ingestion Adapter"]
         Engine["⚡ Healthcare Consent Policy Engine"]
@@ -80,7 +80,7 @@ flowchart TD
 
 ## 2. Universal Healthcare Scope & Department Neutrality
 
-HealthShield is designed as a **universal, department-agnostic healthcare data gateway**. It does not constrain roles to a single specialty (such as a dentist or single clinic); instead, it models any medical institution:
+Vajra Health is designed as a **universal, department-agnostic healthcare data gateway**. It does not constrain roles to a single specialty (such as a dentist or single clinic); instead, it models any medical institution:
 - **Institution Types:** Multi-specialty hospitals, tertiary trauma centers, independent clinics, diagnostic laboratories, health research institutes, and telemedicine platforms.
 - **Dynamic Departments:** General Medicine, Cardiology, Oncology, Psychiatry, Emergency Medicine, Surgery, Orthopedics, Obstetrics & Gynecology, Pediatrics, Pathology, Dermatology, Dental Care.
 - **Universal Personas:**
@@ -92,9 +92,9 @@ HealthShield is designed as a **universal, department-agnostic healthcare data g
 
 ## 3. Existing Component Reuse Matrix
 
-HealthShield maximizes development velocity and production reliability by leveraging the robust, battle-tested foundations of `dpdpa_shield`.
+Vajra Health maximizes development velocity and production reliability by leveraging the robust, battle-tested foundations of `dpdpa_shield`.
 
-| Existing Component in `dpdpa_shield` | Source Path | Reused For in HealthShield | Modifications / Additions |
+| Existing Component in `dpdpa_shield` | Source Path | Reused For in Vajra Health | Modifications / Additions |
 |---|---|---|---|
 | **Proof Vault & Hash Chain** | [models/proof_vault.py](file:///Users/shreyvashistha/Desktop/DPDPHACK/dpdpa_shield/backend/app/models/proof_vault.py)<br>[services/proof_vault_service.py](file:///Users/shreyvashistha/Desktop/DPDPHACK/dpdpa_shield/backend/app/services/proof_vault_service.py) | Tamper-evident logging of every clinical data access decision, consent grant/withdrawal, and break-the-glass emergency event. | Add event types: `HEALTHCARE_ACCESS_EVALUATION`, `BREAK_THE_GLASS_OVERRIDE`, `EHR_CONSENT_DIGITIZATION`. |
 | **Consent Lifecycle & Principal** | [models/consent.py](file:///Users/shreyvashistha/Desktop/DPDPHACK/dpdpa_shield/backend/app/models/consent.py)<br>[models/consent_principal.py](file:///Users/shreyvashistha/Desktop/DPDPHACK/dpdpa_shield/backend/app/models/consent_principal.py) | Core patient representation as Data Principal, consent state machine (`active`, `revoked`, `expired`). | Linked to `HealthcarePatient` entity with Medical Record Number (MRN). |
@@ -174,7 +174,7 @@ Per the Hackathon requirements, **Gemma 4** (`gemma-4-27b-it` or `gemma-4-12b-it
 
 ## 5. EHR/EMR Interoperability Layer (FHIR R4 Aligned)
 
-To enable seamless adoption across hospitals without forcing proprietary data lock-in, HealthShield adopts a **lightweight, pragmatic FHIR R4 JSON schema**.
+To enable seamless adoption across hospitals without forcing proprietary data lock-in, Vajra Health adopts a **lightweight, pragmatic FHIR R4 JSON schema**.
 
 ### 5.1 Clinical Data Categories & Sensitivity Mapping
 
@@ -378,7 +378,7 @@ The frontend is built in React 18 with TypeScript and Tailwind/Vanilla CSS token
 
 ## 11. README & Submission Compliance Checklist
 
-- [x] **Project Name:** Open-DPDPA HealthShield
+- [x] **Project Name:** Vajra Health
 - [x] **License:** MIT License (in root `LICENSE`)
 - [x] **Open-Weight AI Model:** Gemma 4 (`gemma-4-27b-it` / `gemma-4-12b-it`) via Gemini API
 - [x] **Model Terms Linked:** Linked to Google Gemma Open Model terms

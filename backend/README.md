@@ -1,11 +1,10 @@
-# 🛡️ DPDPA Shield — Backend
+# 🛡️ Vajra — Backend
 
 FastAPI + PostgreSQL + SQLAlchemy + Alembic.
 
-This is a **clean scaffold only** — folder structure, config, database wiring,
-base model, migrations, and security helpers. There are **no business routes or
-logic yet** (only a `/api/health` check). It's ready for the team to start
-implementing modules per the repo development plan (when added at repo root).
+This backend includes the existing compliance modules and the HealthShield
+healthcare gateway. See [HEALTHCARE.md](HEALTHCARE.md) for healthcare setup,
+authenticated API integration, demo seeding, AI configuration, and verification.
 
 ---
 
@@ -93,8 +92,7 @@ Never commit `.env`; only placeholders belong in `.env.example`.
 
 ### Step 4 — Run migrations (creates tables)
 
-There are no models yet, so this just initializes Alembic's bookkeeping table.
-Once the team adds models, this is how the schema gets built:
+Apply the migrations to build or update the database schema:
 ```powershell
 alembic upgrade head
 ```

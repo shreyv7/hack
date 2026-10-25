@@ -363,7 +363,7 @@ export function VendorRiskIntelligence(): ReactElement {
       setIsActionLoading(true);
       const res = await scanDiscoveredProcessors(orgId);
       setDiscoveredVendors(res);
-      notify('Shield AI scanned API logs and OAuth gateways. Discovered new shadow IT entries.');
+      notify('Vajra AI scanned API logs and OAuth gateways. Discovered new shadow IT entries.');
     } catch {
       notify('Failed to scan for discovered vendors.');
     } finally {
@@ -1095,7 +1095,7 @@ export function VendorRiskIntelligence(): ReactElement {
               <div className="px-6 py-4 border-b border-[var(--border-default)] flex items-center justify-between">
                 <h3 className="font-semibold flex items-center gap-2">
                   <Shield className="w-5 h-5 text-[var(--brand-primary)]" />
-                  Shield AI Vendor Profiler
+                  Vajra AI Vendor Profiler
                 </h3>
                 <button onClick={() => setInvestigationReport(null)} className="text-[var(--text-tertiary)] hover:text-[var(--text-primary)]">
                   <X className="w-5 h-5" />
@@ -1106,7 +1106,7 @@ export function VendorRiskIntelligence(): ReactElement {
                   <MarkdownRenderer content={investigationReport} />
                 </div>
                 <div className="bg-[var(--status-info-bg)] border border-[var(--status-info)]/30 rounded-lg p-3 text-xs">
-                  <strong>Shield AI:</strong> Audited domain registers. Verified compliance records matches standard checklists.
+                  <strong>Vajra AI:</strong> Audited domain registers. Verified compliance records matches standard checklists.
                 </div>
               </div>
             </div>
@@ -1277,7 +1277,7 @@ export function VendorRiskIntelligence(): ReactElement {
                 </div>
 
                 <div className="bg-[var(--status-info-bg)] border border-[var(--status-info)]/30 rounded-lg p-3 text-xs">
-                  <strong>Shield AI:</strong> After adding the vendor, we'll run automated checks to score security posture and sync CISO compliance status.
+                  <strong>Vajra AI:</strong> After adding the vendor, we'll run automated checks to score security posture and sync CISO compliance status.
                 </div>
               </div>
 

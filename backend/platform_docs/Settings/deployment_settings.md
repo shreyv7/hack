@@ -1,6 +1,6 @@
-# DPDPA Shield — Deployment Settings Technical Specification
+# Vajra — Deployment Settings Technical Specification
 
-This document serves as the **single source of truth** for the **Deployment Settings** page of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the deployment settings editor.
+This document serves as the **single source of truth** for the **Deployment Settings** page of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the deployment settings editor.
 
 ---
 

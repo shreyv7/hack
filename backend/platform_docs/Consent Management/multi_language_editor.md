@@ -1,6 +1,6 @@
-# DPDPA Shield — Multi-Language Editor Technical Specification
+# Vajra — Multi-Language Editor Technical Specification
 
-This document serves as the **single source of truth** for the **Multi-Language Editor** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Multi-Language Editor** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -77,7 +77,7 @@ sequenceDiagram
 ### 3.1 Scenario Workflows
 *   **Automatic Translation Flow**: Admin selects target language ➜ Clicks "Translate" ➜ System queries LibreTranslate mirrors, falls back to MyMemory API, then to local dictionary ➜ Local translation state updated.
 *   **Manual Refinement & Legal Verification Flow**: Legal review member logs in ➜ Inspects translation side-by-side ➜ Modifies terms manually ➜ Checks "Verified by legal team" ➜ Click "Apply Local" ➜ Saves translation pack.
-*   **Runtime SDK Delivery**: The ZeroShield SDK detects the user's browser language. If a localized translation exists, it displays the banner in their preferred language. If no translation is found, it falls back to the default language.
+*   **Runtime SDK Delivery**: The Vajra SDK detects the user's browser language. If a localized translation exists, it displays the banner in their preferred language. If no translation is found, it falls back to the default language.
 
 ---
 

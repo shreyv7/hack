@@ -1,5 +1,5 @@
 """
-Embedding service — provider-aware vectors for Shield AI RAG.
+Embedding service — provider-aware vectors for Vajra AI RAG.
 
   * ``AI_PROVIDER=vertex``  — Gemini Embedding (``gemini-embedding-001``)
   * ``AI_PROVIDER=bedrock`` — Amazon Titan Text Embeddings V2
@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 _embed_lock = threading.Lock()
 
 
-# ── Bedrock client (re-uses the same credential resolution as shield_ai_service) ──
+# ── Bedrock client (re-uses the same credential resolution as vajra_ai_service) ──
 
 
 @lru_cache(maxsize=1)

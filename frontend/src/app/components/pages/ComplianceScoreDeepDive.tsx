@@ -16,9 +16,9 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/app/components/ui/Button';
 import { PenaltyChip } from '@/app/components/ui/PenaltyChip';
 import { ConsentManagementGate } from '@/app/components/pages/ConsentManagementGate';
-import { ShieldAICard } from '@/app/components/common/ShieldAICard';
+import { VajraAICard } from '@/app/components/common/VajraAICard';
 import { useComplianceScore } from '@/hooks/useComplianceScore';
-import { fetchShieldAiStatus, type ShieldAiStatus } from '@/lib/api/shieldAi';
+import { fetchVajraAiStatus, type VajraAiStatus } from '@/lib/api/vajraAi';
 import { fetchWorkspace } from '@/lib/api/workspace';
 import { downloadComplianceScorePdf } from '@/lib/dashboard/scorePdf';
 import { notify } from '@/app/utils/notify';
@@ -83,7 +83,7 @@ function scoreStrokeColor(score: number): string {
 }
 
 /**
- * Deep-dive compliance score dashboard with DPDPA section breakdown and Shield AI insights.
+ * Deep-dive compliance score dashboard with DPDPA section breakdown and Vajra AI insights.
  */
 export function ComplianceScoreDeepDive(): ReactElement {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ export function ComplianceScoreDeepDive(): ReactElement {
   } = useComplianceScore();
   const [expandedSection, setExpandedSection] = useState<string | null>(null);
   const [industry, setIndustry] = useState<string | null>(null);
-  const [shieldAiStatus, setShieldAiStatus] = useState<ShieldAiStatus | null>(null);
+  const [vajraAiStatus, setVajraAiStatus] = useState<VajraAiStatus | null>(null);
 
   const overallScore = score?.overall_score ?? 0;
   const sections = breakdown?.sections ?? [];
@@ -120,9 +120,9 @@ export function ComplianceScoreDeepDive(): ReactElement {
 
   useEffect(() => {
     if (!hasOrg) return;
-    void fetchShieldAiStatus()
-      .then(setShieldAiStatus)
-      .catch(() => setShieldAiStatus({ configured: false, model_id: null, region: null }));
+    void fetchVajraAiStatus()
+      .then(setVajraAiStatus)
+      .catch(() => setVajraAiStatus({ configured: false, model_id: null, region: null }));
   }, [hasOrg]);
 
   const handleExport = (): void => {
@@ -135,7 +135,7 @@ export function ComplianceScoreDeepDive(): ReactElement {
     .flatMap((s) => s.gaps.map((g) => ({ section: s, gap: g })))
     .slice(0, 3);
 
-  const shieldAiContext = useMemo(() => {
+  const vajraAiContext = useMemo(() => {
     if (!score) return '';
     const gapLines = topGaps.map(
       ({ section, gap }) =>
@@ -160,7 +160,7 @@ export function ComplianceScoreDeepDive(): ReactElement {
       .join('\n\n');
   }, [score, topGaps, sections, orgName, industry, overallScore]);
 
-  const shieldAiFallback = useMemo(
+  const vajraAiFallback = useMemo(
     () =>
       topGaps.length > 0
         ? topGaps.map(
@@ -173,7 +173,7 @@ export function ComplianceScoreDeepDive(): ReactElement {
     [topGaps],
   );
 
-  const openShieldAi = (query: string): void => {
+  const openVajraAi = (query: string): void => {
     navigate('/ai/copilot', { state: { query } });
   };
 
@@ -498,7 +498,7 @@ export function ComplianceScoreDeepDive(): ReactElement {
           </div>
         </div>
 
-        {/* Shield AI Insights */}
+        {/* Vajra AI Insights */}
         <div
           className={cn(
             'p-6 rounded-xl border border-[var(--border-default)]',
@@ -516,24 +516,24 @@ export function ComplianceScoreDeepDive(): ReactElement {
                 <Sparkles className="w-5 h-5 text-white" strokeWidth={2} />
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-[var(--text-primary)]">Shield AI&apos;s Insights</h3>
+                <h3 className="text-lg font-semibold text-[var(--text-primary)]">Vajra AI&apos;s Insights</h3>
                 <p className="text-xs text-[var(--text-secondary)] mt-0.5">
-                  {shieldAiStatus?.configured
+                  {vajraAiStatus?.configured
                     ? 'Prioritized actions based on your compliance posture'
-                    : 'Shield AI is not configured — contact your administrator'}
+                    : 'Vajra AI is not configured — contact your administrator'}
                 </p>
               </div>
             </div>
-            <Button variant="secondary" size="sm" onClick={() => openShieldAi(shieldAiContext || 'How can I improve my DPDPA compliance score?')}>
-              Open Shield AI →
+            <Button variant="secondary" size="sm" onClick={() => openVajraAi(vajraAiContext || 'How can I improve my DPDPA compliance score?')}>
+              Open Vajra AI →
             </Button>
           </div>
 
-          <ShieldAICard
+          <VajraAICard
             title="Recommended actions"
             topic="DPDPA 2023 compliance improvement steps based on the organization's compliance score, statutory sections, and open control gaps"
-            context={shieldAiContext}
-            suggestions={shieldAiFallback}
+            context={vajraAiContext}
+            suggestions={vajraAiFallback}
             count={3}
             className="bg-[var(--surface-card)] border border-[var(--border-default)] mb-4"
           />
@@ -560,13 +560,13 @@ export function ComplianceScoreDeepDive(): ReactElement {
                       variant="secondary"
                       size="sm"
                       onClick={() =>
-                        openShieldAi(
+                        openVajraAi(
                           `Explain the DPDPA requirement "${gap.label}" under ${section.statute_reference} ${section.title} and how to close this compliance gap for ${orgName}.`,
                         )
                       }
                     >
                       <Sparkles className="w-3.5 h-3.5 mr-1.5" strokeWidth={2} />
-                      Ask Shield AI
+                      Ask Vajra AI
                     </Button>
                   </div>
                 </div>

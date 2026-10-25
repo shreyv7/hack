@@ -1,4 +1,4 @@
-# 🏥 Open-DPDPA HealthShield — Implementation Plan
+# 🏥 Vajra Health — Implementation Plan
 
 **Hackathon:** Hacktoberfest × MOSS Hack Day Udupi (Sunday, 25 October 2026, 9:00 AM – 7:30 PM IST)  
 **Challenges:** 🏆 Best Open-Source AI Project + 🏆 Best Use of Gemma 4  

@@ -1,6 +1,6 @@
-# DPDPA Shield — Website Integration Technical Specification
+# Vajra — Website Integration Technical Specification
 
-This document serves as the **single source of truth** for the **Website Integration** (JavaScript Web SDK) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Website Integration** (JavaScript Web SDK) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -19,11 +19,11 @@ To allow engineering teams to implement consent compliance in minutes by adding 
 *   **Unconditional Consent (Section 6(1))**: The SDK dynamically blocks all non-essential scripts, preventing "consent walls" and ensuring users can access services even if they deny non-essential tracking purposes.
 
 ### 1.4 Architectural Context
-The SDK loader acts as a middleware gatekeeper between the user's browser, third-party trackers, and the ZeroShield backend APIs:
+The SDK loader acts as a middleware gatekeeper between the user's browser, third-party trackers, and the Vajra backend APIs:
 
 ```mermaid
 graph TD
-    HTML[Client HTML Page] -->|Loads zero-blocking SDK| SDK[ZeroShield JS SDK]
+    HTML[Client HTML Page] -->|Loads zero-blocking SDK| SDK[Vajra JS SDK]
     SDK -->|1. Intercept script tags| DOM[Dynamic DOM Engine]
     SDK -->|2. Fetch Notice Details| API[CDN Notice API]
     SDK -->|3. Get Cached Choice| LS[Local Storage / Cookies]
@@ -56,11 +56,11 @@ sequenceDiagram
     autonumber
     actor Principal as Website End-User
     participant Browser as Browser DOM
-    participant SDK as ZeroShield Web SDK
-    participant CDN as ZeroShield CDN
+    participant SDK as Vajra Web SDK
+    participant CDN as Vajra CDN
     participant API as Recording API
 
-    Browser->>SDK: Parse <script src="zeroshield.js"> tag
+    Browser->>SDK: Parse <script src="vajra.js"> tag
     SDK->>Browser: Set up MutationObserver to intercept script elements
     SDK->>SDK: Query localStorage for existing consent choice
     
@@ -85,7 +85,7 @@ sequenceDiagram
 
 ## 4. Technical Script Interception Architecture
 
-To ensure compliance under DPDPA, third-party trackers must not fire prior to consent. ZeroShield implements a **dual-layer interception engine**:
+To ensure compliance under DPDPA, third-party trackers must not fire prior to consent. Vajra implements a **dual-layer interception engine**:
 
 ### 4.1 HTML Node Modification (Prior to Execution)
 Developers mark third-party scripts with special attributes to prevent auto-execution:
@@ -93,7 +93,7 @@ Developers mark third-party scripts with special attributes to prevent auto-exec
 <!-- Native Tag -->
 <script type="text/javascript" src="https://example.com/analytics.js"></script>
 
-<!-- Refactored DPDPA Shield Tag -->
+<!-- Refactored Vajra Tag -->
 <script type="text/plain" data-zs-purpose="analytics" data-zs-src="https://example.com/analytics.js"></script>
 ```
 *The browser ignores `<script type="text/plain">` blocks. The SDK parses these nodes and changes the type to `text/javascript` only after consent is granted.*
@@ -110,8 +110,8 @@ To intercept trackers created dynamically by third-party libraries (e.g. `docume
             // Intercept dynamic script tags
             Object.defineProperty(element, 'src', {
                 set: function(url) {
-                    const purpose = window.ZeroShield.matchPurpose(url);
-                    if (purpose && !window.ZeroShield.hasConsent(purpose)) {
+                    const purpose = window.Vajra.matchPurpose(url);
+                    if (purpose && !window.Vajra.hasConsent(purpose)) {
                         element.setAttribute('data-zs-blocked-src', url);
                         element.setAttribute('type', 'text/plain');
                         // Prevent source from execution
@@ -155,7 +155,7 @@ When consent is captured, the SDK compiles user choices and sends a signed paylo
 *   **Asynchronous Loading**: The loader script uses the `async` attribute to prevent blocking DOM render trees.
 *   **CDN Cache Invalidation**: Notice schemas are cached on Cloudflare/AWS CloudFront edge nodes with a TTL of 3600 seconds. When a Notice version updates, a webhook triggers a CDN purge to ensure clients fetch new banners.
 *   **Content Security Policy (CSP)**: The SDK is fully compatible with strict CSP configurations. Organizations must add the following parameters:
-    `script-src https://cdn.zeroshield.in; connect-src https://api.zeroshield.in`
+    `script-src https://cdn.vajra.in; connect-src https://api.vajra.in`
 
 ---
 

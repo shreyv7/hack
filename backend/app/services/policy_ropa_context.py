@@ -1,4 +1,4 @@
-"""Build a RoPA snapshot for Shield AI policy generation."""
+"""Build a RoPA snapshot for Vajra AI policy generation."""
 
 from __future__ import annotations
 

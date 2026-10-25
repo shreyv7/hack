@@ -1,6 +1,6 @@
-# DPDPA Shield — Consent Withdrawal Flow Technical Specification
+# Vajra — Consent Withdrawal Flow Technical Specification
 
-This document serves as the **single source of truth** for the **Consent Withdrawal Flow** module of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Consent Withdrawal Flow** module of the Vajra DPDPA compliance platform.
 
 ---
 

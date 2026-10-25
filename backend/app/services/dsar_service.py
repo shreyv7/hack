@@ -399,7 +399,7 @@ class DsarService:
             )
 
     def _notify_closure(self, req: DataRightsRequest, org_name: str, closure_text: str) -> None:
-        pdf_bytes = text_to_pdf_bytes("DPDPA Shield — Closure Letter", closure_text)
+        pdf_bytes = text_to_pdf_bytes("Vajra — Closure Letter", closure_text)
         if req.requester_email:
             send_closure_email(req.requester_email, req.tracking_id, closure_text, pdf_bytes)
         if req.verification_method == "sms" and req.requester_phone:
@@ -1670,7 +1670,7 @@ class DsarService:
         }
         label = right_labels.get(req.right_type, req.right_type.value)
         lines = [
-            f"DPDPA Shield — Request Closure Letter",
+            f"Vajra — Request Closure Letter",
             f"Organization: {org_name}",
             f"Request ID: {req.tracking_id}",
             f"Right exercised: {label}",

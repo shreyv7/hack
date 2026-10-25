@@ -52,16 +52,16 @@ export class ReactAdapter implements InstallationAdapter {
     bannerId: string
   ): string {
     return `// Install NPM package
-npm install @zeroshield/react
+npm install @vajra/react
 
 // In your application root file (e.g. index.js / App.js):
 import React from 'react';
-import { ZeroShieldProvider } from '@zeroshield/react';
+import { VajraProvider } from '@vajra/react';
 import MainLayout from './MainLayout';
 
 function App() {
   return (
-    <ZeroShieldProvider
+    <VajraProvider
       propertyId="${propertyId}"
       apiKey="${apiKeyPrefix}"
       options={{
@@ -71,12 +71,12 @@ function App() {
       }}
     >
       <MainLayout />
-    </ZeroShieldProvider>
+    </VajraProvider>
   );
 }`;
   }
   getGuideTip(): string {
-    return 'Wrap your main App root component inside ZeroShieldProvider. It automatically hooks into context state and controls tracker blockages.';
+    return 'Wrap your main App root component inside VajraProvider. It automatically hooks into context state and controls tracker blockages.';
   }
 }
 
@@ -99,7 +99,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Load ZeroShield compliance script */}
+        {/* Load Vajra compliance script */}
         <Script
           src="${cmpUrl}"
           strategy="afterInteractive"
@@ -117,7 +117,7 @@ export default function RootLayout({ children }) {
 }`;
   }
   getGuideTip(): string {
-    return 'Use next/script afterInteractive strategy. ZeroShield handles scripts executed by GTM dynamically on hydration.';
+    return 'Use next/script afterInteractive strategy. Vajra handles scripts executed by GTM dynamically on hydration.';
   }
 }
 
@@ -133,7 +133,7 @@ export class AngularAdapter implements InstallationAdapter {
   ): string {
     const cmpUrl = getCmpScriptUrl();
     const apiUrl = getPublicApiBaseUrl();
-    return `// 1. Create a script file: src/assets/zeroshield.js
+    return `// 1. Create a script file: src/assets/vajra.js
 (function() {
   var s = document.createElement('script');
   s.async = true;
@@ -148,7 +148,7 @@ export class AngularAdapter implements InstallationAdapter {
 })();
 
 // 2. Include in angular.json "scripts" bundle:
-// "scripts": ["src/assets/zeroshield.js"]`;
+// "scripts": ["src/assets/vajra.js"]`;
   }
   getGuideTip(): string {
     return 'Loading via angular.json scripts array guarantees the blocker initiates prior to the main zone.js and angular bundles.';
@@ -203,8 +203,8 @@ export class GTMAdapter implements InstallationAdapter {
   ): string {
     return `<!-- 1. Place this custom HTML snippet BEFORE GTM container initialization -->
 <script>
-  window.ZeroShieldDataLayer = window.ZeroShieldDataLayer || [];
-  window.ZeroShield = {
+  window.VajraDataLayer = window.VajraDataLayer || [];
+  window.Vajra = {
     hasConsent: function(purp) {
       // Local mock check before GTM initialization completes
       return localStorage.getItem('zs_consent_' + purp) === 'true';
@@ -215,7 +215,7 @@ export class GTMAdapter implements InstallationAdapter {
 <!-- 2. GTM Consent Mode settings are synced automatically once cmp.js loads. -->`;
   }
   getGuideTip(): string {
-    return 'Hook ZeroShield into GTM Consent Mode v2 mappings. Map Google ad_storage and analytics_storage to matching purpose IDs.';
+    return 'Hook Vajra into GTM Consent Mode v2 mappings. Map Google ad_storage and analytics_storage to matching purpose IDs.';
   }
 }
 
@@ -232,22 +232,22 @@ export class WordPressAdapter implements InstallationAdapter {
     const cmpUrl = getCmpScriptUrl();
     const apiUrl = getPublicApiBaseUrl();
     return `// Add this to your child theme's functions.php file:
-function enqueue_zeroshield_cmp() {
+function enqueue_vajra_cmp() {
     wp_enqueue_script(
-        'zeroshield-cmp',
+        'vajra-cmp',
         '${cmpUrl}',
         array(),
         null,
         false
     );
-    wp_script_add_data('zeroshield-cmp', 'data-property-id', '${propertyId}');
-    wp_script_add_data('zeroshield-cmp', 'data-api-key', '${apiKeyPrefix}');
-    wp_script_add_data('zeroshield-cmp', 'data-api-url', '${apiUrl}');
-    wp_script_add_data('zeroshield-cmp', 'data-language', '${language}');
-    wp_script_add_data('zeroshield-cmp', 'data-blocker-mode', '${blockerMode}');
-    ${bannerId && bannerId !== 'null' ? `wp_script_add_data('zeroshield-cmp', 'data-banner-id', '${bannerId}');` : ''}
+    wp_script_add_data('vajra-cmp', 'data-property-id', '${propertyId}');
+    wp_script_add_data('vajra-cmp', 'data-api-key', '${apiKeyPrefix}');
+    wp_script_add_data('vajra-cmp', 'data-api-url', '${apiUrl}');
+    wp_script_add_data('vajra-cmp', 'data-language', '${language}');
+    wp_script_add_data('vajra-cmp', 'data-blocker-mode', '${blockerMode}');
+    ${bannerId && bannerId !== 'null' ? `wp_script_add_data('vajra-cmp', 'data-banner-id', '${bannerId}');` : ''}
 }
-add_action('wp_enqueue_scripts', 'enqueue_zeroshield_cmp', 1);`;
+add_action('wp_enqueue_scripts', 'enqueue_vajra_cmp', 1);`;
   }
   getGuideTip(): string {
     return 'Enqueue script at priority 1 to make it the absolute first resource enqueued on the front end page.';
@@ -265,11 +265,11 @@ export class IOSSwiftAdapter implements InstallationAdapter {
     _bannerId: string
   ): string {
     return `// 1. Add dependency in your Podfile:
-pod 'ZeroShieldCMP', '~> 4.2'
+pod 'VajraCMP', '~> 4.2'
 
 // 2. Initialize in AppDelegate.swift:
 import UIKit
-import ZeroShieldCMP
+import VajraCMP
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -278,10 +278,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         // Initialize Headless SDK
-        ZeroShield.initialize(
+        Vajra.initialize(
             propertyId: "${propertyId}",
             apiKey: "${apiKeyPrefix}",
-            options: ZeroShieldOptions(
+            options: VajraOptions(
                 blockerMode: .${blockerMode},
                 language: "${language}"
             )
@@ -291,7 +291,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 // 3. Query consent state inside views or view controllers:
-if ZeroShield.shared.hasConsent(for: "analytics") {
+if Vajra.shared.hasConsent(for: "analytics") {
     // Safe to initialize tracking trackers or SDKs
     GoogleAnalytics.initialize()
 }`;
@@ -312,24 +312,24 @@ export class AndroidKotlinAdapter implements InstallationAdapter {
     _bannerId: string
   ): string {
     return `// 1. Add to build.gradle dependencies:
-implementation("in.zeroshield:sdk:4.2.1")
+implementation("in.vajra:sdk:4.2.1")
 
 // 2. Initialize in MainApplication.kt:
 package com.company.app
 
 import android.app.Application
-import in.zeroshield.sdk.ZeroShield
-import in.zeroshield.sdk.ZeroShieldOptions
+import in.vajra.sdk.Vajra
+import in.vajra.sdk.VajraOptions
 
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         
-        ZeroShield.initialize(
+        Vajra.initialize(
             context = this,
             propertyId = "${propertyId}",
             apiKey = "${apiKeyPrefix}",
-            options = ZeroShieldOptions(
+            options = VajraOptions(
                 blockerMode = "${blockerMode}",
                 language = "${language}"
             )
@@ -338,12 +338,12 @@ class MainApplication : Application() {
 }
 
 // 3. Check opt-in dynamically:
-if (ZeroShield.hasConsent("analytics")) {
+if (Vajra.hasConsent("analytics")) {
     FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(true)
 }`;
   }
   getGuideTip(): string {
-    return 'Loading the ZeroShield Android library inside Application.onCreate guarantees no background services load trackers before consent resolution.';
+    return 'Loading the Vajra Android library inside Application.onCreate guarantees no background services load trackers before consent resolution.';
   }
 }
 
@@ -359,19 +359,19 @@ export class FlutterAdapter implements InstallationAdapter {
   ): string {
     return `# 1. Add dependency in pubspec.yaml:
 dependencies:
-  zeroshield_cmp: ^4.1.8
+  vajra_cmp: ^4.1.8
 
 # 2. Initialize in main.dart:
 import 'package:flutter/material.dart';
-import 'package:zeroshield_cmp/zeroshield_cmp.dart';
+import 'package:vajra_cmp/vajra_cmp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  await ZeroShield.initialize(
+  await Vajra.initialize(
     propertyId: "${propertyId}",
     apiKey: "${apiKeyPrefix}",
-    options: ZeroShieldOptions(
+    options: VajraOptions(
       blockerMode: "${blockerMode}",
       language: "${language}"
     )
@@ -381,12 +381,12 @@ void main() async {
 }
 
 // 3. Check consent before initializing third-party services:
-if (await ZeroShield.hasConsent("analytics")) {
+if (await Vajra.hasConsent("analytics")) {
   // Initialize third-party plugins
 }`;
   }
   getGuideTip(): string {
-    return 'Ensure WidgetsFlutterBinding.ensureInitialized() is triggered before starting ZeroShield initialization.';
+    return 'Ensure WidgetsFlutterBinding.ensureInitialized() is triggered before starting Vajra initialization.';
   }
 }
 
@@ -401,15 +401,15 @@ export class ReactNativeAdapter implements InstallationAdapter {
     _bannerId: string
   ): string {
     return `// 1. Install NPM module:
-npm install @zeroshield/react-native
+npm install @vajra/react-native
 
 // 2. Import and initialize at application root (e.g. index.js):
 import { AppRegistry } from 'react-native';
 import App from './App';
 import { name as appName } from './app.json';
-import { ZeroShield } from '@zeroshield/react-native';
+import { Vajra } from '@vajra/react-native';
 
-ZeroShield.initialize("${propertyId}", "${apiKeyPrefix}", {
+Vajra.initialize("${propertyId}", "${apiKeyPrefix}", {
   blockerMode: "${blockerMode}",
   language: "${language}"
 });
@@ -417,7 +417,7 @@ ZeroShield.initialize("${propertyId}", "${apiKeyPrefix}", {
 AppRegistry.registerComponent(appName, () => App);
 
 // 3. Check consent states:
-const consented = await ZeroShield.hasConsent("analytics");
+const consented = await Vajra.hasConsent("analytics");
 if (consented) {
   // Launch tracking SDKs
 }`;

@@ -106,7 +106,7 @@ def create_assisted_session(
 ) -> ConsentCaptureSessionRead:
     prop = _resolve_property(db, current_user, property_id, org_id)
     return ConsentCaptureSessionService(db).create_session(
-        prop, body, ip_hash="teller-ui", user_agent="ZeroShield-Teller-UI"
+        prop, body, ip_hash="teller-ui", user_agent="Vajra-Teller-UI"
     )
 
 
@@ -126,7 +126,7 @@ def verify_assisted_otp(
         body.otp_code,
         auto_complete=body.auto_complete,
         ip_hash="teller-ui",
-        user_agent="ZeroShield-Teller-UI",
+        user_agent="Vajra-Teller-UI",
     )
 
 
@@ -140,7 +140,7 @@ def resend_assisted_otp(
 ) -> ConsentCaptureSessionRead:
     prop = _resolve_property(db, current_user, property_id, org_id)
     return ConsentCaptureSessionService(db).resend_otp(
-        prop, session_id, ip_hash="teller-ui", user_agent="ZeroShield-Teller-UI"
+        prop, session_id, ip_hash="teller-ui", user_agent="Vajra-Teller-UI"
     )
 
 
@@ -154,5 +154,5 @@ def complete_assisted_session(
 ) -> ConsentCaptureSessionRead:
     prop = _resolve_property(db, current_user, property_id, org_id)
     return ConsentCaptureSessionService(db).complete_session(
-        prop, session_id, ip_hash="teller-ui", user_agent="ZeroShield-Teller-UI"
+        prop, session_id, ip_hash="teller-ui", user_agent="Vajra-Teller-UI"
     )

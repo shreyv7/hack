@@ -128,7 +128,7 @@ function renderCover(
   exportedAt: string,
   summary: string
 ): void {
-  pdf.title('DPDPA Shield — Evidence Pack');
+  pdf.title('Vajra — Evidence Pack');
   pdf.heading(sectionTitle);
   pdf.paragraph(summary);
   pdf.field('Organization', context.organizationName);
@@ -210,7 +210,7 @@ export function downloadConsentNoticesEvidencePdf(
   );
   renderNotices(pdf, notices);
   pdf.paragraph(
-    'This PDF was generated from DPDPA Shield consent management records for audit and compliance evidence purposes.'
+    'This PDF was generated from Vajra consent management records for audit and compliance evidence purposes.'
   );
   pdf.save(filename);
   return filename;
@@ -234,7 +234,7 @@ export function downloadPurposeRegistryEvidencePdf(
   );
   renderPurposes(pdf, purposes);
   pdf.paragraph(
-    'This PDF was generated from DPDPA Shield consent management records for audit and compliance evidence purposes.'
+    'This PDF was generated from Vajra consent management records for audit and compliance evidence purposes.'
   );
   pdf.save(filename);
   return filename;
@@ -261,7 +261,7 @@ export function downloadFullConsentEvidencePdf(
   pdf.newPage();
   renderPurposes(pdf, purposes);
   pdf.paragraph(
-    'This PDF was generated from DPDPA Shield consent management records for audit and compliance evidence purposes.'
+    'This PDF was generated from Vajra consent management records for audit and compliance evidence purposes.'
   );
   pdf.save(filename);
   return filename;

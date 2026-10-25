@@ -154,7 +154,7 @@ def ai_assist(
     db: Session = Depends(get_db),
     org_id: UUID | None = Query(default=None),
 ) -> GovernanceAiAssistResponse:
-    """Shield AI governance assistant (primary AI endpoint)."""
+    """Vajra AI governance assistant (primary AI endpoint)."""
     return GovernanceAiService(db).assist(current_user, body, org_id=org_id)
 
 

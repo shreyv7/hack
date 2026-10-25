@@ -63,7 +63,7 @@ export function AccessRestrictedModal({
     void navigate('/dashboard', { replace: true });
   };
 
-  const adminEmail = 'admin@zeroshield.in'; // fallback; ideally from org settings
+  const adminEmail = 'admin@vajra.dev'; // fallback; ideally from org settings
 
   return (
     /* Backdrop: blurs the page behind the modal */

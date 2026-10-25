@@ -1,5 +1,5 @@
 """
-CLI script — index platform documentation for Shield AI RAG.
+CLI script — index platform documentation for Vajra AI RAG.
 
 Usage (from the backend directory):
     python -m app.scripts.index_docs
@@ -26,7 +26,7 @@ def main() -> None:
 
     if not settings.ai_configured:
         logger.error(
-            "❌ Shield AI is not configured — cannot generate embeddings.  "
+            "❌ Vajra AI is not configured — cannot generate embeddings.  "
             "Set AI_PROVIDER=vertex with GOOGLE_CLOUD_PROJECT, or "
             "AI_PROVIDER=bedrock with BEDROCK_MODEL_ID, then try again."
         )
@@ -37,7 +37,7 @@ def main() -> None:
 
     db = SessionLocal()
     try:
-        logger.info("🚀 Starting Shield AI documentation indexing …")
+        logger.info("🚀 Starting Vajra AI documentation indexing …")
         stats = DocIngestionService(db).ingest_all()
         logger.info("✅ Done!  Summary: %s", stats)
 

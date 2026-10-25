@@ -1,6 +1,6 @@
-# DPDPA Shield — Received Consents Technical Specification
+# Vajra — Received Consents Technical Specification
 
-This document serves as the **single source of truth** for the **Received Consents** module of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Received Consents** module of the Vajra DPDPA compliance platform.
 
 ---
 

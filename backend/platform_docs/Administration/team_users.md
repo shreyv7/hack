@@ -1,4 +1,4 @@
-# DPDPA Shield — Team & Users Technical Specification
+# Vajra — Team & Users Technical Specification
 
 This document covers the **Team & Users** administration page for admin and superadmin users.
 
@@ -50,7 +50,7 @@ Table of organization users:
 | Manage team users | No | Yes | Yes |
 | Manage organizations | No | No | Yes |
 | Approve signups | No | No | Yes |
-| Re-index Shield AI docs | No | No | Yes |
+| Re-index Vajra AI docs | No | No | Yes |
 
 ---
 

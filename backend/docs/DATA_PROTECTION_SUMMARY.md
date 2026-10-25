@@ -1,6 +1,6 @@
 # Data Protection Module — Work Summary
 
-**Module:** Data Protection (DPDPA Shield)
+**Module:** Data Protection (Vajra)
 **Status:** Implemented and working ✅
 
 ---

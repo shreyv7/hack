@@ -1,11 +1,11 @@
 """
 Document Ingestion Service — reads, filters, chunks, embeds and stores
-platform documentation for Shield AI's RAG pipeline.
+platform documentation for Vajra AI's RAG pipeline.
 
 Key design decisions
 --------------------
 * **Content filtering**: Sections about backend internals (API endpoints,
-  database schemas, routers, migrations) are *excluded* so Shield AI never
+  database schemas, routers, migrations) are *excluded* so Vajra AI never
   leaks architecture details to platform users.
 * **Change detection**: Each chunk is SHA-256 hashed.  On re-index, only
   new/changed chunks are embedded, and chunks for deleted files are removed.
@@ -35,12 +35,12 @@ logger = logging.getLogger(__name__)
 # ── Configuration ─────────────────────────────────────────────────────────────
 
 def _docs_root() -> Path:
-    """Platform docs used for Shield AI RAG.
+    """Platform docs used for Vajra AI RAG.
 
     Local uvicorn: repo-level ``docs/`` (three parents above this file).
-    Docker: set ``SHIELD_AI_DOCS_DIR`` to the mounted docs path.
+    Docker: set ``VAJRA_AI_DOCS_DIR`` to the mounted docs path.
     """
-    configured = (settings.SHIELD_AI_DOCS_DIR or "").strip()
+    configured = (settings.VAJRA_AI_DOCS_DIR or "").strip()
     if configured:
         return Path(configured)
     return Path(__file__).resolve().parents[3] / "docs"

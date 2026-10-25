@@ -83,7 +83,7 @@ This document outlines the manual setup procedures, credentials, environment var
 - **Configuration Steps**:
   1. Register for an enterprise account on the Shiprocket Portal.
   2. Define and verify a pickup warehouse location (pickup address, city, state, pincode) in the Shiprocket settings.
-  3. Input your Shiprocket login credentials in the ZeroShield notice delivery settings.
+  3. Input your Shiprocket login credentials in the Vajra notice delivery settings.
   4. The system will automatically authenticate, create forward adhoc envelope orders, and capture waybills (AWB) and real-time tracking webhook callbacks.
 
 ---

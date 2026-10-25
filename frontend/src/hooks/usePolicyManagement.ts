@@ -282,7 +282,7 @@ export function usePolicyManagement() {
       const result = await policyApi.generatePolicyFromRopa(policyType, orgIdParam);
       const sourceLabel =
         result.source === 'bedrock' || result.source === 'vertex'
-          ? 'Shield AI'
+          ? 'Vajra AI'
           : 'rule-based engine';
       notify(
         result.is_new_policy

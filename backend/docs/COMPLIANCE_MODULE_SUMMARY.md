@@ -29,7 +29,7 @@ All pages are **org-scoped**. Superadmin selects tenant via org picker.
 ## Page 1 — DPDPA Map
 
 ### Purpose
-An interactive **compliance coverage map** — chapters and sections of the DPDPA linked to implemented (or planned) ZeroShield features, with evidence counts and review status.
+An interactive **compliance coverage map** — chapters and sections of the DPDPA linked to implemented (or planned) Vajra features, with evidence counts and review status.
 
 ### What users do
 - Browse chapters (Consent, Security, Rights, etc.)  

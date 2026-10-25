@@ -543,7 +543,7 @@ export function DPIAModule(): ReactElement {
     }
   };
 
-  // Shield AI Analysis
+  // Vajra AI Analysis
   const handleAnalyzeAI = async () => {
     if (!selectedDpia) return;
     setIsAiLoading(true);
@@ -556,9 +556,9 @@ export function DPIAModule(): ReactElement {
       ]);
       setAiAnalysis(analysisRes.analysis);
       setAiRecommendations(recRes.recommendations);
-      notify('Shield AI Analysis complete');
+      notify('Vajra AI Analysis complete');
     } catch (err: any) {
-      notify(err?.message || 'Failed to run Shield AI analysis');
+      notify(err?.message || 'Failed to run Vajra AI analysis');
     } finally {
       setIsAiLoading(false);
     }
@@ -976,7 +976,7 @@ export function DPIAModule(): ReactElement {
                   }`}
                 >
                   <Sparkles className={`size-3.5 ${isAiLoading ? 'animate-pulse' : 'text-indigo-400'}`} />
-                  {isAiLoading ? 'Analyzing...' : 'Shield AI Analysis'}
+                  {isAiLoading ? 'Analyzing...' : 'Vajra AI Analysis'}
                 </button>
                 <button
                   onClick={handleRunRuleChecks}
@@ -1245,11 +1245,11 @@ export function DPIAModule(): ReactElement {
                             <option value="No">No</option>
                           </select>
 
-                          {/* Shield AI Dynamic context panel */}
+                          {/* Vajra AI Dynamic context panel */}
                           <div className="p-3 rounded-lg bg-indigo-500/5 border border-indigo-500/10 flex items-start gap-2.5">
                             <Sparkles className="size-4 text-indigo-400 shrink-0 mt-0.5" />
                             <div className="text-[10px] leading-relaxed">
-                              <span className="font-bold text-indigo-400">Shield AI Assistant:</span> Selecting 'Yes' automatically escalates compliance score checks and triggers verification requirement for verified parental consent.
+                              <span className="font-bold text-indigo-400">Vajra AI Assistant:</span> Selecting 'Yes' automatically escalates compliance score checks and triggers verification requirement for verified parental consent.
                             </div>
                           </div>
                         </div>
@@ -1951,12 +1951,12 @@ export function DPIAModule(): ReactElement {
                     <div className="space-y-4 text-xs">
                       <h4 className="text-sm font-bold flex items-center gap-1.5 text-[var(--text-primary)]">
                         <Sparkles className="size-4.5 text-indigo-400" />
-                        Shield AI Governance Analysis
+                        Vajra AI Governance Analysis
                       </h4>
                       
                       {!aiAnalysis ? (
                         <div className="p-5 rounded-xl border border-dashed border-[var(--border-default)] text-center text-xs text-[var(--text-secondary)] bg-[var(--surface-raised)]/10">
-                          Run a Shield AI Analysis from the header to see dynamic insights against Indian DPDPA regulations.
+                          Run a Vajra AI Analysis from the header to see dynamic insights against Indian DPDPA regulations.
                         </div>
                       ) : (
                         <div className="space-y-4">

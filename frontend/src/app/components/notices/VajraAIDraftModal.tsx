@@ -3,17 +3,17 @@ import { useState, useRef } from 'react';
 import { Modal } from '@/app/components/ui/Modal';
 import { Button } from '@/app/components/ui/Button';
 import { FileUp, HelpCircle, FileText, Sparkles } from 'lucide-react';
-import { draftConsentFromUpload, draftConsentFromQuestions, ConsentDraftResult } from '@/lib/api/shieldAi';
+import { draftConsentFromUpload, draftConsentFromQuestions, ConsentDraftResult } from '@/lib/api/vajraAi';
 import { notify } from '@/app/utils/notify';
 
-interface ShieldAIDraftModalProps {
+interface VajraAIDraftModalProps {
   onClose: () => void;
   onDraftReady: (draft: ConsentDraftResult) => void;
 }
 
 type Mode = 'select' | 'upload' | 'questions' | 'loading';
 
-export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModalProps): ReactElement {
+export function VajraAIDraftModal({ onClose, onDraftReady }: VajraAIDraftModalProps): ReactElement {
   const [mode, setMode] = useState<Mode>('select');
   const [file, setFile] = useState<File | null>(null);
   const [dragActive, setDragActive] = useState(false);
@@ -89,7 +89,7 @@ export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModal
     setLoadingStep('Extracting document text...');
     
     try {
-      setTimeout(() => setLoadingStep('Analyzing with Shield AI RAG...'), 2000);
+      setTimeout(() => setLoadingStep('Analyzing with Vajra AI RAG...'), 2000);
       setTimeout(() => setLoadingStep('Formulating DPDPA notice draft...'), 5000);
 
       const result = await draftConsentFromUpload(file);
@@ -157,14 +157,14 @@ export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModal
   return (
     <Modal
       size={mode === 'questions' ? 'lg' : 'md'}
-      title="Draft with Shield AI"
+      title="Draft with Vajra AI"
       onClose={onClose}
     >
       <div className="space-y-6">
         {mode === 'select' && (
           <div className="space-y-4">
             <p className="text-sm text-[var(--text-secondary)]">
-              Choose how you want Shield AI to construct your DPDPA-compliant consent notice draft. You can always edit all fields afterwards.
+              Choose how you want Vajra AI to construct your DPDPA-compliant consent notice draft. You can always edit all fields afterwards.
             </p>
 
             <div className="grid grid-cols-2 gap-4 pt-2">
@@ -264,7 +264,7 @@ export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModal
                   Clear File
                 </Button>
                 <Button variant="primary" size="md" onClick={runUploadDraft}>
-                  ⚡ Draft with Shield AI
+                  ⚡ Draft with Vajra AI
                 </Button>
               </div>
             )}
@@ -398,7 +398,7 @@ export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModal
                 Cancel
               </Button>
               <Button variant="primary" size="md" onClick={handleQuestionsSubmit}>
-                ⚡ Draft with Shield AI
+                ⚡ Draft with Vajra AI
               </Button>
             </div>
           </div>
@@ -413,7 +413,7 @@ export function ShieldAIDraftModal({ onClose, onDraftReady }: ShieldAIDraftModal
               </div>
             </div>
             <div className="text-center">
-              <h4 className="font-semibold text-[var(--text-primary)]">Processing with Shield AI</h4>
+              <h4 className="font-semibold text-[var(--text-primary)]">Processing with Vajra AI</h4>
               <p className="text-xs text-[var(--text-secondary)] mt-1 animate-pulse font-mono tracking-wider uppercase">
                 {loadingStep}
               </p>

@@ -7,8 +7,8 @@ from dataclasses import dataclass
 from typing import Any
 from urllib import error, request
 
-from zeroshield.config import ZeroShieldConfig
-from zeroshield.token import DecisionTokenPayload, lookup_purpose_allowed, verify_decision_token
+from vajra.config import VajraConfig
+from vajra.token import DecisionTokenPayload, lookup_purpose_allowed, verify_decision_token
 
 
 @dataclass(frozen=True)
@@ -28,7 +28,7 @@ class ConsentEvaluation:
 
 def _fetch_decision_api(
     *,
-    config: ZeroShieldConfig,
+    config: VajraConfig,
     purpose_key: str,
     token: str | None,
     session_id: str | None,
@@ -66,7 +66,7 @@ def _fetch_decision_api(
 
 def _fetch_suppression_check(
     *,
-    config: ZeroShieldConfig,
+    config: VajraConfig,
     purpose_key: str,
     identifiers: list[dict[str, str | None]],
 ) -> dict[str, Any]:
@@ -94,13 +94,13 @@ def filter_consented(
     *,
     purpose_key: str,
     identifiers: list[dict[str, str | None]],
-    config: ZeroShieldConfig | None = None,
+    config: VajraConfig | None = None,
 ) -> list[dict[str, Any]]:
     """Return only identifiers allowed for the given purpose (marketing-send filter).
 
     Each identifier dict may include ``ref``, ``principal_email``, and/or ``principal_phone``.
     """
-    cfg = config or ZeroShieldConfig.from_env()
+    cfg = config or VajraConfig.from_env()
     data = _fetch_suppression_check(
         config=cfg,
         purpose_key=purpose_key,
@@ -116,7 +116,7 @@ def filter_consented(
 def evaluate_consent(
     *,
     purpose_key: str,
-    config: ZeroShieldConfig,
+    config: VajraConfig,
     token: str | None = None,
     session_id: str | None = None,
     principal_email: str | None = None,

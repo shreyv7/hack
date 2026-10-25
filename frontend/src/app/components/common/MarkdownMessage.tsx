@@ -10,7 +10,7 @@ interface MarkdownMessageProps {
 }
 
 /**
- * Renders Shield AI replies as formatted markdown — headings, bold text,
+ * Renders Vajra AI replies as formatted markdown — headings, bold text,
  * lists, code, and GitHub-style tables — instead of raw `**` / `|` characters.
  */
 export function MarkdownMessage({ children, className }: MarkdownMessageProps): ReactElement {

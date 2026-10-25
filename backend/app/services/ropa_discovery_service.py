@@ -16,14 +16,14 @@ from app.models.ropa import (
     ProcessingActivity,
     RopaDiscoverySuggestion,
 )
-from app.services import shield_ai_service
+from app.services import vajra_ai_service
 from app.services.ropa_discovery_context import (
     RopaDiscoveryContext,
     build_ropa_discovery_context,
 )
 from app.services.compliance_base import ComplianceBaseService
 from app.services.ropa_service import RopaService
-from app.services.shield_ai_service import ShieldAIError
+from app.services.vajra_ai_service import VajraAIError
 
 logger = logging.getLogger(__name__)
 
@@ -280,14 +280,14 @@ class RopaDiscoveryService(ComplianceBaseService):
     def _infer_suggestions(self, context: RopaDiscoveryContext) -> list[dict]:
         if settings.ai_configured:
             try:
-                items = shield_ai_service.ropa_discovery_suggestions(
+                items = vajra_ai_service.ropa_discovery_suggestions(
                     context=context.to_json(),
                     max_suggestions=_MAX_SUGGESTIONS_PER_SCAN,
                 )
                 if items:
                     return [self._normalize_suggestion(item) for item in items]
                 logger.info("AI provider returned no RoPA suggestions; using rule-based fallback")
-            except ShieldAIError as exc:
+            except VajraAIError as exc:
                 logger.warning("RoPA discovery AI call failed, using fallback: %s", exc)
 
         return self._fallback_rule_based_suggestions(context)

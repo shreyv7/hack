@@ -34,7 +34,7 @@ class CoverageService:
             elapsed = int((datetime.now(timezone.utc) - start).total_seconds() * 1000)
             body = response.text[:50000]
             snippet_detected = bool(
-                re.search(r"cmp\.js|zeroshield|consent-banner|data-cmp", body, re.IGNORECASE)
+                re.search(r"cmp\.js|vajra|consent-banner|data-cmp", body, re.IGNORECASE)
             )
             issues: list[str] = []
             if not snippet_detected:

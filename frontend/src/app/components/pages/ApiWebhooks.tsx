@@ -291,10 +291,10 @@ export function ApiWebhooks(): ReactElement {
     ? 'zsk_live_pending'
     : `${activeKeyPrefix}-YOUR_API_KEY_SECRET`;
 
-  const curlConfig = `curl -X GET "https://api.zeroshield.in/public/v1/integrations/sdk/config/${selectedPropertyId || 'PROPERTY_ID'}" \\
+  const curlConfig = `curl -X GET "https://api.vajra.in/public/v1/integrations/sdk/config/${selectedPropertyId || 'PROPERTY_ID'}" \\
   -H "X-API-KEY: ${activeKey}"`;
 
-  const curlConsent = `curl -X POST "https://api.zeroshield.in/public/v1/integrations/sdk/consent" \\
+  const curlConsent = `curl -X POST "https://api.vajra.in/public/v1/integrations/sdk/consent" \\
   -H "Content-Type: application/json" \\
   -H "X-API-KEY: ${activeKey}" \\
   -d '{
@@ -313,7 +313,7 @@ export function ApiWebhooks(): ReactElement {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPropertyId]);
 
-  const curlHeartbeat = `curl -X POST "https://api.zeroshield.in/public/v1/integrations/sdk/heartbeat/YOUR_DEPLOYMENT_ID" \\
+  const curlHeartbeat = `curl -X POST "https://api.vajra.in/public/v1/integrations/sdk/heartbeat/YOUR_DEPLOYMENT_ID" \\
   -H "Content-Type: application/json" \\
   -H "X-API-KEY: ${activeKey}" \\
   -d '{
@@ -496,7 +496,7 @@ export function ApiWebhooks(): ReactElement {
                   </div>
                   <p className="text-[10px] text-[var(--text-tertiary)] mt-1.5">
                     Live consent events fire automatically. Test events use the first selected type above.
-                    HMAC signing uses <code>X-ZeroShield-Signature</code> + <code>X-ZeroShield-Timestamp</code>.
+                    HMAC signing uses <code>X-Vajra-Signature</code> + <code>X-Vajra-Timestamp</code>.
                   </p>
                 </div>
 

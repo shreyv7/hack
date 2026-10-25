@@ -1,4 +1,4 @@
-"""Local verification of ZeroShield bundle decision tokens (HS256, per-property secret)."""
+"""Local verification of Vajra bundle decision tokens (HS256, per-property secret)."""
 
 from __future__ import annotations
 

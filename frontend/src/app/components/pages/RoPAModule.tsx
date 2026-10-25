@@ -338,7 +338,7 @@ export function RoPAModule(): ReactElement {
     try {
       const res = await scanRopaSuggestions(orgIdParam);
       setSuggestions(res);
-      notify('Shield AI discovery scanner completed. Found suggestions.');
+      notify('Vajra AI discovery scanner completed. Found suggestions.');
       void refreshActivitiesAndDashboard();
     } catch (err) {
       notify('Discovery scan failed.');
@@ -1339,7 +1339,7 @@ export function RoPAModule(): ReactElement {
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="size-4 text-purple-600" />
             <h3 className="font-medium text-purple-900 dark:text-purple-200">
-              Shield AI Auto-discovery suggestions ({suggestions.length} pending review)
+              Vajra AI Auto-discovery suggestions ({suggestions.length} pending review)
             </h3>
           </div>
           <div className="space-y-4">

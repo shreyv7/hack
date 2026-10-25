@@ -1,4 +1,4 @@
-"""FastAPI integration for ZeroShield consent enforcement."""
+"""FastAPI integration for Vajra consent enforcement."""
 
 from __future__ import annotations
 
@@ -6,8 +6,8 @@ import functools
 import inspect
 from typing import Any, Callable, Literal
 
-from zeroshield.config import ZeroShieldConfig
-from zeroshield.enforcement import ConsentEvaluation, evaluate_consent
+from vajra.config import VajraConfig
+from vajra.enforcement import ConsentEvaluation, evaluate_consent
 
 DenyBehavior = Literal["reject", "strip_fields", "queue_pending"]
 
@@ -35,7 +35,7 @@ def require_consent(
     purpose_key: str,
     *,
     deny_behavior: DenyBehavior = "reject",
-    config: ZeroShieldConfig | None = None,
+    config: VajraConfig | None = None,
     session_header: str = "X-ZS-Session-Id",
     token_header: str = "X-ZS-Decision-Token",
 ):
@@ -47,7 +47,7 @@ def require_consent(
         @functools.wraps(func)
         async def async_wrapper(*args: Any, **kwargs: Any):
             request = _extract_request(signature, args, kwargs)
-            cfg = config or ZeroShieldConfig.from_env()
+            cfg = config or VajraConfig.from_env()
             evaluation = evaluate_consent(
                 purpose_key=purpose_key,
                 config=cfg,
@@ -61,7 +61,7 @@ def require_consent(
                 if deny_response is not None:
                     return deny_response
             if request is not None:
-                request.state.zeroshield_consent = evaluation
+                request.state.vajra_consent = evaluation
             result = func(*args, **kwargs)
             if inspect.isawaitable(result):
                 return await result
@@ -70,7 +70,7 @@ def require_consent(
         @functools.wraps(func)
         def sync_wrapper(*args: Any, **kwargs: Any):
             request = _extract_request(signature, args, kwargs)
-            cfg = config or ZeroShieldConfig.from_env()
+            cfg = config or VajraConfig.from_env()
             evaluation = evaluate_consent(
                 purpose_key=purpose_key,
                 config=cfg,
@@ -84,7 +84,7 @@ def require_consent(
                 if deny_response is not None:
                     return deny_response
             if request is not None:
-                request.state.zeroshield_consent = evaluation
+                request.state.vajra_consent = evaluation
             return func(*args, **kwargs)
 
         return async_wrapper if inspect.iscoroutinefunction(func) else sync_wrapper

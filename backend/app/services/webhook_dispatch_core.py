@@ -43,12 +43,12 @@ def build_webhook_headers(
     headers = {
         "Content-Type": "application/json",
         "User-Agent": user_agent,
-        "X-ZeroShield-Event": event_type,
+        "X-Vajra-Event": event_type,
     }
     if signing_secret:
         timestamp = str(int(time.time()))
-        headers["X-ZeroShield-Timestamp"] = timestamp
-        headers["X-ZeroShield-Signature"] = sign_webhook_payload(
+        headers["X-Vajra-Timestamp"] = timestamp
+        headers["X-Vajra-Signature"] = sign_webhook_payload(
             payload_bytes, signing_secret, timestamp
         )
     if bearer_token:
@@ -63,7 +63,7 @@ def post_webhook_with_retries(
     payload: dict[str, Any],
     *,
     event_type: str,
-    user_agent: str = "ZeroShield-Webhook/1.0",
+    user_agent: str = "Vajra-Webhook/1.0",
     signing_secret: str | None = None,
     bearer_token: str | None = None,
     extra_headers: dict[str, str] | None = None,

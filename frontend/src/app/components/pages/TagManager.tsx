@@ -1107,7 +1107,7 @@ export function TagManager(): ReactElement {
                         {filteredViolations.length === 0 ? (
                           <tr>
                             <td colSpan={8} className="p-8 text-center text-[var(--text-tertiary)]">
-                              No violations detected. ZeroShield blocker engine active.
+                              No violations detected. Vajra blocker engine active.
                             </td>
                           </tr>
                         ) : (

@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from app.models.consent import ConsentNoticeVersion, LegalBasis
 from app.models.consent_receipt import ConsentReceipt
+from app.models.organization import Organization
 from app.models.proof_vault import ProofVaultRecord, ProofVaultVerification
 from app.schemas.proof_vault import (
     ProofVaultChainVerifyResult,
@@ -145,6 +146,10 @@ class ProofVaultService:
         receipt_signature: str | None = None,
     ) -> ProofVaultRecord:
         created_at = ProofVaultService._normalize_dt(created_at)
+        # All legacy and healthcare writers must lock the same stable row before
+        # reading the head. Locking the previous block alone can fork the chain
+        # after a waiter resumes, and cannot serialize creation of the first block.
+        db.query(Organization).filter_by(id=org_id).with_for_update().one()
         last_rec = ProofVaultService._lock_last_block(db, org_id)
 
         if last_rec:
@@ -568,7 +573,8 @@ class ProofVaultService:
         )
 
     def verify_entire_chain(
-        self, db: Session, org_id: UUID, user_id: UUID | None = None
+        self, db: Session, org_id: UUID, user_id: UUID | None = None,
+        *, persist_verification: bool = True,
     ) -> ProofVaultChainVerifyResult:
         records = (
             db.query(ProofVaultRecord)
@@ -608,17 +614,18 @@ class ProofVaultService:
         valid = len(errors) == 0
         hashes = [r.merkle_leaf_hash for r in records]
         merkle_root = self.compute_merkle_root(hashes) or "0" * 64
-        ver = ProofVaultVerification(
-            organization_id=org_id,
-            verified_at=datetime.now(timezone.utc),
-            verified_by_user_id=user_id,
-            merkle_root=merkle_root,
-            records_checked=blocks_checked,
-            integrity_ok=valid,
-            errors=json.dumps(errors) if errors else None,
-        )
-        db.add(ver)
-        db.commit()
+        if persist_verification:
+            ver = ProofVaultVerification(
+                organization_id=org_id,
+                verified_at=datetime.now(timezone.utc),
+                verified_by_user_id=user_id,
+                merkle_root=merkle_root,
+                records_checked=blocks_checked,
+                integrity_ok=valid,
+                errors=json.dumps(errors) if errors else None,
+            )
+            db.add(ver)
+            db.commit()
 
         return ProofVaultChainVerifyResult(
             valid=valid,

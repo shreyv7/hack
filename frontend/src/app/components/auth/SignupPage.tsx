@@ -62,7 +62,7 @@ export function SignupPage({ onSwitchToLogin }: SignupPageProps): ReactElement {
           </div>
           <h1 className="text-2xl font-semibold text-[var(--text-primary)]">Create your workspace</h1>
           <p className="mt-2 text-sm text-[var(--text-secondary)]">
-            Register your organization on DPDPA Shield
+            Register your organization on Vajra
           </p>
         </div>
 

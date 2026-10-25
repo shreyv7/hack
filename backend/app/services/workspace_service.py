@@ -438,7 +438,7 @@ class WorkspaceService:
                     "org_id": org_id,
                     "actor_id": user.id,
                     "entity_id": control.id,
-                    "desc": "Shield AI triggered automated scans for shadow IT vendor discovery across integration channels."
+                    "desc": "Vajra AI triggered automated scans for shadow IT vendor discovery across integration channels."
                 }
             )
         return self.list_discovered_processors(user, org_id)

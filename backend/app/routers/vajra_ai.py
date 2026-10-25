@@ -1,4 +1,4 @@
-"""Shield AI endpoints — provider-agnostic assistant (Vertex or Bedrock)."""
+"""Vajra AI endpoints — provider-agnostic assistant (Vertex or Bedrock)."""
 
 from typing import Annotated
 from uuid import UUID
@@ -11,7 +11,7 @@ from app.core.config import settings
 from app.core.database import get_db
 from app.core.dependencies import get_current_user
 from app.models.user import User
-from app.schemas.shield_ai import (
+from app.schemas.vajra_ai import (
     ChatRequest,
     ChatResponse,
     ContextItemRead,
@@ -27,19 +27,19 @@ from app.schemas.shield_ai import (
     SendMessageRequest,
     StatusResponse,
 )
-from app.services import shield_ai_service
+from app.services import vajra_ai_service
 from app.services.ai_context_service import AiContextService
 from app.services.ai_conversation_service import AiConversationService
-from app.services.shield_ai_service import ShieldAIError
+from app.services.vajra_ai_service import VajraAIError
 
-router = APIRouter(prefix="/ai", tags=["shield-ai"])
+router = APIRouter(prefix="/ai", tags=["vajra-ai"])
 
 
 def _handle(call):
-    """Run a Shield AI service call, mapping failures to HTTP errors."""
+    """Run a Vajra AI service call, mapping failures to HTTP errors."""
     try:
         return call()
-    except ShieldAIError as exc:
+    except VajraAIError as exc:
         # 503: the feature is unconfigured or the AI provider is unreachable — a server-
         # side condition the caller can't fix by changing the request body.
         raise HTTPException(
@@ -48,10 +48,10 @@ def _handle(call):
 
 
 @router.get("/status", response_model=StatusResponse)
-def shield_ai_status(
+def vajra_ai_status(
     _current_user: Annotated[User, Depends(get_current_user)],
 ) -> StatusResponse:
-    """Report whether Shield AI is configured (so the UI can degrade gracefully)."""
+    """Report whether Vajra AI is configured (so the UI can degrade gracefully)."""
     configured = settings.ai_configured
     return StatusResponse(
         configured=configured,
@@ -62,12 +62,12 @@ def shield_ai_status(
 
 
 @router.post("/chat", response_model=ChatResponse)
-def shield_ai_chat(
+def vajra_ai_chat(
     payload: ChatRequest,
     _current_user: Annotated[User, Depends(get_current_user)],
 ) -> ChatResponse:
     reply = _handle(
-        lambda: shield_ai_service.chat(
+        lambda: vajra_ai_service.chat(
             [m.model_dump() for m in payload.messages],
             context=payload.context,
         )
@@ -76,12 +76,12 @@ def shield_ai_chat(
 
 
 @router.post("/recommendations", response_model=RecommendationsResponse)
-def shield_ai_recommendations(
+def vajra_ai_recommendations(
     payload: RecommendationsRequest,
     _current_user: Annotated[User, Depends(get_current_user)],
 ) -> RecommendationsResponse:
     suggestions = _handle(
-        lambda: shield_ai_service.recommendations(
+        lambda: vajra_ai_service.recommendations(
             topic=payload.topic,
             context=payload.context,
             count=payload.count,
@@ -91,12 +91,12 @@ def shield_ai_recommendations(
 
 
 @router.post("/generate", response_model=GenerateResponse)
-def shield_ai_generate(
+def vajra_ai_generate(
     payload: GenerateRequest,
     _current_user: Annotated[User, Depends(get_current_user)],
 ) -> GenerateResponse:
     text = _handle(
-        lambda: shield_ai_service.generate(
+        lambda: vajra_ai_service.generate(
             task=payload.task,
             context=payload.context,
             max_tokens=payload.max_tokens,
@@ -109,7 +109,7 @@ def shield_ai_generate(
 
 
 @router.get("/context", response_model=ContextResponse)
-def shield_ai_context(
+def vajra_ai_context(
     current_user: Annotated[User, Depends(get_current_user)],
     db: Session = Depends(get_db),
     org_id: UUID | None = Query(default=None),
@@ -244,7 +244,7 @@ def reindex_docs(
     current_user: Annotated[User, Depends(get_current_user)],
     db: Session = Depends(get_db),
 ) -> dict:
-    """Trigger a full re-index of platform documentation for Shield AI RAG.
+    """Trigger a full re-index of platform documentation for Vajra AI RAG.
 
     Reads all Markdown files in the ``docs/`` folder, strips backend-only
     sections, chunks the remaining user-facing content, embeds via the

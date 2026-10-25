@@ -304,7 +304,7 @@ def download_gtm_template(
     return JSONResponse(
         content=template,
         headers={
-            "Content-Disposition": 'attachment; filename="zeroshield-gtm-template.json"',
+            "Content-Disposition": 'attachment; filename="vajra-gtm-template.json"',
         },
     )
 

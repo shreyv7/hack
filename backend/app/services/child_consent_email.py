@@ -2,7 +2,7 @@
 
 White-labeled: the email is presented as coming from the organisation (their
 name as the sender display + their logo), so the parent deals with a brand they
-recognise, not "DPDPA Shield".
+recognise, not "Vajra".
 """
 
 from __future__ import annotations

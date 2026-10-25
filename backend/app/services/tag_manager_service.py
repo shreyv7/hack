@@ -748,7 +748,7 @@ class TagManagerService:
                 event_type="tag_manager_sync",
                 session_id=f"sync-{container.id}",
                 ip_hash="admin-panel",
-                user_agent="ZeroShield Tag Manager",
+                user_agent="Vajra Tag Manager",
                 payload={
                     "container_id": str(container.id),
                     "container_identifier": container.container_identifier,
@@ -785,7 +785,7 @@ class TagManagerService:
                 property_id=property_id,
                 consent_mode_v2=True,
                 auto_blocker_strict=True,
-                datalayer_event_prefix="zeroshield",
+                datalayer_event_prefix="vajra",
                 blocked_purposes=[],
             )
             self.db.add(settings)

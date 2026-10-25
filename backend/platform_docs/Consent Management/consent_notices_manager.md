@@ -1,6 +1,6 @@
-# DPDPA Shield — Consent Notices Manager Technical Specification
+# Vajra — Consent Notices Manager Technical Specification
 
-This document serves as the **single source of truth** for the **Consent Notices Manager** module of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Consent Notices Manager** module of the Vajra DPDPA compliance platform.
 
 ---
 
@@ -29,7 +29,7 @@ graph TD
     CN -->|Link to banner| CB[Create Consent Banner]
     CN -->|Translate| MLE[Multi-Language Editor]
     CN -->|Deliver via| NDC[Notice Delivery Channels]
-    SDK[ZeroShield SDK] -->|Display notice| User[Data Principal]
+    SDK[Vajra SDK] -->|Display notice| User[Data Principal]
 ```
 
 ### 1.5 Target Users
@@ -77,7 +77,7 @@ sequenceDiagram
 
 ### 3.1 Scenario Workflows
 *   **New notice from scratch**: Create → select purposes → author text → compliance check → publish.
-*   **Shield AI draft**: Upload policy document or answer questions → Shield AI generates notice fields → DPO reviews and edits → publish.
+*   **Vajra AI draft**: Upload policy document or answer questions → Vajra AI generates notice fields → DPO reviews and edits → publish.
 *   **Version update**: Edit published notice → new draft version → re-publish → linked banners show update indicator.
 *   **Multi-language**: Publish English version → open Multi-Language Editor → add Hindi/Tamil translations.
 
@@ -151,7 +151,7 @@ stateDiagram-v2
 | **Multi-Language Editor** | Translations stored on notice versions |
 | **Proof Vault** | Published versions sealed as immutable snapshots |
 | **Notice Delivery Channels** | Notices delivered via email/SMS campaigns |
-| **Shield AI** | Can draft notice content from documents or Q&A |
+| **Vajra AI** | Can draft notice content from documents or Q&A |
 | **Received Consents** | Consent receipts reference notice version |
 
 ---

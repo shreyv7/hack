@@ -548,7 +548,7 @@ class BreachDisclosureService(ComplianceBaseService):
         affected_count = len(principals)
         data_types = self._infer_data_types_from_entries(entries)
         special_categories = self._infer_special_categories_from_entries(entries)
-        shield_ai_used = False
+        vajra_ai_used = False
         summary = (
             f"Found {affected_count} unique data principal(s) across {len(entries)} "
             "breach-related audit log entries."
@@ -560,7 +560,7 @@ class BreachDisclosureService(ComplianceBaseService):
                 "in the analysis window."
             )
         elif settings.ai_configured:
-            from app.services import shield_ai_service
+            from app.services import vajra_ai_service
 
             log_text = "\n".join(
                 f"- [{e.occurred_at.isoformat()}] {e.event_type.value}: {e.action} — {e.details[:240]}"
@@ -580,8 +580,8 @@ class BreachDisclosureService(ComplianceBaseService):
                 f'"special_categories": [<subset of: {allowed_categories}>]}}'
             )
             try:
-                raw = shield_ai_service.generate(task=task, max_tokens=384)
-                parsed = shield_ai_service._parse_json_object(raw)
+                raw = vajra_ai_service.generate(task=task, max_tokens=384)
+                parsed = vajra_ai_service._parse_json_object(raw)
                 ai_count = int(parsed.get("affected_count", affected_count))
                 ai_summary = str(parsed.get("summary", "")).strip()
                 if ai_count > 0:
@@ -604,7 +604,7 @@ class BreachDisclosureService(ComplianceBaseService):
                         if label in _SPECIAL_CATEGORY_SIGNALS and label not in merged:
                             merged.append(label)
                     special_categories = merged
-                shield_ai_used = True
+                vajra_ai_used = True
             except Exception:
                 pass
 
@@ -612,7 +612,7 @@ class BreachDisclosureService(ComplianceBaseService):
         audit.record_event(
             resolved,
             user=user,
-            action="Shield AI breach impact verification",
+            action="Vajra AI breach impact verification",
             details=summary,
             event_type=AuditEventType.access,
             severity=AuditSeverity.info,
@@ -626,7 +626,7 @@ class BreachDisclosureService(ComplianceBaseService):
             log_entries_analyzed=len(entries),
             unique_principals_found=len(principals),
             summary=summary,
-            shield_ai_used=shield_ai_used,
+            vajra_ai_used=vajra_ai_used,
             data_types=data_types,
             special_categories=special_categories,
         )

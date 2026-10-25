@@ -1,13 +1,13 @@
-# DPDPA Shield — Dashboard Technical Specification
+# Vajra — Dashboard Technical Specification
 
-This document serves as the **single source of truth** for the **Dashboard** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the dashboard interface.
+This document serves as the **single source of truth** for the **Dashboard** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the dashboard interface.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Dashboard** module serves as the primary CISO Command Center and compliance landing page. It aggregates metrics from all subsystems of the ZeroShield DPDPA platform (Consent, DSAR, Safeguards, PII Scanner, Audit Log, Breaches) to provide a unified posture overview.
+The **Dashboard** module serves as the primary CISO Command Center and compliance landing page. It aggregates metrics from all subsystems of the Vajra DPDPA platform (Consent, DSAR, Safeguards, PII Scanner, Audit Log, Breaches) to provide a unified posture overview.
 
 ### 1.2 Business Objective
 To empower compliance executives, Data Protection Officers (DPOs), and administrators with real-time insight into the organization's compliance posture, highlighting critical risks, immediate actions, SLA breaches, and financial penalty exposure.

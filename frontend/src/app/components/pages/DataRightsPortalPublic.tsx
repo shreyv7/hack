@@ -464,7 +464,7 @@ export function DataRightsPortalPublic({
       )}
 
       <div className="text-center text-xs text-gray-500 py-6">
-        Powered by DPDPA Shield · DPDPA 2023 (India)
+        Powered by Vajra · DPDPA 2023 (India)
       </div>
     </div>
   );

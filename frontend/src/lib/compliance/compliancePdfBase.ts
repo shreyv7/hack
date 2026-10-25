@@ -57,7 +57,7 @@ export class CompliancePdf {
     this.doc.setFont('helvetica', 'normal');
     this.doc.setFontSize(8);
     this.doc.setTextColor(MUTED.r, MUTED.g, MUTED.b);
-    this.doc.text('ZeroShield DPDPA Shield · Confidential', MARGIN, footerY);
+    this.doc.text('Vajra Vajra · Confidential', MARGIN, footerY);
     this.doc.text(`Page ${this.pageNumber}`, MARGIN + CONTENT_WIDTH, footerY, { align: 'right' });
     this.doc.setTextColor(0, 0, 0);
   }
@@ -68,7 +68,7 @@ export class CompliancePdf {
     this.doc.setFont('helvetica', 'bold');
     this.doc.setFontSize(14);
     this.doc.setTextColor(255, 255, 255);
-    this.doc.text('DPDPA Shield', MARGIN, 12);
+    this.doc.text('Vajra', MARGIN, 12);
     this.doc.setFont('helvetica', 'normal');
     this.doc.setFontSize(9);
     this.doc.text(subtitle, MARGIN, 20);

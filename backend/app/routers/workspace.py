@@ -165,7 +165,7 @@ def investigate_discovered_processor(
 ) -> dict:
     # Simulates fetching vendor GRC information using DNS check + public reports
     report = (
-        f"Shield AI Investigation Report for {vendor_name}:\n"
+        f"Vajra AI Investigation Report for {vendor_name}:\n"
         f"- Target endpoint security check: SSL/TLS active, DMARC enabled.\n"
         f"- Compliance status: Publicly self-attested for SOC 2 Type II and ISO 27001.\n"
         f"- Data sovereignty: Primarily hosted in Singapore / EU West region.\n"

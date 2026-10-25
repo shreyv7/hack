@@ -24,7 +24,7 @@ if _env_path.exists():
         os.environ.setdefault(key.strip(), val.strip().strip('"').strip("'"))
 
 BASE = os.environ.get("TEST_API_BASE", "http://127.0.0.1:8000/api")
-SA_EMAIL = os.environ.get("SUPERADMIN_EMAIL", "superadmin@zeroshield.in")
+SA_EMAIL = os.environ.get("SUPERADMIN_EMAIL", "superadmin@vajra.dev")
 SA_PASSWORD = os.environ.get("SUPERADMIN_PASSWORD", "")
 
 

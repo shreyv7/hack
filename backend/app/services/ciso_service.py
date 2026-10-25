@@ -1663,7 +1663,7 @@ class CisoService(ComplianceBaseService):
         log = VulnerabilityScanLog(
             organization_id=resolved,
             asset_id=asset.id,
-            scanner_name="ZeroShield Continuous Scan Agent",
+            scanner_name="Vajra Continuous Scan Agent",
             findings=findings,
             status=status_val,
             scanned_at=datetime.now(timezone.utc)

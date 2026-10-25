@@ -1,4 +1,4 @@
-# DPDPA Shield — Branch Consent Capture Technical Specification
+# Vajra — Branch Consent Capture Technical Specification
 
 This document covers the **Branch Consent Capture** page (`/consent/banking/branch-capture`) within the Advanced Consent Management cluster.
 

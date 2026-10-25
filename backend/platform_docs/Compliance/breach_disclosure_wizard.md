@@ -1,6 +1,6 @@
-# DPDPA Shield — Breach Disclosure Wizard Technical Specification
+# Vajra — Breach Disclosure Wizard Technical Specification
 
-This document serves as the **single source of truth** for the **Breach Disclosure Wizard** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the breach response interface.
+This document serves as the **single source of truth** for the **Breach Disclosure Wizard** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the breach response interface.
 
 ---
 
@@ -60,7 +60,7 @@ graph LR
 ### 3.1 Scenario Workflows
 *   **Breach Containment Flow**:
     *   SIRT discovers an incident, navigates to `/breach` and clicks "Create Incident", starting a 72-hour countdown timer.
-    *   **Step 1**: Assesses severity, tags affected categories (e.g. Health, children), and asks Shield AI to verify affected records from audit logs.
+    *   **Step 1**: Assesses severity, tags affected categories (e.g. Health, children), and asks Vajra AI to verify affected records from audit logs.
     *   **Step 2**: Enters DPB summary details.
     *   **Step 3**: Drafts notification email. If no active SMTP/SES provider is active, the wizard displays a warning banner alerting the admin to configure the notice delivery channel.
     *   **Step 4**: Skips or enters company website announcement statement.

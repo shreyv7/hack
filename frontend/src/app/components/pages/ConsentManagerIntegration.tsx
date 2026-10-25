@@ -86,7 +86,7 @@ export function ConsentManagerIntegration(): ReactElement {
       <div className="bg-[var(--status-info-bg)] border border-[var(--status-info)]/30 rounded-lg p-4 mb-6">
         <div className="text-sm text-[var(--text-primary)]">
           <strong>DPDPA Section 6(7):</strong> Data Principals may give, manage, review, and withdraw consent through
-          Consent Managers registered with the Data Protection Board of India. ZeroShield integrates with DPB-registered
+          Consent Managers registered with the Data Protection Board of India. Vajra integrates with DPB-registered
           Consent Managers to honor consents granted through these intermediaries.
         </div>
       </div>

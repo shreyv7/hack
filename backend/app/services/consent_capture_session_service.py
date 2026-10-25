@@ -346,7 +346,7 @@ class ConsentCaptureSessionService:
             consented_purposes=payload.get("consented_purposes", {}),
             language=payload.get("language", "en"),
             ip_hash=ip_hash,
-            user_agent=user_agent or "ZeroShield-Assisted-Capture",
+            user_agent=user_agent or "Vajra-Assisted-Capture",
             principal_email=payload.get("principal_email"),
             principal_phone=payload.get("principal_phone"),
             journey_key=session.journey_key,

@@ -1,6 +1,6 @@
-# DPDPA Shield — PII Scanner Technical Specification
+# Vajra — PII Scanner Technical Specification
 
-This document serves as the **single source of truth** for the **PII Scanner** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the automated PII scanner.
+This document serves as the **single source of truth** for the **PII Scanner** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the automated PII scanner.
 
 ---
 
@@ -232,7 +232,7 @@ All endpoints require authorization via JWT Bearer Token.
       "started_at": "2026-06-25T12:00:00Z",
       "finished_at": null,
       "error": null,
-      "triggered_by": "compliance@zeroshield.in"
+      "triggered_by": "compliance@vajra.dev"
     }
     ```
 

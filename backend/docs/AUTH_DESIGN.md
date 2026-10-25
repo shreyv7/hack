@@ -1,4 +1,4 @@
-# 🔐 DPDPA Shield — Authentication & User Management (Design Spec)
+# 🔐 Vajra — Authentication & User Management (Design Spec)
 
 ## 1. Goal in one paragraph
 
@@ -344,7 +344,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=youraccount@gmail.com      # the Gmail address that sends invites
 SMTP_PASSWORD=your-16-char-app-password   # Google "App Password", NOT your login pw
-SMTP_FROM_NAME=DPDPA Shield          # display name shown to recipients
+SMTP_FROM_NAME=Vajra          # display name shown to recipients
 ```
 
 > **Gmail App Password**, not your normal password: enable 2-Step Verification on

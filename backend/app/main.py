@@ -27,7 +27,7 @@ from app.routers import (
     masking,
     pii_scanner,
     retention,
-    shield_ai,
+    vajra_ai,
     users,
     workspace,
     policy,
@@ -72,7 +72,7 @@ async def lifespan(_app: FastAPI):
     governance_schedule_task = asyncio.create_task(governance_schedule_engine_loop())
     NoticeOrchestrationWorkers.start_workers(SessionLocal)
 
-    # --- Shield AI RAG: auto-index docs on startup ---
+    # --- Vajra AI RAG: auto-index docs on startup ---
     if settings.RAG_AUTO_INDEX_ON_STARTUP and settings.ai_configured:
         import threading
 
@@ -197,13 +197,14 @@ app.add_middleware(SplitCORSMiddleware)
 
 
 from fastapi.exceptions import RequestValidationError
+from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(_request, exc):
     return JSONResponse(
         status_code=422,
-        content={"detail": exc.errors()},
+        content={"detail": jsonable_encoder(exc.errors(), custom_encoder={ValueError: str})},
     )
 
 
@@ -235,7 +236,7 @@ app.include_router(pii_scanner.router, prefix=api_prefix)
 app.include_router(masking.router, prefix=api_prefix)
 app.include_router(anonymisation.router, prefix=api_prefix)
 app.include_router(compliance.router, prefix=api_prefix)
-app.include_router(shield_ai.router, prefix=api_prefix)
+app.include_router(vajra_ai.router, prefix=api_prefix)
 app.include_router(policy.router, prefix=api_prefix)
 
 from app.routers import integrations
@@ -294,4 +295,9 @@ from app.routers import legitimate_use, regulatory_proceeding, rights_ops
 app.include_router(legitimate_use.router, prefix=api_prefix)
 app.include_router(regulatory_proceeding.router, prefix=api_prefix)
 app.include_router(rights_ops.router, prefix=api_prefix)
+
+# Healthcare uses the shared frontend contract independently of the legacy prefix.
+from app.routers import healthcare, healthcare_ai
+app.include_router(healthcare.router, prefix="/api/v1")
+app.include_router(healthcare_ai.router, prefix="/api/v1")
 

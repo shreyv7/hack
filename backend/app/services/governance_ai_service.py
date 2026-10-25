@@ -1,6 +1,6 @@
 """AI-assisted governance dashboard insights.
 
-Primary path: Shield AI via shield_ai_service.generate() / chat().
+Primary path: Vajra AI via vajra_ai_service.generate() / chat().
 Fallback: rule-based summaries when the AI provider is unconfigured or unavailable.
 """
 
@@ -30,8 +30,8 @@ logger = logging.getLogger(__name__)
 # --------------------------------------------------------------------------- #
 
 _GOVERNANCE_PERSONA = (
-    "You are Shield AI, a compliance expert assistant embedded in the "
-    "Governance → Compliance Dashboards module of DPDPA Shield. "
+    "You are Vajra AI, a compliance expert assistant embedded in the "
+    "Governance → Compliance Dashboards module of Vajra. "
     "The user has just opened the AI Assistant panel on their dashboard. "
     "Be concise, insightful, and specific — reference the live metrics "
     "in the context snapshot below. Never mention backend APIs, database "
@@ -69,8 +69,8 @@ class GovernanceAiService(ComplianceBaseService):
 
         if configured:
             try:
-                import app.services.shield_ai_service as _shield_ai
-                from app.services.shield_ai_service import ShieldAIError
+                import app.services.vajra_ai_service as _vajra_ai
+                from app.services.vajra_ai_service import VajraAIError
 
                 if body.action == "welcome":
                     task = (
@@ -85,7 +85,7 @@ class GovernanceAiService(ComplianceBaseService):
                         '"Complete RoPA entries missing DPIA linkages."]\n\n'
                         f"Dashboard context:\n{context_snapshot}"
                     )
-                    raw = _shield_ai.generate(
+                    raw = _vajra_ai.generate(
                         task=task,
                         context=None,
                         max_tokens=450,
@@ -101,7 +101,7 @@ class GovernanceAiService(ComplianceBaseService):
                     )
 
                 if body.action == "quick_ask" and body.question:
-                    reply = _shield_ai.chat(
+                    reply = _vajra_ai.chat(
                         [{"role": "user", "content": body.question}],
                         context=context_snapshot,
                     )
@@ -153,7 +153,7 @@ class GovernanceAiService(ComplianceBaseService):
                 "Link RoPA processing activities to DPIA assessments.",
             ]
         except Exception:
-            summary = "Your compliance dashboard is active. Configure Shield AI to unlock AI-powered insights."
+            summary = "Your compliance dashboard is active. Configure Vajra AI to unlock AI-powered insights."
             bullets = [
                 "Set AI_PROVIDER=vertex with GOOGLE_CLOUD_PROJECT, or AI_PROVIDER=bedrock with BEDROCK_MODEL_ID.",
                 "Restart the backend server after updating environment variables.",

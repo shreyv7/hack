@@ -1,5 +1,5 @@
 """
-Comprehensive production seed script for nikit@zeroshield.ai (admin role).
+Comprehensive production seed script for nikit@vajra.ai (admin role).
 
 Seeds ALL major tables in the database with realistic demo data so every
 UI module has content during the 11 AM demo.
@@ -22,10 +22,10 @@ from app.models.user import User, UserRole, UserStatus
 from app.utils.workspace_defaults import create_default_organization_settings
 
 # ──────────── constants ────────────
-ADMIN_EMAIL = "test@zeroshield.ai"
+ADMIN_EMAIL = "test@vajra.ai"
 ADMIN_PASSWORD = "Test1234"
-ORG_NAME = "ZeroShield Sandbox Org"
-ORG_SLUG = "zeroshield-sandbox-org"
+ORG_NAME = "Vajra Sandbox Org"
+ORG_SLUG = "vajra-sandbox-org"
 NOW = datetime.now(timezone.utc)
 
 
@@ -82,7 +82,7 @@ def seed_data_sources(db, org):
     sources = [
         DataSource(organization_id=org.id, name="Customer PostgreSQL",   source_type="postgresql", category="database", host="db.prod.internal", port=5432, database_name="customers",  status=DataSourceStatus.connected, last_tested_at=_ts(1), region="ap-south-1"),
         DataSource(organization_id=org.id, name="HR MongoDB Atlas",      source_type="mongodb_atlas", category="cloud", host="cluster0.mongodb.net", port=27017, database_name="hr_data",  status=DataSourceStatus.connected, last_tested_at=_ts(2), region="ap-south-1"),
-        DataSource(organization_id=org.id, name="Marketing S3 Bucket",   source_type="s3",        category="files", host="s3://zeroshield-marketing", status=DataSourceStatus.connected, last_tested_at=_ts(0, 5), region="ap-south-1"),
+        DataSource(organization_id=org.id, name="Marketing S3 Bucket",   source_type="s3",        category="files", host="s3://vajra-marketing", status=DataSourceStatus.connected, last_tested_at=_ts(0, 5), region="ap-south-1"),
         DataSource(organization_id=org.id, name="Payment Gateway API",   source_type="rest",      category="api",   host="https://api.payment.in",    status=DataSourceStatus.connected, last_tested_at=_ts(3), region="ap-south-1"),
         DataSource(organization_id=org.id, name="CloudWatch Audit Logs", source_type="cloudwatch", category="logs",  host="logs.ap-south-1", status=DataSourceStatus.connected, last_tested_at=_ts(1), region="ap-south-1"),
     ]
@@ -367,7 +367,7 @@ def seed_integrations(db, org):
         return
 
     prop = IntegrationProperty(
-        organization_id=org.id, domain="www.zeroshield.ai",
+        organization_id=org.id, domain="www.vajra.ai",
         display_name="Corporate Website", property_type=PropertyType.website,
         environment=PropertyEnvironment.production, status=PropertyStatus.active,
         blocker_mode=BlockerMode.strict, auto_language=True, default_language="en",
@@ -383,9 +383,9 @@ def seed_integrations(db, org):
         heading="We Value Your Privacy",
         body_text="We use cookies to enhance your experience. You can manage your preferences below.",
         cta_accept="Accept All", cta_reject="Reject All", cta_customize="Customize",
-        privacy_policy_url="https://www.zeroshield.ai/privacy",
-        cookie_policy_url="https://www.zeroshield.ai/cookies",
-        dpo_email="dpo@zeroshield.ai", show_language_switcher=True,
+        privacy_policy_url="https://www.vajra.ai/privacy",
+        cookie_policy_url="https://www.vajra.ai/cookies",
+        dpo_email="dpo@vajra.ai", show_language_switcher=True,
         properties=[str(prop.id)],
     )
     db.add(banner)
@@ -464,7 +464,7 @@ def seed_policies(db, org, user):
         db.flush()
         ver = PolicyVersion(
             policy_id=doc.id, version_number=1, status="live",
-            content=f"# {title}\n\nThis document was auto-generated for the ZeroShield demo environment.",
+            content=f"# {title}\n\nThis document was auto-generated for the Vajra demo environment.",
             summary=f"Initial version of {title}.",
             published_at=_ts(30), published_by_user_id=user.id,
         )
@@ -529,7 +529,7 @@ def main(email: str = None, password: str = None):
         ADMIN_PASSWORD = password
 
     print("=" * 60)
-    print("🚀 ZeroShield Production Seed Script")
+    print("🚀 Vajra Production Seed Script")
     print(f"   Admin: {ADMIN_EMAIL} / {ADMIN_PASSWORD}")
     print("=" * 60)
 

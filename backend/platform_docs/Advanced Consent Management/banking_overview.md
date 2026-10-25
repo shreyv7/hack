@@ -1,4 +1,4 @@
-# DPDPA Shield — Advanced Consent Management (Banking) Overview
+# Vajra — Advanced Consent Management (Banking) Overview
 
 This document serves as the **single source of truth** for the **Advanced Consent Management** module cluster — available when the organization's primary industry is set to **Banking & Financial Services** in Industry Config.
 

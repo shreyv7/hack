@@ -570,7 +570,7 @@ export function PropertyDetailView({
   };
 
   const handleRemoveBanner = async () => {
-    if (!confirm('Are you sure you want to disconnect this banner? ZeroShield banner overlay will cease rendering on your domain.')) return;
+    if (!confirm('Are you sure you want to disconnect this banner? Vajra banner overlay will cease rendering on your domain.')) return;
     try {
       await integrationsApi.removePropertyBanner(propertyId);
       notify('Banner disconnected successfully.');
@@ -610,7 +610,7 @@ export function PropertyDetailView({
     const element = document.createElement("a");
     const file = new Blob([snippet.html], {type: 'text/html'});
     element.href = URL.createObjectURL(file);
-    element.download = `zeroshield-snippet-${property?.domain.replace(/\./g, '_')}.html`;
+    element.download = `vajra-snippet-${property?.domain.replace(/\./g, '_')}.html`;
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -704,11 +704,11 @@ export function PropertyDetailView({
     const apiBaseUrl = origin.includes('localhost') ? 'http://localhost:8002/public/v1' : 'https://dpdpa-backend-290927690790.asia-south1.run.app/public/v1';
     const scriptBaseUrl = origin.includes('localhost') ? 'http://localhost:5173/cmp.js' : 'https://dpdpashield-500607.web.app/cmp.js';
 
-    return `Please integrate the ZeroShield DPDPA consent banner & SDK into our application codebase. Here are the configuration credentials and settings:
+    return `Please integrate the Vajra DPDPA consent banner & SDK into our application codebase. Here are the configuration credentials and settings:
 
 - Script / Web SDK URL: "${scriptBaseUrl}"
 - Property ID: "${property.id}"
-- API Key: "${activeKey}" (Note: Replace YOUR_API_KEY_SECRET with your actual ZeroShield API key secret)
+- API Key: "${activeKey}" (Note: Replace YOUR_API_KEY_SECRET with your actual Vajra API key secret)
 - API Base URL: "${apiBaseUrl}"
 - Default Language: "${language}"
 - Blocker Mode: "${blockerMode}"
@@ -722,10 +722,10 @@ Integration Instructions for Your Project Stack:
    - Tag third-party scripts with data-zs-purpose attributes (e.g. data-zs-purpose="analytics") for automatic cookie/tracker blocking.
 
 2. For React / Next.js / Vue / Angular:
-   - Import @zeroshield/react (or Next.js <Script strategy="afterInteractive">) and initialize <ZeroShieldProvider> at the root of the application (e.g., App.tsx, layout.tsx, or main.js).
+   - Import @vajra/react (or Next.js <Script strategy="afterInteractive">) and initialize <VajraProvider> at the root of the application (e.g., App.tsx, layout.tsx, or main.js).
 
 3. For Mobile Applications (iOS / Swift, Android / Kotlin, Flutter, React Native):
-   - Initialize the ZeroShield SDK on app startup (e.g. in AppDelegate.swift, MainApplication.kt, or root App component).
+   - Initialize the Vajra SDK on app startup (e.g. in AppDelegate.swift, MainApplication.kt, or root App component).
    - Configure with propertyId: "${property.id}", apiKey: "${activeKey}", apiUrl: "${apiBaseUrl}", blockerMode: "${blockerMode}"${bannerId !== 'null' ? `, bannerId: "${bannerId}"` : ''}.
    - Present the native CMP consent sheet or Webview modal on initial app launch before collecting any telemetry or initializing third-party SDKs (such as Firebase Analytics, Meta SDK, etc.).`;
   };
@@ -1244,7 +1244,7 @@ Integration Instructions for Your Project Stack:
                 <div className="flex items-center justify-between border-b border-[var(--border-default)] pb-4 mb-4">
                   <div>
                     <h3 className="font-bold text-[var(--text-primary)]">Domain Page Coverage</h3>
-                    <p className="text-[10px] text-[var(--text-secondary)]">Presence of ZeroShield scripts across pages.</p>
+                    <p className="text-[10px] text-[var(--text-secondary)]">Presence of Vajra scripts across pages.</p>
                   </div>
                   <button
                     onClick={handleScan}
@@ -1705,7 +1705,7 @@ Integration Instructions for Your Project Stack:
                       <div>
                         <div className="text-xs font-bold text-[var(--text-primary)]">HMAC Session Token Exchange</div>
                         <div className="text-[11px] text-[var(--text-secondary)] mt-0.5">
-                          Raw API key is scrubbed from <code className="font-mono text-[10px]">window.ZeroShield</code> after exchange for 30-min JWT.
+                          Raw API key is scrubbed from <code className="font-mono text-[10px]">window.Vajra</code> after exchange for 30-min JWT.
                         </div>
                       </div>
                     </div>

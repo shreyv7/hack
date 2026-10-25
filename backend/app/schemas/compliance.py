@@ -162,7 +162,7 @@ class BreachAffectedVerifyResult(BaseModel):
     log_entries_analyzed: int
     unique_principals_found: int
     summary: str
-    shield_ai_used: bool = False
+    vajra_ai_used: bool = False
     data_types: list[str] = []
     special_categories: list[str] = []
 

@@ -24,7 +24,7 @@ def _send_email(
         if settings.ENVIRONMENT == "development":
             import os
             from datetime import datetime, timezone
-            log_dir = "/Users/shreyvashistha/Desktop/ZEROSHIELD-DPDPA/dpdpa_shield/backend/scratch"
+            log_dir = "/Users/shreyvashistha/Desktop/VAJRA-DPDPA/dpdpa_shield/backend/scratch"
             os.makedirs(log_dir, exist_ok=True)
             log_path = os.path.join(log_dir, "sent_emails.log")
             with open(log_path, "a") as f:
@@ -63,9 +63,9 @@ def _send_email(
 
 
 def send_otp_email(to_email: str, otp_code: str) -> bool:
-    subject = "Your DPDPA Shield verification code"
+    subject = "Your Vajra verification code"
     text_body = (
-        f"Your DPDPA Shield verification code is: {otp_code}\n\n"
+        f"Your Vajra verification code is: {otp_code}\n\n"
         "This code expires in 15 minutes. Do not share it with anyone."
     )
     html_body = (

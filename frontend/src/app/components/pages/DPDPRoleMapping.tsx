@@ -680,7 +680,7 @@ export function DPDPRoleMapping(): ReactElement {
                 <div className="border border-indigo-200 dark:border-indigo-800 rounded-lg p-4 bg-indigo-50/50 dark:bg-indigo-950/20">
                   <div className="text-sm font-medium text-[var(--text-primary)] mb-1">Compliance guidance</div>
                   <div className="text-xs text-[var(--text-secondary)] mb-3">
-                    ZeroShield module:{' '}
+                    Vajra module:{' '}
                     <span className="font-medium text-indigo-700 dark:text-indigo-300">
                       {selectedGuidance.featureLabel}
                     </span>

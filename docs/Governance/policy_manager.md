@@ -1,6 +1,6 @@
-# DPDPA Shield — Policy Manager Technical Specification
+# Vajra — Policy Manager Technical Specification
 
-This document serves as the **single source of truth** for the **Policy Manager** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Policy Manager** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -24,7 +24,7 @@ graph TD
     UI[Policy Editor Workspace] -->|1. Draft Policy Content| BE[FastAPI Policy Service]
     BE -->|2. Request DPO Signoff| App[Approval Engine]
     BE -->|3. Save Document Revisions| DB[(PostgreSQL)]
-    SDK[ZeroShield SDK / App Portal] -->|4. Request Acknowledgment| BE
+    SDK[Vajra SDK / App Portal] -->|4. Request Acknowledgment| BE
     SDK -->|5. Submit User Signature| BE
     BE -->|6. Log Acknowledgment| DB
 ```

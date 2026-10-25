@@ -1,4 +1,4 @@
-# 🗺️ DPDPA Shield — Project Understanding, Module Complexity & Team Plan
+# 🗺️ Vajra — Project Understanding, Module Complexity & Team Plan
 
 > Read this top-to-bottom once. Part 1 explains **what the product is and why**
 > (in plain language). Part 2 explains **every module** — what it does, the flow,
@@ -38,7 +38,7 @@ rules, the **Data Protection Board of India (DPB)** can fine them heavily (up to
 
 ## 1.2 What our product does (the elevator pitch)
 
-**DPDPA Shield is a compliance platform that a company buys so it can obey the
+**Vajra is a compliance platform that a company buys so it can obey the
 DPDPA without building all this themselves.** It is **multi-tenant** — each
 customer company is an "Organization" (tenant), and we (the product owner) sit
 above all of them as Superadmin.
@@ -49,7 +49,7 @@ In one sentence per pillar, the product lets a company:
 - **Handle breaches** within the 72-hour legal window (Breach Manager),
 - **Know what data it holds** and who it shares with (Data Inventory, RoPA, Vendors),
 - **Prove compliance** to auditors and leadership (Dashboard, Audit Log, CISO Center),
-- and **get guided help** (Shield AI).
+- and **get guided help** (Vajra AI).
 
 ## 1.3 Why this is non-trivial to build
 
@@ -288,7 +288,7 @@ Knowing which is which is the whole point of Part 2 and Part 3.
 
 ## TIER 5 — Specialized / hardest (treat as R&D spikes, schedule carefully)
 
-### 5.1 Shield AI (compliance chatbot) — 🟠 Hard *(~4–6 days; ~2–3 with mock)*
+### 5.1 Vajra AI (compliance chatbot) — 🟠 Hard *(~4–6 days; ~2–3 with mock)*
 - **What:** A chatbot that answers DPDPA questions *with the tenant's own context*
   (their score, gaps, pending items) and can draft notices or suggest fixes.
 - **Why it solves:** Makes the platform usable by non-experts; a sales differentiator.
@@ -328,7 +328,7 @@ Knowing which is which is the whole point of Part 2 and Part 3.
 | Breach Manager | 🟠 Hard | ✅ | 5–7 | Jobs, Email |
 | Proof Vault | 🟠 Hard | — | 4–6 | Consent |
 | Compliance Dashboard + Score | 🟠 Hard | — | 4–6 | Most modules |
-| Shield AI | 🟠 Hard | — | 4–6 (2–3 mock) | (context data) |
+| Vajra AI | 🟠 Hard | — | 4–6 (2–3 mock) | (context data) |
 | Rights SLA Engine | 🟠 Hard | ✅ | 4–5 | Rights Portal, Jobs |
 | Monitoring & Scheduling | 🟠 Hard | ✅ | 4–5 | Jobs |
 | Retention + auto-delete | 🟠 Hard | ✅ | 3–4 | Jobs, Inventory |
@@ -376,7 +376,7 @@ Think in **phases**. Don't start hard modules before their foundations exist.
 **Phase 4 — Oversight & AI:**
 13. Compliance Dashboard + Score (needs the above to score)
 14. Monitoring & Scheduling
-15. Shield AI (mock → real)
+15. Vajra AI (mock → real)
 
 **Phase 5 — Specialized spikes (start research early, ship late):**
 16. PII Scanner + Anonymisation

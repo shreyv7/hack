@@ -1,4 +1,4 @@
-# DPDPA Shield — Merchant Consent Capture Technical Specification
+# Vajra — Merchant Consent Capture Technical Specification
 
 This document covers the **Merchant Consent Capture** page (`/consent/banking/merchant-capture`) within the Advanced Consent Management cluster.
 

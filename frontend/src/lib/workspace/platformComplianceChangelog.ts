@@ -8,7 +8,7 @@ export interface PlatformChangelogEntry {
   items: string[];
 }
 
-/** Product-level DPDPA adoption history for the ZeroShield platform. */
+/** Product-level DPDPA adoption history for the Vajra platform. */
 export const PLATFORM_COMPLIANCE_CHANGELOG: PlatformChangelogEntry[] = [
   {
     version: 'v4.2',
@@ -34,9 +34,9 @@ export const PLATFORM_COMPLIANCE_CHANGELOG: PlatformChangelogEntry[] = [
   {
     version: 'v4.0',
     date: 'September 2024',
-    title: 'Shield AI Launch',
+    title: 'Vajra AI Launch',
     items: [
-      'Introduced Shield AI assistant',
+      'Introduced Vajra AI assistant',
       'Automated compliance suggestions',
       'Smart risk detection algorithms',
     ],

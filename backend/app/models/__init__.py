@@ -201,5 +201,9 @@ from app.models.cross_border_transfer import (  # noqa: F401
 from app.models.refresh_token import RefreshTokenSession  # noqa: F401
 from app.models.legitimate_use import LegitimateUseRecord  # noqa: F401
 from app.models.regulatory_proceeding import RegulatoryProceeding  # noqa: F401
+from app.models.healthcare import (  # noqa: F401
+    HealthcarePatient, EHRClinicalRecord, HealthcareConsent,
+    AccessDecisionAudit, EmergencyOverrideLog,
+)
 
 

@@ -1,6 +1,6 @@
-# DPDPA Shield — Data Sources Technical Specification
+# Vajra — Data Sources Technical Specification
 
-This document serves as the **single source of truth** for the **Data Sources** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the registry of data connections.
+This document serves as the **single source of truth** for the **Data Sources** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the registry of data connections.
 
 ---
 

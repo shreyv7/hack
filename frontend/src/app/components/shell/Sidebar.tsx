@@ -21,6 +21,7 @@ import {
   Gavel,
   GitBranch,
   Globe,
+  HeartPulse,
   Home,
   LayoutGrid,
   LayoutPanelTop,
@@ -41,6 +42,7 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Stethoscope,
   Tag,
   User,
   Users,
@@ -146,7 +148,7 @@ function integrationsHasResults(query: string): boolean {
   );
 }
 
-function shieldAiMatchesSearch(query: string): boolean {
+function vajraAiMatchesSearch(query: string): boolean {
   const q = query.trim().toLowerCase();
   if (!q) {
     return true;
@@ -249,6 +251,12 @@ const OVERVIEW_ITEMS: NavItem[] = [
   { label: 'Dashboard', icon: Home },
   { label: 'Compliance Score', icon: Gauge },
   { label: 'Automation Coverage', icon: LayoutGrid, badge: 'New' },
+];
+
+const HEALTHCARE_SHIELD_ITEMS: NavItem[] = [
+  { label: 'Patient Consent Portal', icon: HeartPulse, badge: 'New' },
+  { label: 'Clinician Access View', icon: Stethoscope },
+  { label: 'DPO Audit Dashboard', icon: ShieldCheck },
 ];
 
 const CONSENT_MANAGEMENT_ITEMS: NavItem[] = [
@@ -666,11 +674,12 @@ export function Sidebar(): ReactElement {
     regulatoryOverdueCount,
   );
   const searchActive = searchQuery.trim().length > 0;
-  const shieldAiVisible = shieldAiMatchesSearch(searchQuery);
+  const vajraAiVisible = vajraAiMatchesSearch(searchQuery);
   const hasVisibleNav =
     !searchActive ||
     navSectionsHaveResults(searchQuery, [
       { title: 'Overview', items: OVERVIEW_ITEMS },
+      { title: 'Vajra Healthcare', items: HEALTHCARE_SHIELD_ITEMS },
       { title: 'Consent Management', items: CONSENT_MANAGEMENT_ITEMS },
       ...(isBankingOrg ? [{ title: 'Advanced Consent Management', items: BANKING_CONSENT_ITEMS }] : []),
       { title: 'Data Protection', items: dataProtectionItems },
@@ -682,7 +691,7 @@ export function Sidebar(): ReactElement {
       { title: 'Administration', items: administrationItems },
     ]) ||
     integrationsHasResults(searchQuery) ||
-    shieldAiVisible;
+    vajraAiVisible;
 
   useEffect(() => {
     async function loadSummary() {
@@ -870,7 +879,7 @@ export function Sidebar(): ReactElement {
               <Shield className="size-4 text-white" strokeWidth={2} />
             </div>
             {!isCollapsed ? (
-              <h1 className="min-w-0 flex-1 text-base font-bold tracking-tight text-white">DPDPA Shield</h1>
+              <h1 className="min-w-0 flex-1 text-base font-bold tracking-tight text-white">Vajra</h1>
             ) : null}
             <button
               type="button"
@@ -896,7 +905,7 @@ export function Sidebar(): ReactElement {
               className="mb-[18px] flex w-full items-center justify-between gap-2 rounded-[10px] border border-[var(--sidebar-surface-border)] bg-[var(--sidebar-surface)] px-[11px] py-[9px] transition-colors hover:bg-white/[0.07]"
             >
               <span className="min-w-0 truncate text-[13px] font-medium text-[var(--sidebar-org-name)]">
-                ZeroShield Pvt Ltd
+                Vajra Pvt Ltd
               </span>
               <span className="shrink-0 rounded-md border border-[var(--sidebar-badge-border)] bg-[var(--sidebar-badge-bg)] px-2 py-0.5 text-[10.5px] font-semibold text-[var(--sidebar-badge-text)]">
                 Enterprise
@@ -967,6 +976,16 @@ export function Sidebar(): ReactElement {
             activeItem={activeItem}
             onItemClick={handleItemClick}
             items={OVERVIEW_ITEMS}
+            defaultOpen
+            collapsed={isCollapsed}
+            searchQuery={searchQuery}
+          />
+
+          <CollapsibleNavSection
+            title="Vajra Healthcare"
+            activeItem={activeItem}
+            onItemClick={handleItemClick}
+            items={HEALTHCARE_SHIELD_ITEMS}
             defaultOpen
             collapsed={isCollapsed}
             searchQuery={searchQuery}
@@ -1066,21 +1085,21 @@ export function Sidebar(): ReactElement {
         </div>
 
         <div className={cn('mt-1.5 space-y-3.5 border-t border-white/[0.07] p-4', isCollapsed && 'px-3')}>
-          {shieldAiVisible ? (
+          {vajraAiVisible ? (
             <button
               type="button"
               onClick={() => {
                 setSearchQuery('');
                 void guardedNavigate('/ai/copilot');
               }}
-            title={isCollapsed ? 'Shield AI' : undefined}
+            title={isCollapsed ? 'Vajra AI' : undefined}
             className={cn(
               'flex w-full items-center justify-center gap-2 rounded-[11px] bg-gradient-to-br from-[var(--sidebar-primary-2)] to-[#5a4fe6] text-[13.5px] font-semibold text-white shadow-[var(--sidebar-ai-glow)] transition-opacity hover:opacity-95',
               isCollapsed ? 'p-2.5' : 'px-4 py-[11px]',
             )}
           >
             <Sparkles className="size-4 shrink-0" strokeWidth={2} />
-            {!isCollapsed ? 'Shield AI' : null}
+            {!isCollapsed ? 'Vajra AI' : null}
           </button>
           ) : null}
 

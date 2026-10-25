@@ -64,7 +64,7 @@ const COMPLIANCE_FLOW: ComplianceModule[] = [
     route: '/compliance/map',
     icon: Scale,
     description:
-      'Interactive statute coverage map — browse DPDPA chapters and sections linked to ZeroShield features, with live evidence counts, gap analysis, and review status.',
+      'Interactive statute coverage map — browse DPDPA chapters and sections linked to Vajra features, with live evidence counts, gap analysis, and review status.',
     whenToUse: 'Start here. Establish which parts of the Act your platform covers before diving into controls or incidents.',
     roles: ['DPO', 'CCO', 'Auditors'],
     feedsFrom: ['Seeded statute catalog', 'Consent, audit, DSAR, and control evidence'],
@@ -594,7 +594,7 @@ export function ComplianceGuide(): ReactElement {
                 <Sparkles className="w-6 h-6" />
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-sm text-[var(--text-primary)]">Shield AI Copilot</h4>
+                <h4 className="font-bold text-sm text-[var(--text-primary)]">Vajra AI Copilot</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   Ask about statute coverage, breach timelines, or audit trail requirements.
                 </p>

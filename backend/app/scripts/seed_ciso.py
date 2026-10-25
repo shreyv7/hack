@@ -275,7 +275,7 @@ CONTROLS_DATA = [
         "control_key": "CIS-17",
         "title": "Incident Response Management",
         "description": "Establish an incident response program (playbooks, roles, and workflows) to quickly contain and resolve breaches.",
-        "tech_explanation": "Deploy an incident response wizard inside DPDPA Shield to guide CISO notifications and containment timelines.",
+        "tech_explanation": "Deploy an incident response wizard inside Vajra to guide CISO notifications and containment timelines.",
         "business_explanation": "Ensures the DPO initiates containment and notifies authorities within statutory timelines (e.g. 72 hours).",
         "why_required": "CIS Control 17.1 / ISO A.5.1 / NIST DE.CM-1 / DPDPA Sec.8.5",
         "penalty_if_absent": "Strict penalties for failure to notify data breaches under DPDPA rules.",

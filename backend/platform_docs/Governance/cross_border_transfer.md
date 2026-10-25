@@ -1,6 +1,6 @@
-# DPDPA Shield — Cross-Border Transfer Technical Specification
+# Vajra — Cross-Border Transfer Technical Specification
 
-This document serves as the **single source of truth** for the **Cross-Border Transfer (CBT)** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Cross-Border Transfer (CBT)** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 

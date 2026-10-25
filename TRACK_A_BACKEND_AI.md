@@ -5,7 +5,7 @@
 ---
 
 ```markdown
-You are an expert Backend & AI Systems Engineer working on the Hacktoberfest × MOSS Hack Day Udupi project: Open-DPDPA HealthShield.
+You are an expert Backend & AI Systems Engineer working on the Hacktoberfest × MOSS Hack Day Udupi project: Vajra Health.
 Your teammate is independently building the frontend in `frontend/`. 
 YOU MUST ONLY CREATE AND MODIFY FILES IN `dpdpa_shield/backend/`. Do NOT touch `frontend/`.
 

@@ -11,11 +11,11 @@ def run_seeding():
     db = SessionLocal()
     try:
         # 1. Create default organization
-        org = db.query(Organization).filter(Organization.slug == "zeroshield-sandbox-org").first()
+        org = db.query(Organization).filter(Organization.slug == "vajra-sandbox-org").first()
         if not org:
             org = Organization(
-                name="ZeroShield Sandbox Org",
-                slug="zeroshield-sandbox-org",
+                name="Vajra Sandbox Org",
+                slug="vajra-sandbox-org",
                 status=OrganizationStatus.active,
             )
             db.add(org)
@@ -31,7 +31,7 @@ def run_seeding():
             print(f"Organization already exists: {org.name}")
 
         # 2. Create or update the superadmin user
-        email = "superadmin@zeroshield.in"
+        email = "superadmin@vajra.dev"
         password = "Admin@12345"
         user = db.query(User).filter(User.email == email).first()
         if not user:

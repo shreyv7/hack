@@ -1,6 +1,6 @@
-# DPDPA Shield — Mobile SDK Integration Technical Specification
+# Vajra — Mobile SDK Integration Technical Specification
 
-This document serves as the **single source of truth** for the **Mobile SDK Integration** (Native iOS & Android Libraries) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Mobile SDK Integration** (Native iOS & Android Libraries) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -21,7 +21,7 @@ The native SDK manages consent data structures inside mobile sandboxes:
 
 ```mermaid
 graph TD
-    App[Mobile Native App] -->|Initializes SDK| SDK[ZeroShield Mobile SDK]
+    App[Mobile Native App] -->|Initializes SDK| SDK[Vajra Mobile SDK]
     SDK -->|1. Check Cache| Local[UserDefaults / SharedPreferences]
     SDK -->|2. Fetch Notice payload| API[CDN Notice API]
     SDK -->|3. Display Native UI Dialog| Dialog[Native UI Component]
@@ -44,7 +44,7 @@ graph TD
 | :--- | :--- | :--- |
 | **Section 6(3)** | Notice must accompany the request for consent. | Mobile SDK fetches dynamic JSON notice translation objects to populate localized text inside native screens. |
 | **Section 6(1)** | Consent must be specific and informed. | Native dialogue forms list toggle switches mapping directly to specific purpose scopes. |
-| **Section 6(3)(a)** | Principal has the right to withdraw consent easily. | SDK exposes programmatic triggers (e.g. `ZeroShield.showConsentCenter()`) to reopen the preferences screen from any App settings menu. |
+| **Section 6(3)(a)** | Principal has the right to withdraw consent easily. | SDK exposes programmatic triggers (e.g. `Vajra.showConsentCenter()`) to reopen the preferences screen from any App settings menu. |
 
 ---
 
@@ -55,9 +55,9 @@ sequenceDiagram
     autonumber
     actor Principal as Mobile App User
     participant App as App Launch Logic
-    participant SDK as ZeroShield SDK
+    participant SDK as Vajra SDK
     participant Storage as Native Storage (Disk)
-    participant CDN as ZeroShield CDN
+    participant CDN as Vajra CDN
     participant API as Recording API
 
     App->>SDK: Initialize SDK (API Key, Property ID)
@@ -91,12 +91,12 @@ The SDK handles consent configurations inside mobile platform storage:
 Developers initialize the SDK in the `AppDelegate` or main App structure:
 
 ```swift
-import ZeroShield
+import Vajra
 
 @main
 struct MyApp: App {
     init() {
-        ZeroShield.initialize(
+        Vajra.initialize(
             clientToken: "zs_prop_e3b0c442",
             fallbackPolicy: .cacheLast
         )
@@ -107,8 +107,8 @@ struct MyApp: App {
             ContentView()
                 .onAppear {
                     // Check if prompt is needed
-                    if ZeroShield.shouldPromptUser() {
-                        ZeroShield.presentConsentController()
+                    if Vajra.shouldPromptUser() {
+                        Vajra.presentConsentController()
                     }
                 }
         }
@@ -122,12 +122,12 @@ struct MyApp: App {
 Developers initialize the SDK in their `Application` file:
 
 ```kotlin
-import class io.zeroshield.android.ZeroShield
+import class io.vajra.android.Vajra
 
 class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        ZeroShield.initialize(
+        Vajra.initialize(
             context = this,
             clientToken = "zs_prop_e3b0c442",
             fallbackPolicy = FallbackPolicy.CACHE_LAST
@@ -177,7 +177,7 @@ The dynamic notice payload is returned in standard JSON format:
 ## 6. QA Verification Matrix
 
 ### 6.1 Positive Test Cases
-*   **TC-01 (Clean Launch Presentation)**: Install mobile app for the first time. Launch app. Verify the native ZeroShield modal displays automatically before other features load.
+*   **TC-01 (Clean Launch Presentation)**: Install mobile app for the first time. Launch app. Verify the native Vajra modal displays automatically before other features load.
 *   **TC-02 (State Memory Sync)**: Close app after granting consent. Relaunch. Verify `shouldPromptUser()` returns `false` and preferences match the previous session.
 
 ### 6.2 Negative Test Cases

@@ -1,11 +1,11 @@
 """
 Bedrock Translation Service — primary translation engine for the DPDPA Multi-Language Editor.
 
-Uses the existing Shield AI converse() helper (Vertex or Bedrock via AI_PROVIDER)
+Uses the existing Vajra AI converse() helper (Vertex or Bedrock via AI_PROVIDER)
 to translate consent banner and consent notice text into all 22 Eighth Schedule languages.
 
 Designed as the first tier in a cascading fallback chain:
-  1. Shield AI (this module)  → production quality, 99.9% SLA
+  1. Vajra AI (this module)  → production quality, 99.9% SLA
   2. LibreTranslate mirrors → free open-source fallback
   3. MyMemory API           → free crowdsourced fallback
   4. Local dictionary       → always-available hardcoded phrases
@@ -90,14 +90,14 @@ def translate_via_bedrock(text: str, target_lang_code: str) -> TranslationResult
         ``TranslationResult(translated_text, source=<ai_provider>)``
     """
     from app.core.config import settings
-    from app.services.shield_ai_service import ShieldAIError, converse
+    from app.services.vajra_ai_service import VajraAIError, converse
 
     if not text or not text.strip():
         return TranslationResult(translated_text="", source=settings.ai_provider)
 
     if not settings.ai_configured:
         raise BedrockTranslationError(
-            "Shield AI is not configured (set AI_PROVIDER plus Vertex or Bedrock settings)."
+            "Vajra AI is not configured (set AI_PROVIDER plus Vertex or Bedrock settings)."
         )
 
     target_language = _LANGUAGE_NAMES.get(
@@ -121,7 +121,7 @@ def translate_via_bedrock(text: str, target_lang_code: str) -> TranslationResult
             # Low temperature for deterministic, faithful translations
             temperature=0.1,
         )
-    except ShieldAIError as exc:
+    except VajraAIError as exc:
         logger.warning("AI translation failed for lang=%s: %s", target_lang_code, exc)
         raise BedrockTranslationError(str(exc)) from exc
     except Exception as exc:
@@ -133,7 +133,7 @@ def translate_via_bedrock(text: str, target_lang_code: str) -> TranslationResult
 
     translated = translated.strip()
     if not translated:
-        raise BedrockTranslationError("Shield AI returned an empty translation.")
+        raise BedrockTranslationError("Vajra AI returned an empty translation.")
 
     logger.info(
         "AI translation OK: provider=%s lang=%s, input_chars=%d, output_chars=%d",

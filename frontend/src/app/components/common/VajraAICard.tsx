@@ -2,16 +2,16 @@ import type { ReactElement } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Sparkles, RefreshCw, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { shieldAiRecommendations } from '@/lib/api/shieldAi';
+import { vajraAiRecommendations } from '@/lib/api/vajraAi';
 import { ApiError } from '@/lib/api/client';
 
-interface ShieldAICardProps {
-  /** Card heading. Defaults to "Shield AI Recommendations". */
+interface VajraAICardProps {
+  /** Card heading. Defaults to "Vajra AI Recommendations". */
   title?: string;
   /** Static suggestions. Shown as-is when `topic` is omitted, or as a fallback
    *  if a live recommendation fetch fails. */
   suggestions?: string[];
-  /** When provided, the card fetches live recommendations from Shield AI for this
+  /** When provided, the card fetches live recommendations from Vajra AI for this
    *  topic (e.g. "privacy risks and mitigations"). Enables loading + regenerate. */
   topic?: string;
   /** Free-text scenario passed to the model to ground the recommendations. */
@@ -30,11 +30,11 @@ interface ShieldAICardProps {
 /**
  * Highlighted callout that surfaces AI-generated compliance recommendations
  * with optional "Apply" and "Customize" actions. When `topic` is supplied the
- * suggestions are generated live by Shield AI; otherwise the
+ * suggestions are generated live by Vajra AI; otherwise the
  * static `suggestions` prop is rendered.
  */
-export function ShieldAICard({
-  title = 'Shield AI Recommendations',
+export function VajraAICard({
+  title = 'Vajra AI Recommendations',
   suggestions = [],
   topic,
   context,
@@ -42,7 +42,7 @@ export function ShieldAICard({
   onApply,
   onCustomize,
   className,
-}: ShieldAICardProps): ReactElement {
+}: VajraAICardProps): ReactElement {
   const isLive = Boolean(topic);
   const [items, setItems] = useState<string[]>(suggestions);
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +53,7 @@ export function ShieldAICard({
     setIsLoading(true);
     setError(null);
     try {
-      const { suggestions: result } = await shieldAiRecommendations({
+      const { suggestions: result } = await vajraAiRecommendations({
         topic,
         context,
         count: count ?? (suggestions.length || 4),
@@ -63,7 +63,7 @@ export function ShieldAICard({
       setError(
         err instanceof ApiError
           ? err.message
-          : 'Could not reach Shield AI. Showing default suggestions.',
+          : 'Could not reach Vajra AI. Showing default suggestions.',
       );
       // Keep whatever we have (initial static suggestions) as a fallback.
     } finally {
@@ -89,7 +89,7 @@ export function ShieldAICard({
             type="button"
             onClick={() => void load()}
             disabled={isLoading}
-            title="Regenerate with Shield AI"
+            title="Regenerate with Vajra AI"
             className="p-1 rounded-md text-purple-600 hover:bg-purple-100 disabled:opacity-50"
           >
             <RefreshCw className={cn('size-4', isLoading && 'animate-spin')} />

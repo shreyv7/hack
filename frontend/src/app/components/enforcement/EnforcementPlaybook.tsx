@@ -127,7 +127,7 @@ const TROUBLESHOOTING = [
   },
   {
     issue: 'Token verification fails',
-    fix: 'Confirm ZEROSHIELD_DECISION_SECRET matches the property signing secret. Tokens are HS256, per-property, short TTL.',
+    fix: 'Confirm VAJRA_DECISION_SECRET matches the property signing secret. Tokens are HS256, per-property, short TTL.',
   },
   {
     issue: 'Checkout blocked after go-live',
@@ -325,7 +325,7 @@ export function EnforcementPlaybook({ onClose, onOpenWizard }: EnforcementPlaybo
               </p>
               <p className="text-xs text-[var(--text-secondary)]">
                 <strong className="text-[var(--text-primary)]">Fallback:</strong> POST to Decision API with raw
-                identifier fields (email / phone). ZeroShield hashes server-side — never reimplement the fingerprint.
+                identifier fields (email / phone). Vajra hashes server-side — never reimplement the fingerprint.
               </p>
               <pre className="text-[11px] leading-relaxed p-3 rounded-md bg-[var(--surface-card)] border border-[var(--border-default)] overflow-x-auto text-[var(--text-secondary)]">
                 {`POST ${apiBase}/integrations/{property_id}/consent/decision
@@ -354,7 +354,7 @@ X-API-Key: <property_api_key>
           <PlaybookSection title="Withdrawal & remediation">
             <div className="rounded-xl border border-amber-200/60 bg-amber-50/50 dark:bg-amber-950/20 p-4 text-sm text-[var(--text-secondary)] space-y-2">
               <p>
-                When a data principal withdraws consent, ZeroShield dispatches a webhook and queues remediation tasks
+                When a data principal withdraws consent, Vajra dispatches a webhook and queues remediation tasks
                 based on your purpose → field mappings (mask, anonymize, delete, etc.).
               </p>
               <p>

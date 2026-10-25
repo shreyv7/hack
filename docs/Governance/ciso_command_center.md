@@ -1,6 +1,6 @@
-# DPDPA Shield — CISO Command Center Technical Specification
+# Vajra — CISO Command Center Technical Specification
 
-This document serves as the **single source of truth** for the **CISO Command Center** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **CISO Command Center** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -125,7 +125,7 @@ Triggered by clicking any control card:
 *   **Drill-down Sub-tabs**:
     *   *Linked Evidence Table*: Evidence list with delete/unlink options.
     *   *Remediation Tasks Checklist*: Sub-task checkboxes.
-    *   *Shield AI Copilot*: "Generate Blueprint" button to output customized compliance implementation checklists.
+    *   *Vajra AI Copilot*: "Generate Blueprint" button to output customized compliance implementation checklists.
     *   *Compliance Verification Review*: Dropdown selector (Approved / Rejected), notes textarea, and "Submit Verification Outcome" button.
     *   *Control Discussion Feed*: Interactive operator comments feed.
     *   *Version Vault*: History list of changes made to the control over time.

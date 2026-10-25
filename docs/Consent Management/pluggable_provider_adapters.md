@@ -1,13 +1,13 @@
-# DPDPA Shield — Pluggable Provider Adapters Technical Specification
+# Vajra — Pluggable Provider Adapters Technical Specification
 
-This document serves as the **single source of truth** for the **Pluggable Provider Adapters** module of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Pluggable Provider Adapters** module of the Vajra DPDPA compliance platform.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-**Pluggable Provider Adapters** enable organizations to connect their own email, SMS, and push notification infrastructure for delivering consent notices, withdrawal confirmations, DSAR updates, and breach notifications — without routing sensitive communications through ZeroShield's shared infrastructure.
+**Pluggable Provider Adapters** enable organizations to connect their own email, SMS, and push notification infrastructure for delivering consent notices, withdrawal confirmations, DSAR updates, and breach notifications — without routing sensitive communications through Vajra's shared infrastructure.
 
 ### 1.2 Business Objective
 To support enterprise customers who require consent-related communications to originate from their own verified domains, SMTP relays, Twilio accounts, or AWS SES configurations — maintaining brand trust and meeting internal security policies.

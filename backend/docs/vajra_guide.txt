@@ -1,4 +1,4 @@
-🛡️ DPDPA Shield — Complete Guide (In Simple
+🛡️ Vajra — Complete Guide (In Simple
 Terms)
 
 1. What is DPDPA?
@@ -34,8 +34,8 @@ General non-compliance
 
 Up to ₹250 Crore
 
-2. What is DPDPA Shield?
-DPDPA Shield is a SaaS product (Software-as-a-Service) that helps companies become compliant
+2. What is Vajra?
+Vajra is a SaaS product (Software-as-a-Service) that helps companies become compliant
 with the DPDPA law without hiring an army of lawyers and compliance experts.
 
 Real-World Analogy
@@ -174,12 +174,12 @@ Data Anonymisation
 
 Making data completely untraceable to any individual
 
-4. How Does a Company Use DPDPA Shield? (The
+4. How Does a Company Use Vajra? (The
 Complete Flow)
 Step 1: Company Signs Up → Onboarding
 Company signs up → Creates workspace → Configures their industry
-The company (let's say "ZeroShield Pvt Ltd" — a pharmacy chain):
-1. Signs up on DPDPA Shield
+The company (let's say "Vajra Pvt Ltd" — a pharmacy chain):
+1. Signs up on Vajra
 2. Creates a Workspace (like an account for their company)
 3. Fills in company details in Workspace Info
 4. Configures their Industry (Healthcare/Pharmacy) in Industry Config — this loads rules specific to
@@ -199,7 +199,7 @@ Here's how each module works:
 What: A visual tool to design the cookie/consent popup banner that appears on their website.
 Real example: When you visit any website and see "We use cookies. Accept / Reject" — that popup is a
 consent banner.
-How it works in DPDPA Shield:
+How it works in Vajra:
 The DPO opens Banner Builder
 Designs the banner (colors, text, buttons)
 Configures what options to show (Accept All, Reject All, Customize)
@@ -275,7 +275,7 @@ What: Configures HOW consent notices reach users — website popup, email, SMS, 
 WhatsApp, etc.
 
 🔹 Consent Manager Integration
-What: Connects DPDPA Shield with your existing tech (CRM, email tools, marketing platforms) via APIs
+What: Connects Vajra with your existing tech (CRM, email tools, marketing platforms) via APIs
 so that when a user withdraws consent, ALL systems stop processing.
 
 🔹 Proof Vault
@@ -352,7 +352,7 @@ The 6 Rights:
 5. File a Grievance — "I have a complaint about how you're using my data"
 6. Withdraw Consent — "I no longer want you to use my data for marketing" (DPDPA Section 6)
 How it works for the citizen:
-1. Citizen visits ZeroShield's website → clicks "Privacy Portal"
+1. Citizen visits Vajra's website → clicks "Privacy Portal"
 2. Sees the 6 rights as cards
 3. Clicks "Access Your Data"
 4. Fills form (name, email, phone, details)
@@ -549,7 +549,7 @@ Risk Heatmap, Recent Activity
 └─────────────────────────────────────────┘
 The dashboard shows at a glance: Are we compliant? What needs attention? What's overdue?
 
-5. Shield AI (AI Copilot)
+5. Vajra AI (AI Copilot)
 What: An AI assistant built into the platform that helps the DPO with:
 Answering compliance questions ("Do we need parental consent for 16-year-olds?")
 Auto-generating consent notices
@@ -597,7 +597,7 @@ J --> K
 7. Two Types of Users
 User Type 1: The Company (Admin Side)
 Who: DPO, CISO, Legal Team, IT Admin
-What they see: The full DPDPA Shield dashboard (all 48 pages you see in the design)
+What they see: The full Vajra dashboard (all 48 pages you see in the design)
 What they do: Configure, monitor, respond to requests, handle breaches
 
 User Type 2: The Citizen (Public Side)
@@ -782,7 +782,7 @@ Audit
 
 Action logging, query, export
 
-AI (Shield AI)
+AI (Vajra AI)
 
 Chat endpoint, auto-suggestions, notice generation
 
@@ -839,8 +839,8 @@ Right to nominate someone
 
 Rights Portal
 
-10. Summary — DPDPA Shield in One Sentence
-DPDPA Shield is a compliance platform that helps Indian companies follow the DPDPA 2023
+10. Summary — Vajra in One Sentence
+Vajra is a compliance platform that helps Indian companies follow the DPDPA 2023
 data privacy law by managing user consent, protecting personal data, handling rights
 requests, reporting breaches on time, and maintaining audit-ready records — all from a
 single dashboard.

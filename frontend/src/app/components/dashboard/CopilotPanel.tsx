@@ -37,7 +37,7 @@ export function CopilotPanel(): ReactElement {
         <div className="flex flex-col lg:flex-row lg:items-center gap-4">
           <div className="flex items-center gap-2 shrink-0">
             <Sparkles className="size-5 text-[var(--status-ai)]" />
-            <h2 className="text-base font-semibold text-[var(--text-primary)]">ConsentIQ Copilot</h2>
+            <h2 className="text-base font-semibold text-[var(--text-primary)]">Vajra Copilot</h2>
           </div>
 
           <form onSubmit={handleSubmit} className="flex-1 flex gap-2">

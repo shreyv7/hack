@@ -1,4 +1,4 @@
-"""Floating assistant overlay — team comments and Shield AI Vision."""
+"""Floating assistant overlay — team comments and Vajra AI Vision."""
 
 from typing import Annotated
 from uuid import UUID
@@ -11,7 +11,7 @@ from app.core.dependencies import get_current_user
 from app.models.user import User
 from app.schemas.overlay import CommentCreate, CommentRead, VisionQueryRequest, VisionQueryResponse
 from app.services.overlay_service import OverlayCommentService
-from app.services.shield_ai_service import ShieldAIError
+from app.services.vajra_ai_service import VajraAIError
 from app.services.vision_assist_service import VisionAssistService
 
 router = APIRouter(prefix="/overlay", tags=["overlay"])
@@ -56,6 +56,6 @@ def vision_query(
     del current_user  # auth gate only — any authenticated user may use vision
     try:
         answer = VisionAssistService().answer(body.image_base64, body.question)
-    except ShieldAIError as exc:
+    except VajraAIError as exc:
         raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
     return VisionQueryResponse(answer=answer)

@@ -14,7 +14,7 @@ import '@/app/components/pages/automation-coverage.css';
 type CoverageTab = 'map' | 'why';
 
 /**
- * Automation Coverage — maps DPDPA Shield platform capabilities to the Act section by section.
+ * Automation Coverage — maps Vajra platform capabilities to the Act section by section.
  */
 export function AutomationCoverage(): ReactElement {
   const [activeTab, setActiveTab] = useState<CoverageTab>('why');
@@ -60,7 +60,7 @@ export function AutomationCoverage(): ReactElement {
           <div>
             <h1>Automation Coverage</h1>
             <p className="page-sub">
-              How DPDPA Shield maps to the Digital Personal Data Protection Act, 2023 — what the
+              How Vajra maps to the Digital Personal Data Protection Act, 2023 — what the
               platform automates, and the reasoning behind every decision.
             </p>
           </div>

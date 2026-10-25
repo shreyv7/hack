@@ -662,7 +662,7 @@ export function DataProtectionGuide(): ReactElement {
                 <Sparkles className="w-6 h-6" />
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-sm text-[var(--text-primary)]">Shield AI Copilot</h4>
+                <h4 className="font-bold text-sm text-[var(--text-primary)]">Vajra AI Copilot</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   Ask questions about data classification, retention rules, or children&apos;s data obligations.
                 </p>
@@ -721,7 +721,7 @@ export function DataProtectionGuide(): ReactElement {
               <div className="space-y-2">
                 <h4 className="font-bold text-sm text-[var(--text-primary)]">Consent Setup Guide</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  New to DPDPA Shield? Start with consent notices and banner deployment first.
+                  New to Vajra? Start with consent notices and banner deployment first.
                 </p>
                 <button
                   type="button"

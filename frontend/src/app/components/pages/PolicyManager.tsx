@@ -929,14 +929,14 @@ export function PolicyManager(): ReactElement {
           </div>
         </div>
 
-        {/* Shield AI Promotion Card */}
+        {/* Vajra AI Promotion Card */}
         <div className="p-6 rounded-lg border bg-[var(--status-ai-bg)] border-violet-300 transition-all hover:shadow-sm">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 bg-violet-600">
               <Sparkles className="w-5 h-5 text-white animate-pulse" strokeWidth={1.5} />
             </div>
             <div className="flex-1">
-              <h3 className="mb-2 font-bold text-violet-900">Shield AI</h3>
+              <h3 className="mb-2 font-bold text-violet-900">Vajra AI</h3>
               <p className="text-sm mb-4 text-violet-800">
                 Generate policy from your processing activities — Auto-draft a policy from your RoPA in 30 seconds
               </p>

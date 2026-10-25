@@ -609,9 +609,9 @@ export function NewConsentNotice({
                             <Sparkles className="size-4" />
                           </div>
                           <div>
-                            <h4 className="font-semibold text-sm">Drafted by Shield AI</h4>
+                            <h4 className="font-semibold text-sm">Drafted by Vajra AI</h4>
                             <p className="text-xs text-[var(--text-secondary)] mt-0.5">
-                              This consent notice was automatically drafted by Shield AI. All fields have been pre-filled and remain fully editable.
+                              This consent notice was automatically drafted by Vajra AI. All fields have been pre-filled and remain fully editable.
                             </p>
                           </div>
                         </div>

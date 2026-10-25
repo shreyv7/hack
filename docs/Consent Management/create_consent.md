@@ -1,6 +1,6 @@
-# DPDPA Shield — Create Consent (Banner Builder) Technical Specification
+# Vajra — Create Consent (Banner Builder) Technical Specification
 
-This document serves as the **single source of truth** for the **Create Consent** module — the **Consent Banner Builder** — of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Create Consent** module — the **Consent Banner Builder** — of the Vajra DPDPA compliance platform.
 
 > **Note:** This module (`/consent/banner`) is distinct from the **Consent Notices Manager** (`/consent/notices`). The Banner Builder creates deployable consent banners/widgets that display a published notice and collect consent. The Notices Manager authors the legal notice content itself. See `consent_notices_manager.md` for notice authoring.
 
@@ -9,7 +9,7 @@ This document serves as the **single source of truth** for the **Create Consent*
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Create Consent** (Banner Builder) module allows organizations to design, configure, and deploy interactive **consent banners** and preference centres that display published consent notices, collect granular purpose-level consent, and integrate with the ZeroShield SDK on websites, mobile apps, and APIs.
+The **Create Consent** (Banner Builder) module allows organizations to design, configure, and deploy interactive **consent banners** and preference centres that display published consent notices, collect granular purpose-level consent, and integrate with the Vajra SDK on websites, mobile apps, and APIs.
 
 ### 1.2 Business Objective
 To provide a no-code banner designer that compliance teams can configure and engineering teams can deploy with a single script tag — enabling DPDPA-compliant consent collection without custom frontend development.
@@ -26,7 +26,7 @@ To provide a no-code banner designer that compliance teams can configure and eng
 graph TD
     CN[Consent Notices Manager] -->|Published notice| CB[Banner Builder]
     PR[Purpose Registry] -->|Purpose toggles| CB
-    CB -->|Deploy script| SDK[ZeroShield SDK]
+    CB -->|Deploy script| SDK[Vajra SDK]
     SDK -->|Collect consent| API[Consent Capture API]
     API -->|Seal receipt| PV[Proof Vault]
     API -->|Mint token| DT[Decision Token]
@@ -124,7 +124,7 @@ sequenceDiagram
 ### 4.3 Deployment Snippet
 After publish, displays:
 ```html
-<script src="https://cdn.zeroshield.io/cmp.js"
+<script src="https://cdn.vajra.io/cmp.js"
         data-property-id="YOUR_PROPERTY_ID"
         data-api-key="YOUR_API_KEY"></script>
 ```
@@ -163,11 +163,11 @@ stateDiagram-v2
 
 ### 7.1 Key SDK Methods
 ```javascript
-ZeroShield.showBanner()           // display banner
-ZeroShield.getConsent()          // current consent state
-ZeroShield.getDecisionToken()     // for server-side enforcement
-ZeroShield.hasConsent(purpose)    // check specific purpose
-ZeroShield.guardSubmit(form, purpose)  // form-level gating
+Vajra.showBanner()           // display banner
+Vajra.getConsent()          // current consent state
+Vajra.getDecisionToken()     // for server-side enforcement
+Vajra.hasConsent(purpose)    // check specific purpose
+Vajra.guardSubmit(form, purpose)  // form-level gating
 ```
 
 ### 7.2 Form Annotation

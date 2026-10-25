@@ -1,4 +1,4 @@
-# 🛡️ DPDPA Shield — Integrations Module: Website Integration Blueprint
+# 🛡️ Vajra — Integrations Module: Website Integration Blueprint
 
 ## User Review Required
 
@@ -28,7 +28,7 @@
 
 ### Architecture Challenge: Why the Current UI Design Is Incomplete
 
-The existing [TechnicalIntegration.tsx](file:///Users/shreyvashistha/Desktop/ZEROSHIELD-DPDPA/dpdpa_shield/frontend/src/app/components/pages/TechnicalIntegration.tsx) has a fundamental gap: **it has no concept of "Properties"**. It jumps straight to banner selection and snippet generation. But an enterprise compliance platform needs:
+The existing [TechnicalIntegration.tsx](file:///Users/shreyvashistha/Desktop/VAJRA-DPDPA/dpdpa_shield/frontend/src/app/components/pages/TechnicalIntegration.tsx) has a fundamental gap: **it has no concept of "Properties"**. It jumps straight to banner selection and snippet generation. But an enterprise compliance platform needs:
 
 ```
 Organization (Acme Corp)
@@ -564,7 +564,7 @@ All routes require JWT. Organization-scoped via `current_user.organization_id`.
   "banner_name": "Acme Retail Main Banner",
   "banner_version": "v2.3",
   "activated_at": "...",
-  "snippet": "<script async src=\"https://cdn.zeroshield.in/v4/cmp.js\" ...></script>"
+  "snippet": "<script async src=\"https://cdn.vajra.in/v4/cmp.js\" ...></script>"
 }
 ```
 
@@ -580,9 +580,9 @@ All routes require JWT. Organization-scoped via `current_user.organization_id`.
 **GET `/integrations/properties/{id}/snippet`**
 ```json
 {
-  "html": "<script async src=\"https://cdn.zeroshield.in/v4/cmp.js\"\n  data-property-id=\"prop_a8b3c9d4\"\n  data-api-key=\"zsk_live_a8b3\"\n  data-banner-id=\"BANNER-2026-A8B3\"\n  data-language=\"auto\"\n  data-blocker-mode=\"strict\">\n</script>",
-  "npm_install": "npm install @zeroshield/cmp",
-  "gtm_template_url": "https://cdn.zeroshield.in/gtm/template.tpl"
+  "html": "<script async src=\"https://cdn.vajra.in/v4/cmp.js\"\n  data-property-id=\"prop_a8b3c9d4\"\n  data-api-key=\"zsk_live_a8b3\"\n  data-banner-id=\"BANNER-2026-A8B3\"\n  data-language=\"auto\"\n  data-blocker-mode=\"strict\">\n</script>",
+  "npm_install": "npm install @vajra/cmp",
+  "gtm_template_url": "https://cdn.vajra.in/gtm/template.tpl"
 }
 ```
 
@@ -655,7 +655,7 @@ All routes require JWT. Organization-scoped via `current_user.organization_id`.
 
 **GET `/public/integrations/config/{property_id}`**
 ```
-Headers: X-ZeroShield-Key: zsk_live_a8b3c9d4e5f6g7h8
+Headers: X-Vajra-Key: zsk_live_a8b3c9d4e5f6g7h8
 ```
 ```json
 {
@@ -1270,7 +1270,7 @@ try {
 ```
 Customer's website
     │
-    │  <script src="https://cdn.zeroshield.in/v4/cmp.js" ...>
+    │  <script src="https://cdn.vajra.in/v4/cmp.js" ...>
     │
     ▼
 CloudFront / Cloudflare CDN (edge-cached, <50ms global)
@@ -1284,8 +1284,8 @@ S3 bucket (or FastAPI static endpoint)
     
 cmp.js in browser:
     │
-    │  GET https://api.zeroshield.in/public/integrations/config/{property_id}
-    │  Header: X-ZeroShield-Key: zsk_live_...
+    │  GET https://api.vajra.in/public/integrations/config/{property_id}
+    │  Header: X-Vajra-Key: zsk_live_...
     │
     ▼
 CloudFront / Cloudflare (config response cached, 5-min TTL)
@@ -1452,7 +1452,7 @@ When an organization signs up, offer to scan their DNS for subdomains and sugges
 
 ### 14.3 Competitor Comparison
 
-The current UI mentions competitors but doesn't differentiate. Add a **"How DPDPA Shield differs"** section that highlights India-specific capabilities:
+The current UI mentions competitors but doesn't differentiate. Add a **"How Vajra differs"** section that highlights India-specific capabilities:
 
 - DPDPA Section 6(7) Consent Manager integration (Sahamati, Setu) — **no competitor has this**
 - Hindi + 21 Indian language translations built-in
@@ -1465,7 +1465,7 @@ Instead of polling verification status, let the customer's website ping back whe
 
 ```javascript
 // Inside cmp.js
-fetch('https://api.zeroshield.in/public/integrations/heartbeat', {
+fetch('https://api.vajra.in/public/integrations/heartbeat', {
   method: 'POST',
   body: JSON.stringify({ property_id, version, timestamp })
 });
@@ -1478,7 +1478,7 @@ This gives real-time "snippet is working" confirmation without needing to crawl 
 Before making a banner change live, let the DPO preview it on the actual website using a URL parameter:
 
 ```
-https://acme.com?zeroshield_preview=BANNER-DRAFT-XYZ
+https://acme.com?vajra_preview=BANNER-DRAFT-XYZ
 ```
 
 cmp.js detects this parameter and loads the draft banner config instead of the production one. Only works when the viewer is an authenticated DPO.

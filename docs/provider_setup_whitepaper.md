@@ -1,8 +1,8 @@
-# ZeroShield DPDPA Notice Delivery Setup Whitepaper
+# Vajra DPDPA Notice Delivery Setup Whitepaper
 
 ## 1. Executive Summary
 
-Under the Digital Personal Data Protection Act (DPDPA), 2023, organizations are legally mandated to deliver clear, granular, and multi-lingual privacy notices to data principals when collecting personal data. The **ZeroShield Notice Delivery & Orchestration** module provides a secure, reliable, and compliant infrastructure to automatically dispatch these notices across digital and physical channels, track delivery statuses, and store cryptographic evidence of notice receipt in the ZeroShield compliance proof vault.
+Under the Digital Personal Data Protection Act (DPDPA), 2023, organizations are legally mandated to deliver clear, granular, and multi-lingual privacy notices to data principals when collecting personal data. The **Vajra Notice Delivery & Orchestration** module provides a secure, reliable, and compliant infrastructure to automatically dispatch these notices across digital and physical channels, track delivery statuses, and store cryptographic evidence of notice receipt in the Vajra compliance proof vault.
 
 This document serves as an operational guide for DPOs, CISOs, and IT administrators to configure notice delivery adapters, set up verified external accounts, and establish secure API connections.
 
@@ -10,9 +10,9 @@ This document serves as an operational guide for DPOs, CISOs, and IT administrat
 
 ## 2. Security & Encryption of Credentials
 
-To protect sensitive keys, tokens, and passwords, ZeroShield employs a multi-tiered security model:
-1. **Encryption-at-Rest**: All configuration keys and secret values entered into the ZeroShield Notice Delivery console are symmetrically encrypted before being committed to the database.
-2. **AES-128-CBC + HMAC (Fernet)**: ZeroShield uses standard, secure Fernet encryption. The cryptographic key is derived deterministically from the platform's root `SECRET_KEY` (or specifically configured `DATA_SOURCE_ENCRYPTION_KEY` in production).
+To protect sensitive keys, tokens, and passwords, Vajra employs a multi-tiered security model:
+1. **Encryption-at-Rest**: All configuration keys and secret values entered into the Vajra Notice Delivery console are symmetrically encrypted before being committed to the database.
+2. **AES-128-CBC + HMAC (Fernet)**: Vajra uses standard, secure Fernet encryption. The cryptographic key is derived deterministically from the platform's root `SECRET_KEY` (or specifically configured `DATA_SOURCE_ENCRYPTION_KEY` in production).
 3. **Decryption-on-Use**: Decryption only occurs in-memory at the time of API dispatch or connection testing. Secrets are never stored in plaintext log files or shared with unauthenticated clients.
 
 ---
@@ -47,7 +47,7 @@ A generic fallback SMTP connection for organizations using third-party email del
 #### Option C: Firebase Email
 Routes transactional emails through your Firebase Firestore database instance via the Trigger Email extension.
 * **Credentials Required**:
-  - `firebase_project_id`: Your Firebase project ID (e.g., `zeroshield-compliance`).
+  - `firebase_project_id`: Your Firebase project ID (e.g., `vajra-compliance`).
   - `firebase_api_key`: The Firebase Web API Key of your project.
 * **Firebase Setup Steps**:
   1. Go to the Firebase Console, select your project, and navigate to **Extensions**.
@@ -84,7 +84,7 @@ Under TRAI regulations, notices sent via SMS to Indian citizens must be routed t
 #### Option C: Firebase SMS
 Routes transactional notices via SMS events written to your Firebase Firestore database.
 * **Credentials Required**:
-  - `firebase_project_id`: Your Firebase project ID (e.g., `zeroshield-compliance`).
+  - `firebase_project_id`: Your Firebase project ID (e.g., `vajra-compliance`).
   - `firebase_api_key`: The Firebase Web API Key of your project.
 * **Firebase Setup Steps**:
   1. Go to the Firebase Console, select your project, and navigate to **Extensions** or Cloud Functions.
@@ -124,7 +124,7 @@ Used for legally required physical fallbacks under the DPDPA for recipients with
 
 ## 4. Connection Testing & Validation
 
-Once credentials have been registered in the ZeroShield console, always test the channel before launching notice campaigns.
+Once credentials have been registered in the Vajra console, always test the channel before launching notice campaigns.
 1. Go to the **Notice Delivery Channels** tab.
 2. Under **Configured Provider Adapters**, locate your registered provider.
 3. Click the **Test Connection** button.

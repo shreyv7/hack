@@ -166,7 +166,7 @@ def render_pptx(dashboard_name: str, widget_payloads: list[dict[str, Any]]) -> b
     prs = Presentation()
     title_slide = prs.slides.add_slide(prs.slide_layouts[0])
     title_slide.shapes.title.text = dashboard_name
-    title_slide.placeholders[1].text = "DPDPA Shield — Governance Dashboard Export"
+    title_slide.placeholders[1].text = "Vajra — Governance Dashboard Export"
 
     for item in widget_payloads:
         widget = item.get("widget") or {}

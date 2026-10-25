@@ -1,6 +1,6 @@
-# DPDPA Shield — DSAR Activity Logs Technical Specification
+# Vajra — DSAR Activity Logs Technical Specification
 
-This document serves as the **single source of truth** for the **DSAR Activity Logs** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the request activity logger.
+This document serves as the **single source of truth** for the **DSAR Activity Logs** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the request activity logger.
 
 ---
 

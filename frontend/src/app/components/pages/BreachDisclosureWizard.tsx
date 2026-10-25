@@ -334,10 +334,10 @@ export function BreachDisclosureWizard(): ReactElement {
           ? { special_categories: result.special_categories }
           : {}),
       });
-      const prefix = result.shield_ai_used ? 'Shield AI: ' : '';
+      const prefix = result.vajra_ai_used ? 'Vajra AI: ' : '';
       notify(`${prefix}${result.summary}`);
     } catch (err) {
-      notify(err instanceof ApiError ? err.message : 'Shield AI verification failed');
+      notify(err instanceof ApiError ? err.message : 'Vajra AI verification failed');
     } finally {
       setVerifyingAffected(false);
     }
@@ -490,7 +490,7 @@ export function BreachDisclosureWizard(): ReactElement {
                   disabled={!hasOrg || verifyingAffected}
                   className="text-sm text-[var(--brand-primary)] hover:opacity-90 mt-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {verifyingAffected ? 'Analyzing audit logs…' : '✨ Verify from logs with Shield AI'}
+                  {verifyingAffected ? 'Analyzing audit logs…' : '✨ Verify from logs with Vajra AI'}
                 </button>
               </div>
 

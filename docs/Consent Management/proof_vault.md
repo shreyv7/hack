@@ -1,6 +1,6 @@
-# DPDPA Shield — Proof Vault Technical Specification
+# Vajra — Proof Vault Technical Specification
 
-This document serves as the **single source of truth** for the **Proof Vault** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Proof Vault** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -21,7 +21,7 @@ The Proof Vault acts as the immutable backend ledger for all consent transaction
 
 ```mermaid
 graph TD
-    SDK[ZeroShield SDK / Banner] -->|1. Transmit Consent payload| Rec[Consent Recording API]
+    SDK[Vajra SDK / Banner] -->|1. Transmit Consent payload| Rec[Consent Recording API]
     Campaign[Notice Delivery Campaign] -->|2. Transmit Delivery status| Rec
     Rec -->|3. Compile Event Data| PV[Proof Vault Service]
     PV -->|4. Generate SHA-256 Block & Chain Link| DB[(PostgreSQL)]
@@ -89,7 +89,7 @@ sequenceDiagram
 ### 3.1 Scenario Workflows
 *   **Cryptographic Sealing Flow (Automated)**:
     1. User clicks "Accept All" on a web banner.
-    2. ZeroShield SDK compiles choices, browser agent, and fingerprint, posting it to the Consent Recording API.
+    2. Vajra SDK compiles choices, browser agent, and fingerprint, posting it to the Consent Recording API.
     3. Backend locks the sequence generator and retrieves the `current_hash` from the last written block.
     4. Concatenates fields: `block_number | previous_hash | event_type | action | purposes | channel | source | timestamp`.
     5. Computes the SHA-256 hash.

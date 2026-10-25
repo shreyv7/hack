@@ -1,13 +1,13 @@
-# DPDPA Shield — Audit Log Technical Specification
+# Vajra — Audit Log Technical Specification
 
-This document serves as the **single source of truth** for the **Audit Log** (Immutable Tamper-Evident Ledger) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the audit trail interface.
+This document serves as the **single source of truth** for the **Audit Log** (Immutable Tamper-Evident Ledger) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the audit trail interface.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Audit Log** module maintains an append-only, cryptographically chained ledger of all significant actions taken across the ZeroShield platform (notices published, DSARs resolved, controls updated, data deleted, breaches logged).
+The **Audit Log** module maintains an append-only, cryptographically chained ledger of all significant actions taken across the Vajra platform (notices published, DSARs resolved, controls updated, data deleted, breaches logged).
 
 ### 1.2 Business Objective
 To provide corporate legal teams, independent auditors, and regulators with an indisputable, tamper-evident record of compliance activities recorded contemporaneously.

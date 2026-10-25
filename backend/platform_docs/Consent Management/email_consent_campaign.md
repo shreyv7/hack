@@ -1,4 +1,4 @@
-# DPDPA Shield — Email Consent Campaign Technical Specification
+# Vajra — Email Consent Campaign Technical Specification
 
 This document covers the **Email Consent Campaign** channel — a general-purpose (non-banking-only) module for sending OTP-verified consent capture links to selected recipients.
 

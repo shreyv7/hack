@@ -1,6 +1,6 @@
-# 🚀 ZEROSHIELD DPDPA — Startup Guide
+# 🚀 VAJRA DPDPA — Startup Guide
 
-This document outlines the commands to start the backend services, database, and frontend of the ZEROSHIELD DPDPA project.
+This document outlines the commands to start the backend services, database, and frontend of the VAJRA DPDPA project.
 
 ---
 

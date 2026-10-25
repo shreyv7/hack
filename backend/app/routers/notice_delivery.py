@@ -267,15 +267,15 @@ def test_provider_connection(
 
     # Construct test recipient and content
     recipient = {
-        "name": "ZeroShield Tester",
-        "email": "test@zeroshield.ai",
+        "name": "Vajra Tester",
+        "email": "test@vajra.ai",
         "phone": "+15005550006",  # Twilio magic test number
         "address": "123 Test Street, Mumbai, Maharashtra, 400001",
         "pincode": "400001",
         "city": "Mumbai",
         "state": "Maharashtra"
     }
-    subject = "ZeroShield Connection Test Notice"
+    subject = "Vajra Connection Test Notice"
     body = "This is a test notification to verify your Notice Delivery Channel settings are correct and working."
 
     try:

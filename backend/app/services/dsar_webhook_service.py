@@ -131,7 +131,7 @@ def deliver_data_rights_webhook(
         url,
         payload,
         event_type=event_type,
-        user_agent="ZeroShield-DataRightsWebhook/1.0",
+        user_agent="Vajra-DataRightsWebhook/1.0",
         signing_secret=signing_secret,
         bearer_token=bearer_token,
     )

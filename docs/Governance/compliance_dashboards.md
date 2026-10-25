@@ -1,16 +1,16 @@
-# DPDPA Shield — Compliance Dashboards Technical Specification
+# Vajra — Compliance Dashboards Technical Specification
 
-This document serves as the **single source of truth** for the **Compliance Dashboards** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Compliance Dashboards** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Compliance Dashboards** module is the central reporting cockpit and dynamic GRC visualization workspace of the ZeroShield platform. It consolidates risk metrics, consent collection rates, DSAR SLA tracking, vendor risk scorecards, and audit logs into customizable dashboard layouts. It enables DPOs, executive boards, and regulators to verify compliance status at a glance.
+The **Compliance Dashboards** module is the central reporting cockpit and dynamic GRC visualization workspace of the Vajra platform. It consolidates risk metrics, consent collection rates, DSAR SLA tracking, vendor risk scorecards, and audit logs into customizable dashboard layouts. It enables DPOs, executive boards, and regulators to verify compliance status at a glance.
 
 ### 1.2 Business Objective
-To replace manual GRC audit formatting with automated, real-time metrics, interactive charts, and board-ready evidence packs. The platform implements drag-and-drop widget organization (12-column grid), contextual Bedrock-powered AI analytics (Shield AI Assistant), scheduled report delivery (PDF/XLSX), and secure public sharing links.
+To replace manual GRC audit formatting with automated, real-time metrics, interactive charts, and board-ready evidence packs. The platform implements drag-and-drop widget organization (12-column grid), contextual Bedrock-powered AI analytics (Vajra AI Assistant), scheduled report delivery (PDF/XLSX), and secure public sharing links.
 
 ### 1.3 DPDPA Compliance Objective
 *   **Proof of Compliance & Accountability (Section 6(10) & Section 10)**: Automates the continuous collection and presentation of operational compliance scores, proving data protection practices to the Data Protection Board of India (DPBI).
@@ -25,7 +25,7 @@ graph TD
     UI[Compliance Dashboard Builder UI] -->|1. Request Widgets & Metrics| BE[FastAPI Dashboards Service]
     BE -->|2. Pull Telemetry Metrics| Met[GRC Metrics Query engine]
     Met -->|Query 13 Data Sources| DB[(PostgreSQL)]
-    BE -->|3. Bedrock AI assist| AI[Shield AI Assistant]
+    BE -->|3. Bedrock AI assist| AI[Vajra AI Assistant]
     BE -->|4. Dispatch automated reports| Cron[Schedule cron runner]
     BE -->|5. Render Board PDF / Excel| Rep[ReportLab / openpyxl]
 ```
@@ -56,7 +56,7 @@ sequenceDiagram
     actor Officer as Compliance Officer / DPO
     participant FE as Frontend Grid (React)
     participant BE as Backend GRC Service
-    participant AI as Shield AI Assistant
+    participant AI as Vajra AI Assistant
     participant DB as PostgreSQL DB
 
     Officer->>FE: Create new Dashboard from Template
@@ -78,7 +78,7 @@ sequenceDiagram
     end
 
     rect rgb(245, 245, 245)
-        Note over Officer, FE: Step 3: Shield AI Dashboard Explanation
+        Note over Officer, FE: Step 3: Vajra AI Dashboard Explanation
         Officer->>FE: Click "Explain this dashboard"
         FE->>BE: POST /governance/dashboards/ai/assist (Action: welcome)
         BE->>BE: Gather context snapshot (Active metrics + DPDPA status)
@@ -143,7 +143,7 @@ The Compliance Dashboards module consists of a dynamic grid builder and configur
     *   **Export Format**: PDF, XLSX, CSV.
     *   **Recipient list**: Comma-separated email addresses.
 
-### 4.5 Shield AI Assistant drawer
+### 4.5 Vajra AI Assistant drawer
 *   Violet-branded sliding sidebar widget triggered by clicking the floating violet pill.
 *   **Features**:
     *   **Welcome Insights**: Auto-generates a 3-sentence executive posture summary and exactly 3 priority bullets.

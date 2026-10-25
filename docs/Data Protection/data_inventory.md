@@ -1,6 +1,6 @@
-# DPDPA Shield — Data Inventory Technical Specification
+# Vajra — Data Inventory Technical Specification
 
-This document serves as the **single source of truth** for the **Data Inventory** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the data catalog, Record of Processing Activities (RoPA) sync, and Data Processor Agreement (DPA) tracking.
+This document serves as the **single source of truth** for the **Data Inventory** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the data catalog, Record of Processing Activities (RoPA) sync, and Data Processor Agreement (DPA) tracking.
 
 ---
 
@@ -21,7 +21,7 @@ Under the Indian Digital Personal Data Protection Act, 2023 (DPDPA), compliance 
 *   **Section 11(1)**: Data Principals have the right to obtain a summary of their personal data being processed and the identities of all other Data Fiduciaries/Processors with whom it has been shared (requiring asset-level field classification and RoPA/DPA linkages).
 
 ### 1.4 Architectural Context
-The Data Inventory is the structural foundation of the ZeroShield compliance suite:
+The Data Inventory is the structural foundation of the Vajra compliance suite:
 
 ```mermaid
 graph TD

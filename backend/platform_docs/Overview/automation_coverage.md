@@ -1,13 +1,13 @@
-# DPDPA Shield — Automation Coverage Technical Specification
+# Vajra — Automation Coverage Technical Specification
 
-This document serves as the **single source of truth** for the **Automation Coverage** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the automation coverage visualization.
+This document serves as the **single source of truth** for the **Automation Coverage** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the automation coverage visualization.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Automation Coverage** module maps the active software features and services of the ZeroShield platform against the requirements of the Digital Personal Data Protection Act, 2023 (DPDPA). It provides a structured visual map classification (Fully Automated, Partially Automated, Manual/Advisory, and Not Applicable) to define how compliance operations are performed across the organization.
+The **Automation Coverage** module maps the active software features and services of the Vajra platform against the requirements of the Digital Personal Data Protection Act, 2023 (DPDPA). It provides a structured visual map classification (Fully Automated, Partially Automated, Manual/Advisory, and Not Applicable) to define how compliance operations are performed across the organization.
 
 ### 1.2 Business Objective
 To demonstrate to internal stakeholders, corporate boards, and regulatory auditors the extent to which the organization uses programmatic safeguards and automated pipelines to enforce compliance, minimizing human error and operational overhead.
@@ -36,7 +36,7 @@ graph TD
 
 ## 2. Decision Framework
 
-To classify each section's compliance status, DPDPA Shield evaluates sections against a fixed set of **automation drivers** (why we automate) and **non-automation constraints** (why we cannot fully automate):
+To classify each section's compliance status, Vajra evaluates sections against a fixed set of **automation drivers** (why we automate) and **non-automation constraints** (why we cannot fully automate):
 
 ### 2.1 Automation Drivers (A1 - A5)
 *   **A1: Deterministic & Repeatable**: A rule-based operation with no ambiguity (e.g. hashing a record).

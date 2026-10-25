@@ -29,7 +29,7 @@ export function PendingApprovalPage(): ReactElement {
         </h1>
         <p className="mt-3 text-sm text-[var(--text-secondary)]">
           Thanks for signing up{user?.full_name ? `, ${user.full_name}` : ''}. Your workspace has
-          been created and is pending review by a DPDPA Shield administrator. You&apos;ll be able to
+          been created and is pending review by a Vajra administrator. You&apos;ll be able to
           explore the platform as soon as it&apos;s approved.
         </p>
 

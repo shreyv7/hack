@@ -1,4 +1,4 @@
-"""ZeroShield enforcement configuration (env-based)."""
+"""Vajra enforcement configuration (env-based)."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
-class ZeroShieldConfig:
+class VajraConfig:
     property_id: str
     decision_secret: str
     api_url: str
@@ -15,15 +15,15 @@ class ZeroShieldConfig:
     default_session_id: str | None = None
 
     @classmethod
-    def from_env(cls) -> "ZeroShieldConfig":
-        property_id = os.environ.get("ZEROSHIELD_PROPERTY_ID", "").strip()
-        decision_secret = os.environ.get("ZEROSHIELD_DECISION_SECRET", "").strip()
-        api_url = os.environ.get("ZEROSHIELD_API_URL", "").strip().rstrip("/")
-        api_key = os.environ.get("ZEROSHIELD_API_KEY", "").strip() or None
-        default_session_id = os.environ.get("ZEROSHIELD_DEFAULT_SESSION_ID", "").strip() or None
+    def from_env(cls) -> "VajraConfig":
+        property_id = os.environ.get("VAJRA_PROPERTY_ID", "").strip()
+        decision_secret = os.environ.get("VAJRA_DECISION_SECRET", "").strip()
+        api_url = os.environ.get("VAJRA_API_URL", "").strip().rstrip("/")
+        api_key = os.environ.get("VAJRA_API_KEY", "").strip() or None
+        default_session_id = os.environ.get("VAJRA_DEFAULT_SESSION_ID", "").strip() or None
         if not property_id or not decision_secret:
             raise ValueError(
-                "ZEROSHIELD_PROPERTY_ID and ZEROSHIELD_DECISION_SECRET are required"
+                "VAJRA_PROPERTY_ID and VAJRA_DECISION_SECRET are required"
             )
         if not api_url:
             api_url = "http://localhost:8002/public/v1"

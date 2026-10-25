@@ -115,7 +115,7 @@ function renderCover(
   exporterEmail?: string,
   exporterRole?: string
 ): void {
-  pdf.title('DPDPA Shield — Evidence Pack');
+  pdf.title('Vajra — Evidence Pack');
   pdf.heading(SECTION_TITLES[section]);
   pdf.field('Organization', settings.organization.name);
   pdf.field('Organization slug', settings.organization.slug);
@@ -268,7 +268,7 @@ export function downloadEvidencePackPdf(
   renderCover(pdf, section, settings, exportedAt, options.exporterEmail, options.exporterRole);
   renderSectionBody(pdf, section, settings, obligations);
   pdf.paragraph(
-    'This document was generated from DPDPA Shield workspace settings for audit and compliance evidence purposes.'
+    'This document was generated from Vajra workspace settings for audit and compliance evidence purposes.'
   );
 
   pdf.save(filename);
@@ -282,7 +282,7 @@ function renderFullCover(
   exporterEmail?: string,
   exporterRole?: string
 ): void {
-  pdf.title('DPDPA Shield — Full Settings Evidence Pack');
+  pdf.title('Vajra — Full Settings Evidence Pack');
   pdf.paragraph(
     'Complete workspace and compliance configuration across all Settings sections.'
   );
@@ -316,7 +316,7 @@ export function downloadFullEvidencePackPdf(
   });
 
   pdf.paragraph(
-    'This document was generated from DPDPA Shield workspace settings for audit and compliance evidence purposes.'
+    'This document was generated from Vajra workspace settings for audit and compliance evidence purposes.'
   );
 
   pdf.save(filename);

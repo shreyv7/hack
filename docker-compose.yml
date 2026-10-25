@@ -39,7 +39,7 @@ services:
       GOOGLE_CLOUD_PROJECT: dpdpashield-500607
       GOOGLE_CLOUD_LOCATION: asia-south1
       VERTEX_MODEL_ID: gemini-2.5-flash
-      SHIELD_AI_DOCS_DIR: /app/platform_docs
+      VAJRA_AI_DOCS_DIR: /app/platform_docs
       BACKEND_CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173,http://localhost,http://127.0.0.1,http://localhost:80,http://127.0.0.1:80
       FRONTEND_URL: http://localhost
       BACKEND_PUBLIC_URL: http://localhost:8000

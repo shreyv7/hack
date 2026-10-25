@@ -1,6 +1,6 @@
-# DPDPA Shield — Retention Policies Technical Specification
+# Vajra — Retention Policies Technical Specification
 
-This document serves as the **single source of truth** for the **Retention Policies** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the data retention engine.
+This document serves as the **single source of truth** for the **Retention Policies** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the data retention engine.
 
 ---
 
@@ -239,7 +239,7 @@ All endpoints require authorization via JWT Bearer Token.
       "action": "delete",
       "status": "executed",
       "certificate_ref": "DEL-2026-F982",
-      "executed_by": "admin@zeroshield.in",
+      "executed_by": "admin@vajra.dev",
       "detail": " EXECUTED: deleted 125 row(s)."
     }
     ```

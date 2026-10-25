@@ -1,6 +1,6 @@
-# DPDPA Shield — DPIA Module Technical Specification
+# Vajra — DPIA Module Technical Specification
 
-This document serves as the **single source of truth** for the **DPIA (Data Protection Impact Assessment)** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **DPIA (Data Protection Impact Assessment)** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -23,7 +23,7 @@ The DPIA module integrates questionnaires, AI audit tools, PII database scanners
 graph TD
     UI[DPIA Workspace UI] -->|1. Submit Answers| BE[FastAPI DPIA Service]
     BE -->|2. Query PII Schema| Scan[PII Schema Scanner]
-    BE -->|3. Request Compliance Analysis| AI[Shield AI Governance Assistant]
+    BE -->|3. Request Compliance Analysis| AI[Vajra AI Governance Assistant]
     BE -->|4. Save Assessment Data| DB[(PostgreSQL)]
     BE -->|5. Compile Report| PDF[PDF Compile Server]
     PDF -->|6. Return Signed PDF| UI
@@ -53,7 +53,7 @@ sequenceDiagram
     actor DPO as Compliance Officer / DPO
     participant FE as Frontend Wizard (React)
     participant BE as Backend GRC Service
-    participant AI as Shield AI Assistant
+    participant AI as Vajra AI Assistant
     participant DB as PostgreSQL DB
 
     DPO->>FE: Create new DPIA assessment
@@ -65,10 +65,10 @@ sequenceDiagram
     BE-->>FE: Return Assessment ID
 
     rect rgb(240, 248, 255)
-        Note over DPO, FE: Shield AI Analysis
-        DPO->>FE: Click "Analyze with Shield AI"
+        Note over DPO, FE: Vajra AI Analysis
+        DPO->>FE: Click "Analyze with Vajra AI"
         FE->>BE: POST /api/ai/analyze-dpia/{id}
-        BE->>AI: Send answers payload to Shield AI LLM API
+        BE->>AI: Send answers payload to Vajra AI LLM API
         AI->>AI: Evaluate compliance gaps, penalty exposures, and suggest mitigations
         AI-->>BE: Return structured recommendations JSON
         BE->>DB: Update assessment AI suggestions
@@ -102,7 +102,7 @@ The DPIA module contains three view pages:
     *   *Step 2: Data Elements Mapping*: Map database fields. Includes a **Run PII Schema Scan** button to scan columns.
     *   *Step 3: Risk Evaluation*: Interactive sliders for Likelihood and Impact (1-5 scale). Input fields for justifying risk ratings.
     *   *Step 4: Remediation Plan*: Link security controls from the CISO Command Center.
-*   **Right Side - Shield AI Panel**:
+*   **Right Side - Vajra AI Panel**:
     *   Floating drawer displaying compliance advice based on current form answers.
     *   Lists automated DPDPA gaps (e.g. *"Missing age verification trigger for child data"*).
     *   Click-to-apply action items to auto-populate risk remediations.
@@ -159,7 +159,7 @@ DPIADashboard.tsx (Master Grid View)
   │     ├── Steps/PIIScannerMap.tsx (PII column map UI)
   │     ├── Steps/RiskScoring.tsx (Likelihood/Impact sliders)
   │     └── Steps/MitigationLinker.tsx (CISO control mapping)
-  ├── AIShieldAssistant.tsx (Shield AI panel)
+  ├── AIShieldAssistant.tsx (Vajra AI panel)
   └── CertifiedPDFExporter.tsx (Signature and compile actions)
 ```
 
@@ -266,7 +266,7 @@ erDiagram
 ## 12. Event Architecture
 
 *   `dpia.created`: Logged when an assessment initializes.
-*   `dpia.analysis_completed`: Fired when Shield AI completes a scan.
+*   `dpia.analysis_completed`: Fired when Vajra AI completes a scan.
 *   `dpia.approved`: Triggers the PDF generator and updates linked RoPA records.
 
 ---
@@ -278,5 +278,5 @@ erDiagram
 *   **TC-02 (PDF Export and Cryptographic Sign)**: Click "Download Certified Report". Verify a PDF document downloads, matches inputs, and contains a valid SHA-256 signature block.
 
 ### 13.2 Negative Test Cases
-*   **TC-03 (Child Data Verification Warning)**: Set `processes_child_data` to `true` while linking zero age-gate security mitigations. Assert Shield AI returns a `high` severity warning citation mapping Section 9(1).
+*   **TC-03 (Child Data Verification Warning)**: Set `processes_child_data` to `true` while linking zero age-gate security mitigations. Assert Vajra AI returns a `high` severity warning citation mapping Section 9(1).
 *   **TC-04 (Double Approval Block)**: Attempt to approve a DPIA that has open critical remediation actions. Verify API returns a `400 Bad Request`.

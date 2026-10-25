@@ -1,13 +1,13 @@
-# DPDPA Shield — API & Webhooks Technical Specification
+# Vajra — API & Webhooks Technical Specification
 
-This document serves as the **single source of truth** for the **API & Webhooks** (Developer API & Outbound Integrations) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **API & Webhooks** (Developer API & Outbound Integrations) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **API & Webhooks** module provides developers with access keys to integrate ZeroShield programmatically with backend systems (e.g. CRM, ERP, User databases) and registers outbound **Webhook Listeners** to receive real-time updates when consent states change or notices are updated.
+The **API & Webhooks** module provides developers with access keys to integrate Vajra programmatically with backend systems (e.g. CRM, ERP, User databases) and registers outbound **Webhook Listeners** to receive real-time updates when consent states change or notices are updated.
 
 ### 1.2 Business Objective
 To support bidirectional compliance synchronization across the enterprise. It allows systems like Salesforce, HubSpot, or internal databases to immediately catch and respect data principal consent choices (especially opt-outs and withdrawals) without manual batch exports.
@@ -70,7 +70,7 @@ sequenceDiagram
         Worker->>Worker: Intercept 'consent.withdrawn' event
         Worker->>Worker: Concatenate timestamp + payload
         Worker->>Worker: Calculate HMAC-SHA256 using signing secret
-        Worker->>ExtAPI: POST /webhook-handler (Headers: X-ZeroShield-Signature, X-ZeroShield-Timestamp)
+        Worker->>ExtAPI: POST /webhook-handler (Headers: X-Vajra-Signature, X-Vajra-Timestamp)
         ExtAPI->>ExtAPI: Recompute signature using shared secret
         alt Signatures Match & Handler Returns 200 OK
             ExtAPI-->>Worker: Return 200 OK Response
@@ -87,13 +87,13 @@ sequenceDiagram
 ## 4. Technical Architecture
 
 ### 4.1 HMAC-SHA256 Signature Verification
-To prevent spoofing, ZeroShield signs webhook payloads. Client handlers must verify this signature before processing.
+To prevent spoofing, Vajra signs webhook payloads. Client handlers must verify this signature before processing.
 
 #### Signature Steps:
 1. Concatenate the timestamp header and raw JSON string: `payload_string = timestamp + "." + raw_json_payload`.
 2. Compute the HMAC using SHA-256 with the endpoint's Signing Secret:
    `signature = hmac_sha256(payload_string, secret)`.
-3. Compare the calculated value with the `X-ZeroShield-Signature` header value using a constant-time comparison to prevent timing attacks.
+3. Compare the calculated value with the `X-Vajra-Signature` header value using a constant-time comparison to prevent timing attacks.
 
 #### Python Verification Example:
 ```python

@@ -197,7 +197,7 @@ export function AccessButton(): ReactElement {
                 )}
               >
                 <Sparkles className="h-3.5 w-3.5" />
-                Shield AI
+                Vajra AI
               </button>
             </div>
             <button

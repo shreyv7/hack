@@ -1,10 +1,10 @@
-DPDPA Shield
+Vajra
 Implementation Report — 2 June 2026
 Generated automatically from the CMP-DPDP codebase. Commit: fix consent notice edit/auto-fix/preview UX and
 add PDF evidence exports.
 
 Executive Summary
-This report documents work completed on DPDPA Shield for 2 June 2026, centred on Tier 1.1 Consent Management
+This report documents work completed on Vajra for 2 June 2026, centred on Tier 1.1 Consent Management
 (Purpose Registry + Consent Notice Builder), supporting UX fixes, and PDF evidence export capabilities across
 consent pages.
 The delivery includes a full backend API with immutable notice versioning, org-scoped CRUD, compliance warnings
@@ -38,7 +38,7 @@ context (all passed).
 • Edit published notice !’ POST draft-from-live creates new immutable draft version.
 • Live versions are never mutated.
 
-DPDPA Shield — Implementation Report — 2 June 2026 — Page 1
+Vajra — Implementation Report — 2 June 2026 — Page 1
 
 • Compliance warning codes: MISSING_DPO_CONTACT, MISSING_OPENING_STATEMENT,
 NO_PURPOSES_LINKED, CONSENT_WITHOUT_WITHDRAWAL, SPECIAL_CATEGORY_REVIEW.
@@ -81,6 +81,6 @@ sizes, PDF evidence export downloads.
 End of report. For technical details see backend/docs/CONSENT_MANAGEMENT_DESIGN.md and the consent API
 test script.
 
-DPDPA Shield — Implementation Report — 2 June 2026 — Page 2
+Vajra — Implementation Report — 2 June 2026 — Page 2
 
 

@@ -104,7 +104,7 @@ app.post('/webhooks/consent', express.json(), (req, res) => {
     disableMarketingTags(data.session_id);
   }
 
-  // Always respond 2xx so ZeroShield marks delivery successful
+  // Always respond 2xx so Vajra marks delivery successful
   res.status(200).json({ received: true, receipt_id });
 });`;
 
@@ -123,7 +123,7 @@ app.post('/webhooks/consent', express.json(), (req, res) => {
             <BookOpen className="w-5 h-5 text-[var(--brand-primary)]" strokeWidth={1.5} />
             <div>
               <h2 className="text-base font-semibold text-[var(--text-primary)]">
-                ZeroShield CMP — Install &amp; Integration Guide
+                Vajra CMP — Install &amp; Integration Guide
               </h2>
               <p className="text-xs text-[var(--text-secondary)]">
                 cmp.js setup, Developer Mode, and consent webhooks
@@ -156,7 +156,7 @@ app.post('/webhooks/consent', express.json(), (req, res) => {
               <li>
                 <strong>data-api-url</strong> — {apiPublicBase}
               </li>
-              <li>On load, cmp.js fetches banner config and exposes <code className="font-mono">window.ZeroShield</code></li>
+              <li>On load, cmp.js fetches banner config and exposes <code className="font-mono">window.Vajra</code></li>
             </ul>
           </DocSection>
 
@@ -215,7 +215,7 @@ app.post('/webhooks/consent', express.json(), (req, res) => {
             ) : (
               <p>
                 No webhook URL configured yet. Add one in Advanced → Webhook Integration. When set,
-                ZeroShield POSTs to your server on every live consent action.
+                Vajra POSTs to your server on every live consent action.
               </p>
             )}
             <p><strong>Event types delivered:</strong></p>

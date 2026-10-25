@@ -1,6 +1,6 @@
 # 🐳 Docker Setup & Development Modes Guide
 
-This document describes how to configure, build, and run the **ZeroShield DPDPA** application using Docker. It is designed to get new developers onboarded quickly with a functional database and container environment.
+This document describes how to configure, build, and run the **Vajra DPDPA** application using Docker. It is designed to get new developers onboarded quickly with a functional database and container environment.
 
 ---
 
@@ -20,8 +20,8 @@ The application consists of three main containers wired together via a shared do
 | Service | Port | Image / Source | Purpose |
 |---|---|---|---|
 | `db` | `5432` | `postgres:16` | Relational database storage |
-| `backend` | `8000` | [backend/Dockerfile](file:///Users/shreyvashistha/Desktop/ZEROSHIELD-DPDPA/dpdpa_shield/backend/Dockerfile) | FastAPI API server & migrations |
-| `frontend` | `80` | [frontend/Dockerfile](file:///Users/shreyvashistha/Desktop/ZEROSHIELD-DPDPA/dpdpa_shield/frontend/Dockerfile) | Nginx serving React production bundle |
+| `backend` | `8000` | [backend/Dockerfile](file:///Users/shreyvashistha/Desktop/VAJRA-DPDPA/dpdpa_shield/backend/Dockerfile) | FastAPI API server & migrations |
+| `frontend` | `80` | [frontend/Dockerfile](file:///Users/shreyvashistha/Desktop/VAJRA-DPDPA/dpdpa_shield/frontend/Dockerfile) | Nginx serving React production bundle |
 
 ---
 
@@ -43,7 +43,7 @@ docker compose up -d --build
 ```
 This builds the frontend and backend images, initializes the postgres database volume, runs all Alembic migrations automatically, and brings up the services.
 
-Shield AI in Docker uses **Vertex AI via ADC**. Compose mounts your host file:
+Vajra AI in Docker uses **Vertex AI via ADC**. Compose mounts your host file:
 
 `%APPDATA%\gcloud\application_default_credentials.json`
 
@@ -70,7 +70,7 @@ docker cp backend/app/scripts/seed_entire_db.py dpdpa_backend:/app/app/scripts/s
 docker exec -it dpdpa_backend python -m app.scripts.seed_entire_db
 ```
 > [!NOTE]
-> This creates a default organization **ZeroShield Sandbox Org** and configures an admin user account:
+> This creates a default organization **Vajra Sandbox Org** and configures an admin user account:
 > - **Email**: `shrey07feb@gmail.com`
 > - **Password**: `Shrey@26`
 

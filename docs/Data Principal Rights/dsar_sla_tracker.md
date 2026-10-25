@@ -1,6 +1,6 @@
-# DPDPA Shield — DSAR SLA Tracker Technical Specification
+# Vajra — DSAR SLA Tracker Technical Specification
 
-This document serves as the **single source of truth** for the **DSAR SLA Tracker** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the internal request tracker.
+This document serves as the **single source of truth** for the **DSAR SLA Tracker** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the internal request tracker.
 
 ---
 

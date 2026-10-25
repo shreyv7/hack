@@ -179,7 +179,7 @@ export function DataInventoryPlaybook({ onClose, orgId }: DataInventoryPlaybookP
           <PlaybookSection title="What this module does">
             <div className="rounded-xl border border-[var(--border-default)] p-4 space-y-3 text-sm text-[var(--text-secondary)]">
               <p>
-                Data Inventory is the structural foundation of ZeroShield. It answers{' '}
+                Data Inventory is the structural foundation of Vajra. It answers{' '}
                 <strong className="text-[var(--text-primary)]">what</strong> personal data you hold,{' '}
                 <strong className="text-[var(--text-primary)]">where</strong> it is stored, and{' '}
                 <strong className="text-[var(--text-primary)]">how</strong> it is classified — feeding

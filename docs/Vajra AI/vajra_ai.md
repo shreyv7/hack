@@ -1,6 +1,6 @@
-# DPDPA Shield — Shield AI Technical Specification
+# Vajra — Vajra AI Technical Specification
 
-This document serves as the **single source of truth** for the **Shield AI** compliance copilot of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Vajra AI** compliance copilot of the Vajra DPDPA compliance platform.
 
 **Route:** `/ai/copilot`
 
@@ -9,22 +9,22 @@ This document serves as the **single source of truth** for the **Shield AI** com
 ## 1. Module Overview
 
 ### 1.1 Purpose
-**Shield AI** is an in-product AI compliance assistant that helps users navigate DPDPA requirements, understand platform features, and take action on their compliance posture — powered by AWS Bedrock with retrieval-augmented generation (RAG) over platform documentation.
+**Vajra AI** is an in-product AI compliance assistant that helps users navigate DPDPA requirements, understand platform features, and take action on their compliance posture — powered by AWS Bedrock with retrieval-augmented generation (RAG) over platform documentation.
 
 ### 1.2 Business Objective
 To reduce the time from platform onboarding to compliance readiness by providing instant, context-aware guidance — without requiring users to read lengthy documentation or wait for support tickets.
 
 ### 1.3 Capabilities
-Shield AI has two areas of expertise:
+Vajra AI has two areas of expertise:
 1. **DPDPA Legal Knowledge** — cite section numbers, explain obligations, draft templates.
-2. **Platform Navigation** — step-by-step guidance through DPDPA Shield features using indexed platform documentation.
+2. **Platform Navigation** — step-by-step guidance through Vajra features using indexed platform documentation.
 
 ### 1.4 Architectural Context
 
 ```mermaid
 graph TD
-    User[User] -->|Chat message| Copilot[Shield AI UI]
-    Copilot -->|POST /api/ai/conversations/{id}/messages/stream| API[Shield AI Router]
+    User[User] -->|Chat message| Copilot[Vajra AI UI]
+    Copilot -->|POST /api/ai/conversations/{id}/messages/stream| API[Vajra AI Router]
     API -->|Retrieve context| RAG[Embedding Service + doc_embeddings]
     API -->|Workspace data| Ctx[AiContextService]
     API -->|Generate| Bedrock[AWS Bedrock Converse API]
@@ -87,9 +87,9 @@ Superadmins can trigger full re-index via `POST /api/ai/admin/reindex-docs`:
 *   Reads all docs, chunks by `## ` headers (~1000 chars, 200 overlap)
 *   SHA-256 change detection — only new/changed chunks re-embedded
 *   Stale chunks for deleted files removed
-*   Run after updating documentation to refresh Shield AI's knowledge
+*   Run after updating documentation to refresh Vajra AI's knowledge
 
-### 3.4 What Shield AI Will NOT Do
+### 3.4 What Vajra AI Will NOT Do
 *   Mention backend APIs, database tables, SQL queries, or internal architecture
 *   Invent legal provisions not in DPDPA
 *   Provide definitive legal advice (always reminds to confirm with qualified counsel)
@@ -98,7 +98,7 @@ Superadmins can trigger full re-index via `POST /api/ai/admin/reindex-docs`:
 
 ## 4. Workspace Context
 
-When "Use company data" is enabled, Shield AI receives live workspace snapshot:
+When "Use company data" is enabled, Vajra AI receives live workspace snapshot:
 
 | Context Item | Source |
 | :--- | :--- |
@@ -113,7 +113,7 @@ Context is fetched via `GET /api/ai/context` and injected into the system prompt
 
 ## 5. Specialized AI Features
 
-Beyond the chat copilot, Shield AI powers features across the platform:
+Beyond the chat copilot, Vajra AI powers features across the platform:
 
 | Feature | Module | What It Does |
 | :--- | :--- | :--- |
@@ -137,7 +137,7 @@ Beyond the chat copilot, Shield AI powers features across the platform:
 
 ## 7. Configuration
 
-Shield AI requires AWS Bedrock configuration:
+Vajra AI requires AWS Bedrock configuration:
 
 | Environment Variable | Description |
 | :--- | :--- |
@@ -150,7 +150,7 @@ Shield AI requires AWS Bedrock configuration:
 | `BEDROCK_TEMPERATURE` | Response creativity (0.0–1.0) |
 | `RAG_TOP_K` | Number of documentation chunks to retrieve |
 
-If not configured, Shield AI shows a graceful degradation message: "Shield AI is not configured on the server."
+If not configured, Vajra AI shows a graceful degradation message: "Vajra AI is not configured on the server."
 
 ---
 
@@ -160,7 +160,7 @@ If not configured, Shield AI shows a graceful degradation message: "Shield AI is
 *   Workspace context only includes aggregated counts and statuses — no raw PII.
 *   AWS credentials never exposed to frontend.
 *   Chat history stored in platform database with standard RBAC.
-*   Shield AI does not train on customer data — all inference via Bedrock API.
+*   Vajra AI does not train on customer data — all inference via Bedrock API.
 
 ---
 

@@ -1,5 +1,5 @@
 # ============================================================
-# DPDPA Shield — FULL stack with Docker  (FOR LATER)
+# Vajra — FULL stack with Docker  (FOR LATER)
 # ------------------------------------------------------------
 # Use this ONLY when you are ready to dockerize everything.
 # It runs Postgres + the FastAPI backend together.
@@ -37,7 +37,7 @@ services:
       DATABASE_URL: postgresql+psycopg2://dpdpa:dpdpa@db:5432/dpdpa_shield
       AI_PROVIDER: vertex
       GOOGLE_APPLICATION_CREDENTIALS: /tmp/gcp-adc.json
-      SHIELD_AI_DOCS_DIR: /app/platform_docs
+      VAJRA_AI_DOCS_DIR: /app/platform_docs
     volumes:
       - ../docs:/app/platform_docs:ro
       - type: bind

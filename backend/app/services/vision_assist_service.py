@@ -1,4 +1,4 @@
-"""Shield AI Vision — screenshot Q&A via the active AI provider (Vertex or Bedrock)."""
+"""Vajra AI Vision — screenshot Q&A via the active AI provider (Vertex or Bedrock)."""
 
 from __future__ import annotations
 
@@ -9,8 +9,8 @@ import re
 from typing import Any
 
 from app.core.config import settings
-from app.services.shield_ai_service import (
-    ShieldAIError,
+from app.services.vajra_ai_service import (
+    VajraAIError,
     _call_lock,
     _ensure_bedrock_credentials,
     _friendly_error,
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 _MAX_IMAGE_BYTES = 5 * 1024 * 1024  # 5 MB decoded
 
 _VISION_SYSTEM_PROMPT = (
-    "You are Shield AI Vision, a screenshot Q&A assistant embedded in DPDPA Shield. "
+    "You are Vajra AI Vision, a screenshot Q&A assistant embedded in Vajra. "
     "The user captures a region of the application UI and asks a question about it. "
     "Explain what the feature or UI element is for, why it exists, and how to use it. "
     "Answer concisely in plain language. If you cannot determine something from the image, say so."
@@ -46,8 +46,8 @@ class VisionAssistService:
 
     def answer(self, image_base64: str, question: str) -> str:
         if not settings.ai_vision_configured:
-            raise ShieldAIError(
-                "Shield AI Vision is not configured on the server. Set VERTEX_MODEL_ID "
+            raise VajraAIError(
+                "Vajra AI Vision is not configured on the server. Set VERTEX_MODEL_ID "
                 "(Gemini 2.5 Flash is multimodal) or BEDROCK_VISION_MODEL_ID in the backend .env."
             )
 
@@ -55,10 +55,10 @@ class VisionAssistService:
         try:
             image_bytes = base64.b64decode(raw_b64, validate=True)
         except (binascii.Error, ValueError) as exc:
-            raise ShieldAIError("Invalid image data. Please capture again.") from exc
+            raise VajraAIError("Invalid image data. Please capture again.") from exc
 
         if len(image_bytes) > _MAX_IMAGE_BYTES:
-            raise ShieldAIError("Image is too large. Please capture a smaller region.")
+            raise VajraAIError("Image is too large. Please capture a smaller region.")
 
         if settings.ai_provider == "vertex":
             try:
@@ -70,8 +70,8 @@ class VisionAssistService:
 
         model_ids = settings.resolved_vision_model_ids
         if not model_ids:
-            raise ShieldAIError(
-                "Shield AI Vision is not configured on the server. Set BEDROCK_MODEL_ID "
+            raise VajraAIError(
+                "Vajra AI Vision is not configured on the server. Set BEDROCK_MODEL_ID "
                 "or BEDROCK_VISION_MODEL_ID in the backend .env."
             )
 
@@ -109,28 +109,28 @@ class VisionAssistService:
                     reply = _extract_text(response)
                     if reply:
                         return reply
-                    raise ShieldAIError(
-                        "Shield AI Vision returned an empty response. Please try again."
+                    raise VajraAIError(
+                        "Vajra AI Vision returned an empty response. Please try again."
                     )
-                except ShieldAIError:
+                except VajraAIError:
                     raise
                 except Exception as exc:
                     last_exc = exc
                     if _is_retryable_model_error(exc) and model_id != model_ids[-1]:
                         logger.warning(
-                            "Shield AI Vision model %s unavailable, trying next: %s",
+                            "Vajra AI Vision model %s unavailable, trying next: %s",
                             model_id,
                             exc,
                         )
                         continue
-                    logger.exception("Shield AI Vision provider call failed (model=%s)", model_id)
-                    raise ShieldAIError(_friendly_error(exc)) from exc
+                    logger.exception("Vajra AI Vision provider call failed (model=%s)", model_id)
+                    raise VajraAIError(_friendly_error(exc)) from exc
         finally:
             del image_bytes
 
         if last_exc is not None:
-            raise ShieldAIError(_friendly_error(last_exc)) from last_exc
-        raise ShieldAIError("Shield AI Vision is temporarily unavailable. Please try again.")
+            raise VajraAIError(_friendly_error(last_exc)) from last_exc
+        raise VajraAIError("Vajra AI Vision is temporarily unavailable. Please try again.")
 
     def _answer_vertex(self, image_bytes: bytes, image_format: str, question: str) -> str:
         from app.services.vertex_ai_client import generate_vision
@@ -146,11 +146,11 @@ class VisionAssistService:
                 temperature=0.3,
             )
         except Exception as exc:
-            logger.exception("Shield AI Vision Vertex call failed")
-            raise ShieldAIError(_friendly_error(exc)) from exc
+            logger.exception("Vajra AI Vision Vertex call failed")
+            raise VajraAIError(_friendly_error(exc)) from exc
         if not reply:
-            raise ShieldAIError(
-                "Shield AI Vision returned an empty response. Please try again."
+            raise VajraAIError(
+                "Vajra AI Vision returned an empty response. Please try again."
             )
         return reply
 

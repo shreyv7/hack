@@ -578,7 +578,7 @@ export function GovernanceGuide(): ReactElement {
                 <Sparkles className="w-6 h-6" />
               </div>
               <div className="space-y-2">
-                <h4 className="font-bold text-sm text-[var(--text-primary)]">Shield AI Copilot</h4>
+                <h4 className="font-bold text-sm text-[var(--text-primary)]">Vajra AI Copilot</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
                   Ask questions about DPDPA governance requirements, module workflows, or compliance best
                   practices.
@@ -640,7 +640,7 @@ export function GovernanceGuide(): ReactElement {
               <div className="space-y-2">
                 <h4 className="font-bold text-sm text-[var(--text-primary)]">Consent Setup Guide</h4>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                  New to DPDPA Shield? Start with the consent and banner setup guide before diving into
+                  New to Vajra? Start with the consent and banner setup guide before diving into
                   governance modules.
                 </p>
                 <button

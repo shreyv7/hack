@@ -1,13 +1,13 @@
-# DPDPA Shield — Compliance Score Technical Specification
+# Vajra — Compliance Score Technical Specification
 
-This document serves as the **single source of truth** for the **Compliance Score** (Compliance Posture Deep Dive) module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the compliance scoring logic and UI.
+This document serves as the **single source of truth** for the **Compliance Score** (Compliance Posture Deep Dive) module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the compliance scoring logic and UI.
 
 ---
 
 ## 1. Module Overview
 
 ### 1.1 Purpose
-The **Compliance Score** module calculates and details the organization's legal alignment posture under the Digital Personal Data Protection Act, 2023 (DPDPA). It provides a penalty-anchored compliance percentage, a section-by-section audit checklist, historical compliance trends, and Shield AI recommendations for closing control gaps.
+The **Compliance Score** module calculates and details the organization's legal alignment posture under the Digital Personal Data Protection Act, 2023 (DPDPA). It provides a penalty-anchored compliance percentage, a section-by-section audit checklist, historical compliance trends, and Vajra AI recommendations for closing control gaps.
 
 ### 1.2 Business Objective
 To provide corporate boards, legal counsel, and security teams with an audit-ready, quantifiable compliance score that highlights immediate statutory penalty risks, operational gaps, and exact corrective actions.
@@ -27,12 +27,12 @@ graph TD
     CN[Consent Notices DB] -->|Notice Audits| CMS
     CMS -->|Calculate Score| Score[Overall Score & Chapter Breakdown]
     Score -->|API Delivery| FE[Compliance Score Dashboard]
-    Score -->|Grounding Text| AI[Shield AI Recommendations]
+    Score -->|Grounding Text| AI[Vajra AI Recommendations]
 ```
 
 ### 1.5 Target Users
 *   **Chief Compliance Officers / Legal Counsel**: Audit DPDPA compliance details, inspect statute excerpts, and review statutory penalty exposure.
-*   **CISOs & DPOs**: Identify outstanding control gaps, retrieve remediation checklists, and consult Shield AI for step-by-step resolution.
+*   **CISOs & DPOs**: Identify outstanding control gaps, retrieve remediation checklists, and consult Vajra AI for step-by-step resolution.
 *   **External Auditors**: Inspect verification evidence, audit trail trends, and export PDF compliance reports.
 
 ---
@@ -59,7 +59,7 @@ sequenceDiagram
     participant BE as FastAPI Router
     participant Svc as ComplianceMapService
     participant DB as PostgreSQL DB
-    participant AI as AWS Bedrock (Shield AI)
+    participant AI as AWS Bedrock (Vajra AI)
 
     User->>FE: Open /compliance/score
     activate FE
@@ -77,8 +77,8 @@ sequenceDiagram
 
     FE->>FE: Calculate gauge paths & render cards
     
-    opt Ask Shield AI
-        User->>FE: Click "Ask Shield AI" on a control gap
+    opt Ask Vajra AI
+        User->>FE: Click "Ask Vajra AI" on a control gap
         FE->>AI: Invoke Copilot API with gap details & org context
         AI-->>FE: Return contextual step-by-step mitigation instructions
         FE-->>User: Display AI response in Copilot panel
@@ -106,11 +106,11 @@ The Compliance Score Deep Dive interface (Route: `/compliance/score`) contains f
 2.  **DPDPA Section-by-Section Accordion Table**:
     *   Lists all registered DPDPA statute chapters and sections.
     *   *Columns*: Section reference (e.g., Section 8(5)), Section Title, Score Mini-Gauge, Complete/Total Controls ratio, Max Statutory Penalty Exposure, Status Badge (Compliant, Minor Gap, At Risk).
-    *   *Expanded Row Details*: Renders the official DPDPA statute legal excerpt, a list of mapped compliance controls (with check/cross indicators), a "Configure" link to the evidence source, and an "Ask Shield AI" helper button.
+    *   *Expanded Row Details*: Renders the official DPDPA statute legal excerpt, a list of mapped compliance controls (with check/cross indicators), a "Configure" link to the evidence source, and an "Ask Vajra AI" helper button.
 3.  **Trend & Benchmark Charts**:
     *   **Compliance Trend (Line Graph)**: Plots the historical compliance score percentage over the last 90 days. Displays vertical event annotation markers (e.g. "Fixed S.8(5) gap" trigger dates).
     *   **Industry Benchmark Card**: Renders the organization's current score against the industry median bar chart.
-4.  **Shield AI Insights Recommendations Card**:
+4.  **Vajra AI Insights Recommendations Card**:
     *   Injects active compliance context (gaps list, weakest chapters, industry segment) into the LLM system prompt.
     *   Displays a list of the top 3 recommended priority corrective actions with instant clickable buttons to launch the AI Copilot.
 5.  **Auditor Action Sticky Footer**:
@@ -158,7 +158,7 @@ ComplianceScoreDeepDive.tsx (Main View Container)
         │     └── Mapped Controls Status Row
         ├── Trend Line Chart SVG (Polyline data graph)
         ├── Benchmark Bar Chart
-        ├── ShieldAICard.tsx (AI Action Card)
+        ├── VajraAICard.tsx (AI Action Card)
         └── Auditor Actions Sticky Bar
 ```
 

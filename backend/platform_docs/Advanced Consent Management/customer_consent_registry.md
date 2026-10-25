@@ -1,4 +1,4 @@
-# DPDPA Shield — Customer Consent Registry Technical Specification
+# Vajra — Customer Consent Registry Technical Specification
 
 This document covers the **Customer Consent Registry** page (`/consent/banking/registry`) within the Advanced Consent Management cluster.
 

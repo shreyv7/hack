@@ -208,8 +208,8 @@ export function TechnicalIntegration({
         const [, bannersData, propsList] = await Promise.all([
           integrationsApi.getSnippet(targetPropId).catch(() => ({
             html: `<script src="${getCmpScriptUrl()}" data-property-id="${targetPropId}" data-tenant-id="${targetOrgId}" async></script>`,
-            react: `import { ZeroShieldProvider } from '@zeroshield/react';`,
-            npm: `npm install @zeroshield/cmp-sdk`,
+            react: `import { VajraProvider } from '@vajra/react';`,
+            npm: `npm install @vajra/cmp-sdk`,
           })),
           fetchBanners(targetOrgId).catch(() => []),
           integrationsApi.listProperties(targetOrgId).catch(() => [propData as PropertyDetail]),
@@ -268,15 +268,15 @@ export function TechnicalIntegration({
 ></script>`;
 
   const websiteReactSnippet = `// 1. Install NPM package
-npm install @zeroshield/react-cmp
+npm install @vajra/react-cmp
 
 // 2. Wrap main application root component:
 import React from 'react';
-import { ZeroShieldProvider } from '@zeroshield/react-cmp';
+import { VajraProvider } from '@vajra/react-cmp';
 
 export default function App() {
   return (
-    <ZeroShieldProvider
+    <VajraProvider
       propertyId="${currentProperty.id}"
       apiKey="${currentProperty.api_key_prefix || 'zs_live_key'}"
       apiUrl="${apiUrl}"
@@ -286,7 +286,7 @@ export default function App() {
       }}
     >
       <YourAppComponents />
-    </ZeroShieldProvider>
+    </VajraProvider>
   );
 }`;
 
@@ -311,11 +311,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   );
 }`;
 
-  const swiftInit = `import ZeroShieldSDK
+  const swiftInit = `import VajraSDK
 
 func application(_ application: UIApplication,
                 didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    ZeroShieldSDK.configure(
+    VajraSDK.configure(
         propertyId: "${currentProperty.id}",
         apiKey: "${currentProperty.api_key_prefix || 'zs_live_key'}",
         apiUrl: "${apiUrl}"
@@ -323,12 +323,12 @@ func application(_ application: UIApplication,
     return true
 }`;
 
-  const kotlinInit = `import com.zeroshield.android.sdk.ZeroShield
+  const kotlinInit = `import com.vajra.android.sdk.Vajra
 
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
-        ZeroShield.initialize(
+        Vajra.initialize(
             context = this,
             propertyId = "${currentProperty.id}",
             apiKey = "${currentProperty.api_key_prefix || 'zs_live_key'}"
@@ -336,7 +336,7 @@ class MainApplication : Application() {
     }
 }`;
 
-  const dsarWidgetScript = `<!-- ZeroShield DSAR Self-Service Portal Widget -->
+  const dsarWidgetScript = `<!-- Vajra DSAR Self-Service Portal Widget -->
 <script
   src="${cmpUrl.replace('/cmp.js', '/dsar-widget.js')}"
   data-org-id="${currentProperty.organization_id}"
@@ -355,28 +355,28 @@ class MainApplication : Application() {
 ></iframe>`;
 
   const prefCenterEmbed = `<!-- Embedded Preference Center Snippet -->
-<div id="zeroshield-preference-center"></div>
+<div id="vajra-preference-center"></div>
 <script
   src="${cmpUrl.replace('/cmp.js', '/preference-center.js')}"
   data-org-id="${currentProperty.organization_id}"
-  data-target="#zeroshield-preference-center"
+  data-target="#vajra-preference-center"
   async
 ></script>`;
 
   const dockerPiiAgent = `# Run Self-Hosted PII Scanner Container Agent
 docker run -d \\
-  --name zeroshield-scanner-agent \\
-  -e ZEROSHIELD_API_KEY="${currentProperty.api_key_prefix || 'zs_live_key'}" \\
-  -e ZEROSHIELD_ORG_ID="${currentProperty.organization_id}" \\
+  --name vajra-scanner-agent \\
+  -e VAJRA_API_KEY="${currentProperty.api_key_prefix || 'zs_live_key'}" \\
+  -e VAJRA_ORG_ID="${currentProperty.organization_id}" \\
   -e DB_CONNECTION_STRING="postgresql://db_user:password@internal-db:5432/customer_db" \\
   -p 8088:8088 \\
-  zeroshield/pii-scanner-agent:latest`;
+  vajra/pii-scanner-agent:latest`;
 
   const pythonPiiCli = `# Install PII Scanner CLI
-pip install zeroshield-scanner
+pip install vajra-scanner
 
 # Run automated scan against local database or server
-zeroshield-scanner scan \\
+vajra-scanner scan \\
   --api-key "${currentProperty.api_key_prefix || 'zs_live_key'}" \\
   --host "localhost" \\
   --port 5432 \\
@@ -392,7 +392,7 @@ zeroshield-scanner scan \\
 />`;
 
   const smsWebhookPayload = `// SMS / WhatsApp Webhook Endpoint: POST ${apiUrl}/v1/consent/webhook/sms
-// Headers: X-ZeroShield-Signature: <HMAC_SHA256>
+// Headers: X-Vajra-Signature: <HMAC_SHA256>
 {
   "phone": "+919876543210",
   "consent_action": "OPT_IN",
@@ -608,7 +608,7 @@ zeroshield-scanner scan \\
                 <>
                   <div>
                     <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">CocoaPods Package</h4>
-                    <CodeBlock code={`pod 'ZeroShieldSDK', '~> 4.2'`} language="ruby" />
+                    <CodeBlock code={`pod 'VajraSDK', '~> 4.2'`} language="ruby" />
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Swift AppDelegate Setup</h4>
@@ -619,7 +619,7 @@ zeroshield-scanner scan \\
                 <>
                   <div>
                     <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Gradle Dependency</h4>
-                    <CodeBlock code={`implementation 'com.zeroshield.android:sdk:4.2.1'`} language="groovy" />
+                    <CodeBlock code={`implementation 'com.vajra.android:sdk:4.2.1'`} language="groovy" />
                   </div>
                   <div>
                     <h4 className="text-xs font-bold text-[var(--text-secondary)] uppercase tracking-wider mb-1">Kotlin Application Setup</h4>

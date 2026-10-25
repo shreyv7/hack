@@ -139,7 +139,7 @@ export interface BreachAffectedVerifyResult {
   log_entries_analyzed: number;
   unique_principals_found: number;
   summary: string;
-  shield_ai_used: boolean;
+  vajra_ai_used: boolean;
   data_types: string[];
   special_categories: string[];
 }

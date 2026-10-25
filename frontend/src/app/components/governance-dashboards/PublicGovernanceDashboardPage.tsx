@@ -99,7 +99,7 @@ export function PublicGovernanceDashboardPage(): ReactElement {
       <header className="border-b border-[var(--border-default)] bg-[var(--surface-card)] px-6 py-4">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)] mb-1">
-            <Shield className="size-3.5" /> DPDPA Shield — Shared Dashboard
+            <Shield className="size-3.5" /> Vajra — Shared Dashboard
           </div>
           <h1 className="text-xl font-semibold">{data.dashboard_name}</h1>
           {data.dashboard_description && (

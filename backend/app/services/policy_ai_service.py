@@ -1,4 +1,4 @@
-"""Shield AI policy generation from RoPA processing activities."""
+"""Vajra AI policy generation from RoPA processing activities."""
 
 from __future__ import annotations
 
@@ -12,10 +12,10 @@ from app.core.config import settings
 from app.models.policy import PolicyDocument, PolicyType
 from app.models.user import User
 from app.schemas.policy import PolicyCreate, PolicyDetailRead, PolicyVersionCreate
-from app.services import shield_ai_service
+from app.services import vajra_ai_service
 from app.services.policy_ropa_context import PolicyRopaContext, build_policy_ropa_context
 from app.services.policy_service import PolicyService
-from app.services.shield_ai_service import ShieldAIError
+from app.services.vajra_ai_service import VajraAIError
 
 logger = logging.getLogger(__name__)
 
@@ -60,14 +60,14 @@ class PolicyAiService:
         draft, meta = self._generate_draft(context, policy_type)
         detail, is_new, version_label = self._persist_draft(user, org_uuid, policy_type, draft)
 
-        action = "Shield AI generated new policy" if is_new else "Shield AI generated new draft version"
+        action = "Vajra AI generated new policy" if is_new else "Vajra AI generated new draft version"
         self._policy_service._log_activity(
             org_id=org_uuid,
             policy_id=detail.id,
             action=action,
             title=detail.title,
             version=version_label,
-            user_name=user.full_name or "Shield AI",
+            user_name=user.full_name or "Vajra AI",
         )
         self.db.commit()
 
@@ -84,7 +84,7 @@ class PolicyAiService:
 
         if settings.ai_configured:
             try:
-                draft = shield_ai_service.generate_policy_from_ropa(
+                draft = vajra_ai_service.generate_policy_from_ropa(
                     context=context.to_json(),
                     org_name=context.organization_name,
                     policy_type=policy_type.value,
@@ -92,7 +92,7 @@ class PolicyAiService:
                 meta["source"] = settings.ai_provider
                 meta["model_id"] = settings.ai_model_id or None
                 return draft, meta
-            except ShieldAIError as exc:
+            except VajraAIError as exc:
                 logger.warning("Policy generation AI call failed, using fallback: %s", exc)
 
         return self._fallback_draft(context, policy_type), meta
@@ -176,7 +176,7 @@ class PolicyAiService:
                 "",
                 "---",
                 "",
-                "*This document was auto-drafted from your RoPA register. Configure Shield AI "
+                "*This document was auto-drafted from your RoPA register. Configure Vajra AI "
                 "for AI-enhanced policy generation. Confirm all legal language with your DPO "
                 "or qualified counsel before publishing.*",
             ]
@@ -208,7 +208,7 @@ class PolicyAiService:
 
         title = draft.get("title") or _POLICY_TYPE_DEFAULT_TITLES.get(policy_type, "Policy")
         content = draft.get("content") or ""
-        summary = draft.get("summary") or "Shield AI generated draft from RoPA."
+        summary = draft.get("summary") or "Vajra AI generated draft from RoPA."
 
         if existing:
             version = self._policy_service.create_new_version(

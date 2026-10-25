@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     )
 
     # --- App ---
-    PROJECT_NAME: str = "DPDPA Shield API"
+    PROJECT_NAME: str = "Vajra API"
     ENVIRONMENT: str = "development"
     API_V1_PREFIX: str = "/api"
 
@@ -66,7 +66,7 @@ class Settings(BaseSettings):
 
 
     # --- Superadmin seed ---
-    SUPERADMIN_EMAIL: str = "superadmin@zeroshield.in"
+    SUPERADMIN_EMAIL: str = "superadmin@vajra.dev"
     SUPERADMIN_PASSWORD: str = "ChangeMe123!"
 
     # --- SMTP (invite emails) ---
@@ -74,7 +74,7 @@ class Settings(BaseSettings):
     SMTP_PORT: int = 587
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
-    SMTP_FROM_NAME: str = "DPDPA Shield"
+    SMTP_FROM_NAME: str = "Vajra"
 
     # Link in invite emails (Vite dev server or production app URL)
     FRONTEND_URL: str = "http://localhost:5173"
@@ -85,12 +85,17 @@ class Settings(BaseSettings):
     CMP_PUBLIC_API_URL: str = ""
     CMP_GTM_TEMPLATE_URL: str = ""
 
-    # --- Shield AI provider switch ---
+    # --- Vajra AI provider switch ---
     # vertex = Gemini on Vertex AI via Application Default Credentials (ADC).
     # bedrock = existing AWS Bedrock Converse path. Flip this one value to switch.
-    AI_PROVIDER: str = "vertex"
+    AI_PROVIDER: str = "gemma"
+    GEMINI_API_KEY: str = ""
+    GEMMA_MODEL_ID: str = "gemma-4-31b-it"
+    # Existing Shield AI/RAG remains on Vertex or Bedrock; Gemma healthcare
+    # calls use the dedicated gateway and do not supply embedding vectors.
+    SHIELD_AI_PROVIDER: str = ""
 
-    # --- Shield AI (Google Cloud Vertex AI) ---
+    # --- Vajra AI (Google Cloud Vertex AI) ---
     # ADC supplies credentials: local `gcloud auth application-default login`,
     # Cloud Run uses the runtime service account. No API key is required.
     GOOGLE_CLOUD_PROJECT: str = ""
@@ -106,7 +111,7 @@ class Settings(BaseSettings):
     # Gemini 2.5 Flash thinking budget. 0 = off (faster, more reliable JSON).
     VERTEX_THINKING_BUDGET: int = 0
 
-    # --- Shield AI (AWS Bedrock, kept for AI_PROVIDER=bedrock) ---
+    # --- Vajra AI (AWS Bedrock, kept for AI_PROVIDER=bedrock) ---
     # The model is NEVER hardcoded — set BEDROCK_MODEL_ID in .env to any model
     # ID (or inference profile ARN) enabled in your AWS account, e.g.
     #   anthropic.claude-3-5-sonnet-20241022-v2:0
@@ -130,10 +135,10 @@ class Settings(BaseSettings):
     BEDROCK_VISION_MODEL_ID: str = "amazon.nova-lite-v1:0"
     BEDROCK_VISION_MAX_TOKENS: int = 500
 
-    # --- Shield AI RAG (documentation retrieval) ---
+    # --- Vajra AI RAG (documentation retrieval) ---
     # Empty = repo-relative docs/ (local uvicorn). Docker/Cloud Run should set
     # this to the mounted/copied docs directory inside the container.
-    SHIELD_AI_DOCS_DIR: str = ""
+    VAJRA_AI_DOCS_DIR: str = ""
     BEDROCK_EMBED_MODEL_ID: str = "amazon.titan-embed-text-v2:0"
     RAG_CHUNK_SIZE: int = 1000          # characters per chunk
     RAG_CHUNK_OVERLAP: int = 200        # overlap between adjacent chunks
@@ -156,8 +161,8 @@ class Settings(BaseSettings):
 
     @property
     def ai_provider(self) -> str:
-        """Active Shield AI backend: ``vertex`` or ``bedrock``."""
-        value = (self.AI_PROVIDER or "vertex").strip().lower()
+        """Active AI backend. Healthcare Gemma uses its own gateway."""
+        value = (self.SHIELD_AI_PROVIDER or self.AI_PROVIDER or "vertex").strip().lower()
         return value if value in {"vertex", "bedrock"} else "vertex"
 
     @property
@@ -176,7 +181,7 @@ class Settings(BaseSettings):
 
     @property
     def ai_configured(self) -> bool:
-        """True when the active provider can serve Shield AI requests."""
+        """True when the active provider can serve Vajra AI requests."""
         if self.ai_provider == "vertex":
             return self.vertex_configured
         return self.bedrock_configured
@@ -223,7 +228,7 @@ class Settings(BaseSettings):
 
     @property
     def bedrock_vision_configured(self) -> bool:
-        """True when Shield AI Bedrock is configured for vision (dedicated or shared model)."""
+        """True when Vajra AI Bedrock is configured for vision (dedicated or shared model)."""
         return bool(self.BEDROCK_VISION_MODEL_ID.strip() or self.bedrock_configured)
 
     @property

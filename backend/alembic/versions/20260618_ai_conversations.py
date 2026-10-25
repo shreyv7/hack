@@ -1,4 +1,4 @@
-"""shield ai conversations and messages
+"""vajra ai conversations and messages
 
 Revision ID: 20260618_ai_conv
 Revises: 57641952e38d

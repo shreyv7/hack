@@ -1,4 +1,4 @@
-# DPDPA Shield — Organizations (Tenant Management) Technical Specification
+# Vajra — Organizations (Tenant Management) Technical Specification
 
 This document covers the **Organizations** administration page for superadmin users.
 
@@ -10,7 +10,7 @@ This document covers the **Organizations** administration page for superadmin us
 ## 1. Module Overview
 
 ### 1.1 Purpose
-Enable ZeroShield platform superadmins to manage multi-tenant organizations — create new tenants, configure subscription tiers, monitor usage, and manage organization lifecycle.
+Enable Vajra platform superadmins to manage multi-tenant organizations — create new tenants, configure subscription tiers, monitor usage, and manage organization lifecycle.
 
 ### 1.2 Business Objective
 As a SaaS platform serving multiple enterprise customers, superadmins need a central control plane for tenant provisioning, suspension, and configuration without accessing tenant data.

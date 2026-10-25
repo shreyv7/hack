@@ -1,4 +1,4 @@
-"""Script to clear all database records except the ZeroShield Sandbox Org and superadmin user."""
+"""Script to clear all database records except the Vajra Sandbox Org and superadmin user."""
 
 from sqlalchemy import text
 from app.core.database import SessionLocal
@@ -23,12 +23,12 @@ def clear_database():
         
         # Now clean up organizations and users to keep only the sandbox org and superadmin user
         print("Cleaning up users and organizations...")
-        db.execute(text("DELETE FROM users WHERE email != 'superadmin@zeroshield.in';"))
-        db.execute(text("DELETE FROM organizations WHERE slug != 'zeroshield-sandbox-org';"))
+        db.execute(text("DELETE FROM users WHERE email != 'superadmin@vajra.dev';"))
+        db.execute(text("DELETE FROM organizations WHERE slug != 'vajra-sandbox-org';"))
         db.commit()
         
         print("=== DATABASE CLEARED SUCCESSFULLY ===")
-        print("Kept: Organization 'ZeroShield Sandbox Org' and User 'superadmin@zeroshield.in'")
+        print("Kept: Organization 'Vajra Sandbox Org' and User 'superadmin@vajra.dev'")
     except Exception as e:
         db.rollback()
         print(f"Error clearing database: {e}")

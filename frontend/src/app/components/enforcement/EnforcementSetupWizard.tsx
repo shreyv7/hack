@@ -212,9 +212,9 @@ export function EnforcementSetupWizard({
     }
   };
 
-  const middlewareSnippet = `from zeroshield import require_consent
+  const middlewareSnippet = `from vajra import require_consent
 
-# Env: ZEROSHIELD_PROPERTY_ID, ZEROSHIELD_DECISION_SECRET, ZEROSHIELD_API_URL
+# Env: VAJRA_PROPERTY_ID, VAJRA_DECISION_SECRET, VAJRA_API_URL
 @app.post("/newsletter/subscribe")
 @require_consent("your_purpose_key")
 def subscribe(...):

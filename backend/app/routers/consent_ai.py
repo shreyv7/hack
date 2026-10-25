@@ -4,8 +4,8 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, status
 from app.core.dependencies import get_current_user
 from app.models.user import User
-from app.schemas.shield_ai import ConsentDraftResult, ConsentDraftFromQuestionsRequest
-from app.services import shield_ai_service
+from app.schemas.vajra_ai import ConsentDraftResult, ConsentDraftFromQuestionsRequest
+from app.services import vajra_ai_service
 from app.services.file_scanner import parse_bytes
 
 logger = logging.getLogger(__name__)
@@ -66,18 +66,18 @@ async def draft_from_upload(
     ]
 
     # Retrieve relevant chunks from the uploaded document
-    context = shield_ai_service.retrieve_relevant_chunks(text, queries, top_k_per_query=2)
+    context = vajra_ai_service.retrieve_relevant_chunks(text, queries, top_k_per_query=2)
     if not context:
         context = text[:4000]  # fallback to first 4k characters if RAG retrieval returns nothing
 
     try:
-        draft = shield_ai_service.draft_consent_notice_from_context(context=context)
+        draft = vajra_ai_service.draft_consent_notice_from_context(context=context)
         return ConsentDraftResult(**draft)
     except Exception as exc:
-        logger.exception("Shield AI drafting failed")
+        logger.exception("Vajra AI drafting failed")
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=str(exc) or "Shield AI could not process this request.",
+            detail=str(exc) or "Vajra AI could not process this request.",
         ) from exc
 
 
@@ -88,7 +88,7 @@ def draft_from_questions(
 ) -> ConsentDraftResult:
     """Synthesize answers from guided questions into a draft consent notice."""
     try:
-        draft = shield_ai_service.draft_consent_notice_from_questions(
+        draft = vajra_ai_service.draft_consent_notice_from_questions(
             org_name=payload.org_name,
             industry=payload.industry,
             data_types=payload.data_types,
@@ -100,8 +100,8 @@ def draft_from_questions(
         )
         return ConsentDraftResult(**draft)
     except Exception as exc:
-        logger.exception("Shield AI drafting failed")
+        logger.exception("Vajra AI drafting failed")
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail=str(exc) or "Shield AI could not process this request.",
+            detail=str(exc) or "Vajra AI could not process this request.",
         ) from exc

@@ -1,6 +1,6 @@
-# DPDPA Shield — User Manual
+# Vajra — User Manual
 
-A complete, screen-by-screen guide to operating DPDPA Shield: from workspace setup and team roles to consent, data protection, data-principal rights, and governance.
+A complete, screen-by-screen guide to operating Vajra: from workspace setup and team roles to consent, data protection, data-principal rights, and governance.
 
 > **Production app** → https://dpdpashield-500607.web.app
 
@@ -44,7 +44,7 @@ Each screen is documented with the same compact layout, so you always know where
 10. Governance
 11. Settings
 12. Team & User Management
-13. Shield AI
+13. Vajra AI
 14. Public Pages (No Login)
 15. Appendix — Roles, URLs & Setup
 
@@ -69,13 +69,13 @@ Register your organization by entering company details and creating the first **
 | Work email | Login email for the Org Admin |
 | Password | Minimum 8 characters |
 
-**Note** — New workspaces stay in **pending approval** until the DPDPA Shield team activates your account. Once approved, the signup user becomes your organization's **Org Admin** with full workspace control.
+**Note** — New workspaces stay in **pending approval** until the Vajra team activates your account. Once approved, the signup user becomes your organization's **Org Admin** with full workspace control.
 
 ## 1.2 Pending Approval
 
 **Route** `/pending-approval`  ·  **Open** Shown automatically after signup until approved
 
-After registration, your workspace awaits activation by the DPDPA Shield team. Use **Check approval status** to refresh; once approved you enter the platform as **Org Admin** with the full dashboard and setup guide.
+After registration, your workspace awaits activation by the Vajra team. Use **Check approval status** to refresh; once approved you enter the platform as **Org Admin** with the full dashboard and setup guide.
 
 > **Screenshot** — The "Account awaiting approval" screen: clock icon, message text, and the **Check approval status** and **Sign out** buttons.
 
@@ -85,7 +85,7 @@ After registration, your workspace awaits activation by the DPDPA Shield team. U
 
 Sign in with the email and password created at signup or provided by your administrator. Invited users receive credentials by email, must change their password on first login, and see only the modules their assigned role permits.
 
-> **Screenshot** — The login form: DPDPA Shield logo, Email and Password fields, **Forgot password?** link, **Sign in** button, and the **Create one** link.
+> **Screenshot** — The login form: Vajra logo, Email and Password fields, **Forgot password?** link, **Sign in** button, and the **Create one** link.
 
 ## 1.4 Forgot Password
 
@@ -135,11 +135,11 @@ The sidebar groups every module. Use **⌘K / Ctrl+K** search to jump to any scr
 - Governance
 - Settings
 - Administration *(Team & Users — Org Admin only)*
-- Shield AI *(bottom button)*
+- Vajra AI *(bottom button)*
 
 ## 2.2 Role-Based Access Control (RBAC)
 
-DPDPA Shield ships **12 assignable organization roles** plus the **Org Admin** who manages the workspace. Each role maps to a specific permission set. Permissions control which actions appear on each screen (edit, assign, approve, sign off, close incident, and so on); a few screens are additionally restricted by role.
+Vajra ships **12 assignable organization roles** plus the **Org Admin** who manages the workspace. Each role maps to a specific permission set. Permissions control which actions appear on each screen (edit, assign, approve, sign off, close incident, and so on); a few screens are additionally restricted by role.
 
 **How access works**
 
@@ -261,7 +261,7 @@ Your onboarding roadmap. Complete the 8 steps in order to go from workspace setu
 
 Your compliance command center: real-time score, estimated penalty exposure mitigated, module health, upcoming regulatory deadlines, and recent platform activity. Use **Recalculate** to refresh the score and **Export PDF** for reports.
 
-> **Screenshot** — The full dashboard: compliance-score gauge, penalty-mitigation chip, module-health cards, trend chart, deadlines, alerts, recent activity, and the Shield AI panel.
+> **Screenshot** — The full dashboard: compliance-score gauge, penalty-mitigation chip, module-health cards, trend chart, deadlines, alerts, recent activity, and the Vajra AI panel.
 
 ## 4.2 Compliance Score
 
@@ -275,7 +275,7 @@ A deep dive into your compliance score by dimension. Identify weak areas and tra
 
 **Route** `/overview/automation`  ·  **Open** Overview → *Automation Coverage*
 
-Maps DPDPA Shield capabilities to DPDPA statute sections. Switch to the **Rationale** tab to see why each feature satisfies a legal requirement, and export as PDF for audit evidence.
+Maps Vajra capabilities to DPDPA statute sections. Switch to the **Rationale** tab to see why each feature satisfies a legal requirement, and export as PDF for audit evidence.
 
 > **Screenshot** — The Coverage Map tab showing DPDPA sections mapped to platform features, plus the Coverage Map / Rationale tab switcher.
 
@@ -759,7 +759,7 @@ Document your deployment architecture for audit purposes: hosting model, data-re
 
 **Route** `/settings/industry`  ·  **Open** Settings → *Industry Config*
 
-Set your organization's industry sector. DPDPA Shield tailors compliance recommendations and SDF classification based on sector and data volume.
+Set your organization's industry sector. Vajra tailors compliance recommendations and SDF classification based on sector and data volume.
 
 > **Screenshot** — The primary/secondary industry-sector selectors and SDF classification settings.
 
@@ -834,11 +834,11 @@ Change a user's role anytime via the inline dropdown (except your own row). Disa
 
 ---
 
-# 13. Shield AI
+# 13. Vajra AI
 
-## 13.1 Shield AI Copilot
+## 13.1 Vajra AI Copilot
 
-**Route** `/ai/copilot`  ·  **Open** Sidebar bottom → *Shield AI* button
+**Route** `/ai/copilot`  ·  **Open** Sidebar bottom → *Vajra AI* button
 
 An AI assistant for DPDPA compliance. Ask questions about any module, get step-by-step guidance, and navigate directly to the relevant screen. Conversation history is saved per session.
 
@@ -896,7 +896,7 @@ A read-only compliance dashboard shared via a secure token link — useful for b
 
 ## User Roles — Full Reference
 
-DPDPA Shield assigns every user one **organization role**. When your organization is onboarded, the person who signed up becomes the **Org Admin** (shown as **Admin** in the app), who then invites all other team members and assigns their roles. Roles map to granular permissions that control both screen access and in-page actions (edit, assign, approve, sign off, close).
+Vajra assigns every user one **organization role**. When your organization is onboarded, the person who signed up becomes the **Org Admin** (shown as **Admin** in the app), who then invites all other team members and assigns their roles. Roles map to granular permissions that control both screen access and in-page actions (edit, assign, approve, sign off, close).
 
 **All organization roles**
 
@@ -978,7 +978,7 @@ All other modules are accessible to every active role, with **in-page permission
 ## Recommended First-Time Setup Flow
 
 1. **Sign Up** — workspace enters pending approval
-2. **Activation** — DPDPA Shield activates your account
+2. **Activation** — Vajra activates your account
 3. **Login as Org Admin** — open **How to Use** (the 8-step guide)
 4. **Team & Users** — invite DPO, IT Admin, Legal, CISO, Grievance Officer
 5. **Settings** — Workspace, Industry, Deployment *(DPO updates contact details)*
@@ -1009,9 +1009,9 @@ Use this while capturing screenshots — roughly **55 screens** in total.
 | **Governance (8)** | Guide · RoPA · DPIA · Policy Manager · Vendor Risk · Cross-Border · CISO · Dashboards |
 | **Settings (4)** | Workspace · Deployment · Industry · Role Mapping |
 | **Admin (3)** | Team & Users (main) · Invite Form with Role Preview · User Row Actions |
-| **Shield AI (1)** | Copilot |
+| **Vajra AI (1)** | Copilot |
 | **Public (5)** | Portal Landing · Request Form · OTP · Status Check · Public Dashboard |
 
 ---
 
-*Last updated: July 2026 · DPDPA Shield — Org Admin & RBAC (12 roles)*
+*Last updated: July 2026 · Vajra — Org Admin & RBAC (12 roles)*

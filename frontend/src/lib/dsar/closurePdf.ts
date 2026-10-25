@@ -10,7 +10,7 @@ export function downloadClosurePdf(
   const width = 182;
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.text('DPDPA Shield — Closure Letter', margin, 20);
+  doc.text('Vajra — Closure Letter', margin, 20);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   const lines = doc.splitTextToSize(closureText, width) as string[];

@@ -3,9 +3,9 @@
  *
  * On mount, calls POST /governance/dashboards/ai/assist (action=welcome).
  * One AI call (~400 input / ~300 output tokens); falls back gracefully
- * to rule-based summary when Shield AI is unconfigured.
+ * to rule-based summary when Vajra AI is unconfigured.
  *
- * "Continue in Shield AI" navigates to /ai/copilot with prefilled query +
+ * "Continue in Vajra AI" navigates to /ai/copilot with prefilled query +
  * compact copilot_context so the Copilot doesn't need re-explaining.
  */
 
@@ -118,7 +118,7 @@ export function GovernanceAiAssistantModal({
                       {result.configured && !result.used_fallback
                         ? 'AI-assisted governance insights'
                         : result.used_fallback
-                        ? 'Rule-based summary · Shield AI unavailable'
+                        ? 'Rule-based summary · Vajra AI unavailable'
                         : 'Loading…'}
                     </p>
                   )}
@@ -160,7 +160,7 @@ export function GovernanceAiAssistantModal({
                   <div className="flex items-start gap-2 px-3 py-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-600">
                     <AlertTriangle className="size-3.5 flex-shrink-0 mt-0.5" />
                     <span>
-                      Shield AI is not configured. Contact your administrator to enable AI insights.
+                      Vajra AI is not configured. Contact your administrator to enable AI insights.
                     </span>
                   </div>
                 )}
@@ -187,7 +187,7 @@ export function GovernanceAiAssistantModal({
             {/* Suggested chips */}
             <div className="pt-1">
               <p className="text-[11px] font-medium text-[var(--text-secondary)] uppercase tracking-wider mb-2">
-                Ask Shield AI
+                Ask Vajra AI
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {CHIPS.map((chip) => (
@@ -218,7 +218,7 @@ export function GovernanceAiAssistantModal({
               onClick={handleContinue}
               className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg bg-gradient-to-r from-[var(--status-ai)] to-[var(--brand-primary)] text-white hover:opacity-90 transition-opacity"
             >
-              Continue in Shield AI
+              Continue in Vajra AI
               <ArrowRight className="size-3.5" />
             </button>
           </div>

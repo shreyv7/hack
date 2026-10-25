@@ -131,7 +131,7 @@ export function downloadDsarEvidencePackPdf(input: DsarEvidenceExportInput): str
 
   const pdf = new PdfDocument();
 
-  pdf.title('DPDPA Shield — DSAR Evidence Pack');
+  pdf.title('Vajra — DSAR Evidence Pack');
   pdf.paragraph(
     'Data Principal rights compliance export under the Digital Personal Data Protection Act, 2023 (Sections 11–14).'
   );

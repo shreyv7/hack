@@ -163,7 +163,7 @@ def test_ciso_module():
         print("\n=== Step 10: Generate Board Executive PDF Report ===")
         report = service.generate_board_report(user, org_id=org.id)
         print(f"Generated Board Report: {report.title}")
-        pdf_path = f"/Users/shreyvashistha/Desktop/ZEROSHIELD-DPDPA/dpdpa_shield/backend/templates/report_{report.id}.pdf"
+        pdf_path = f"/Users/shreyvashistha/Desktop/VAJRA-DPDPA/dpdpa_shield/backend/templates/report_{report.id}.pdf"
         print(f"PDF Output File exists: {os.path.exists(pdf_path)} (Size: {os.path.getsize(pdf_path)} bytes)")
 
         # Recalculate summary scores to verify dashboard calculates dynamic updates

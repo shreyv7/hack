@@ -1,146 +1,301 @@
-# DPDPA Shield
+# Vajra Health
 
-Monorepo for the **DPDPA Shield** compliance platform: React frontend and FastAPI backend.
+<div align="center">
 
-## Project structure
+**A consent-aware healthcare data gateway that keeps patient choice enforceable, clinical access explainable, and every exceptional disclosure auditable.**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-0f766e.svg)](LICENSE)
+[![Frontend: React](https://img.shields.io/badge/Frontend-React%2018-149eca.svg)](frontend/)
+[![API: FastAPI](https://img.shields.io/badge/API-FastAPI-009688.svg)](backend/)
+[![Database: PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL%20%2B%20pgvector-4169e1.svg)](docker-compose.yml)
+[![AI: Gemma 4](https://img.shields.io/badge/Open--weight%20AI-Gemma%204-f9ab00.svg)](#open-weight-ai-and-model-terms)
+
+Built for **Hacktoberfest x MOSS Hack Day Udupi 2026**<br>
+Tracks: **Best Open-Source AI Project** and **Best Use of Gemma 4**
+
+</div>
+
+> [!IMPORTANT]
+> This is a hackathon prototype, not a medical device or a substitute for legal, clinical, or information-security advice. The healthcare demo uses synthetic records and must not be given real patient data.
+
+## Why Vajra Health
+
+Healthcare teams need fast access to records, but access should never silently exceed a patient's consent. Vajra Health places a policy-enforcement layer between an EHR/EMR and the people or systems requesting data. It evaluates the purpose of access, reveals only permitted clinical categories, redacts protected fields, and seals the decision in a tamper-evident proof chain.
+
+The hack-day experience focuses on three people:
+
+- **Patient:** grants purpose-specific consent, withholds sensitive categories, reads a plain-language explanation, and digitizes a paper form.
+- **Clinician:** requests a record for a declared purpose, sees allowed data and explicit redactions, and can invoke a tightly logged emergency override.
+- **Data Protection Officer:** reviews every access decision and emergency event, checks the SHA-256 proof chain, and inspects AI-assisted compliance findings.
+
+## What we built
+
+| Capability | What it demonstrates |
+| --- | --- |
+| Granular patient consent | Separate grants for treatment, diagnostics, research, insurance, and emergency use, with category-level allow/deny choices. |
+| Consent-aware record access | A deterministic policy engine returns allowed records and `[REDACTED]` placeholders instead of leaking non-consented fields. |
+| Break-the-glass workflow | Emergency access requires a justification, is limited to the active session, and is queued for DPO review. |
+| Proof Vault | Every consent change and access decision is linked with SHA-256 hashes so tampering can be detected. |
+| Paper consent digitization | A multimodal AI workflow turns a consent-form image into a patient-reviewable structured draft. |
+| Patient-friendly explanations | AI rewrites dense consent language into concise explanations in Indian languages. |
+| Clinical access advisor | AI explains why a category is allowed or denied while the deterministic policy engine remains authoritative. |
+| Compliance analysis | AI summarizes possible DPDPA gaps and recommended actions for a human reviewer. |
+
+The healthcare UI lives in [`frontend/src/app/healthcare`](frontend/src/app/healthcare), its typed API adapter is [`frontend/src/lib/api/healthcare.ts`](frontend/src/lib/api/healthcare.ts), and the broader compliance platform remains available around the hack-day workflow.
+
+## Five-minute demo
+
+1. Open `/healthcare/patient` and review Priya Sharma's purpose-specific consent.
+2. Withhold mental-health, reproductive-health, and HIV/STD records, then save the choice.
+3. Upload a paper consent image and review the AI-produced structured draft before accepting it.
+4. Open `/healthcare/clinician`, request records for treatment, and show that protected categories remain redacted.
+5. Ask the access advisor why psychiatric notes are unavailable.
+6. Trigger **Break the Glass**, enter an emergency justification, and show the temporary disclosure.
+7. Open `/healthcare/audit`, review the emergency event, and run **Verify Proof Vault Integrity**.
+
+### Current integration status
+
+The healthcare frontend runs in **synthetic demo mode by default** so the complete user journey can be shown without patient data or external credentials. Set `VITE_USE_HEALTHCARE_MOCKS=false` to make the adapter call `/api/v1/healthcare/*`.
+
+The repository's existing AI backend currently defaults to Vertex AI with `gemini-2.5-flash`. The hackathon Gemma 4 client and healthcare API routes must be connected before presenting this branch as a live **Best Use of Gemma 4** integration. A valid submission should show the actual `gemma-4-26b-a4b-it` request in code or in the running demo, not only the UI badge or this README.
+
+## How it works
+
+```mermaid
+flowchart LR
+    P[Patient portal] --> API[FastAPI healthcare API]
+    C[Clinician gateway] --> API
+    D[DPO audit dashboard] --> API
+
+    API --> POLICY[Deterministic consent policy engine]
+    POLICY -->|allowed fields| EHR[(FHIR-aligned clinical records)]
+    POLICY -->|redacted fields| C
+    POLICY --> VAULT[(SHA-256 Proof Vault)]
+
+    API --> AI[Gemma 4 via Gemini API]
+    AI --> DIGITIZE[Paper-consent digitizer]
+    AI --> EXPLAIN[Consent explainer]
+    AI --> ADVISE[Clinical access advisor]
+    AI --> REVIEW[Compliance gap analysis]
+
+    VAULT --> D
 ```
+
+The safety boundary is intentional: **Gemma explains and extracts; deterministic application logic decides access.** An AI response cannot grant consent, bypass a denial, or erase an audit event.
+
+## Open-weight AI and model terms
+
+The hackathon configuration targets **Gemma 4 26B A4B instruction-tuned** (`gemma-4-26b-a4b-it`) through the Gemini API. It is used for multimodal consent-form extraction, multilingual explanations, access-decision explanations, and compliance review.
+
+- Model overview: [Gemma 4 documentation](https://ai.google.dev/gemma/docs/core)
+- Hosted API instructions and supported model IDs: [Run Gemma with the Gemini API](https://ai.google.dev/gemma/docs/core/gemma_on_gemini_api)
+- Model card: [Gemma 4 model card](https://ai.google.dev/gemma/docs/core/model_card_4)
+- License/usage terms: [Gemma 4 license](https://ai.google.dev/gemma/terms)
+- Prohibited-use policy: [Gemma prohibited-use policy](https://ai.google.dev/gemma/prohibited_use_policy)
+
+The model is open-weight, not OSI-licensed application code. Vajra's source code is MIT-licensed separately.
+
+## Repository layout
+
+```text
 .
-├── frontend/          # Vite + React + TypeScript (UI)
-├── backend/           # FastAPI + PostgreSQL + SQLAlchemy (API)
-├── packages/          # Shared libraries (e.g. zeroshield-python SDK)
-├── docs/              # Product documentation
-├── guidelines/        # Design / product guidelines
-├── package.json       # Root scripts (delegates to frontend)
-└── pnpm-workspace.yaml
+├── frontend/                 React, TypeScript, Vite application
+│   └── src/app/healthcare/   Hack-day patient, clinician, and DPO views
+├── backend/                  FastAPI, SQLAlchemy, Alembic application
+│   ├── app/                  Routers, schemas, services, models, and config
+│   └── platform_docs/        Retrieval corpus for the compliance copilot
+├── packages/vajra-python/    Consent-enforcement Python SDK
+├── docs/                     Product and operator documentation
+├── docker-compose.yml        Local full-stack services
+├── SRS2.md                   Hackathon system requirements
+└── LICENSE                   MIT license for this repository
 ```
 
-> **Note:** This repo lives inside the outer `ZEROSHIELD-DPDPA` workspace wrapper.
-> The legacy root-level `app/`, `src/`, and `alembic/` directories were removed —
-> all development happens in `frontend/` and `backend/`.
+## Run the demo
 
-## Frontend
+### Fastest path: frontend with synthetic data
+
+Requirements: Node.js 20+ and Corepack (or pnpm installed globally).
 
 ```bash
-# From repo root
-pnpm install
-pnpm dev
-
-# Or from frontend/
-cd frontend
-pnpm install
-pnpm dev
+git clone https://github.com/shreyv7/hack.git
+cd hack
+corepack enable
+pnpm --dir frontend install
+pnpm --dir frontend dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173).
+Open <http://localhost:5173> and sign in through the normal Vajra flow. Healthcare requests use local synthetic data unless `VITE_USE_HEALTHCARE_MOCKS=false` is set.
 
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start Vite dev server |
-| `pnpm build` | Production build |
-| `pnpm typecheck` | TypeScript check |
+### Full local stack
 
-See [frontend/README.md](frontend/README.md) for UI-specific notes.
+Requirements: Python 3.12, Node.js 20+, Docker, and pnpm.
 
-## Backend
+1. Start PostgreSQL with pgvector and Redis:
+
+   ```bash
+   docker compose -f backend/docker-compose.db.yml up -d
+   ```
+
+2. Configure and start the API:
+
+   ```bash
+   cd backend
+   python3.12 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   playwright install chromium
+   python -m spacy download en_core_web_sm
+   cp .env.example .env
+   alembic upgrade heads
+   uvicorn app.main:app --reload
+   ```
+
+3. In another terminal, start the frontend:
+
+   ```bash
+   cd frontend
+   corepack enable
+   pnpm install
+   printf 'VITE_API_BASE_URL=http://localhost:8000/api\nVITE_USE_HEALTHCARE_MOCKS=false\n' > .env.local
+   pnpm dev
+   ```
+
+4. Open:
+
+   - App: <http://localhost:5173>
+   - API health: <http://localhost:8000/api/health>
+   - Swagger UI: <http://localhost:8000/docs>
+
+Windows activation command: `.venv\Scripts\Activate.ps1`. Copy `.env.example` with `copy .env.example .env`.
+
+> [!CAUTION]
+> Keep `.env`, cloud credentials, SMTP secrets, and patient data out of Git. The committed environment files contain placeholders only.
+
+## Configuration
+
+| Variable | Purpose | Default/example |
+| --- | --- | --- |
+| `DATABASE_URL` | PostgreSQL connection used by SQLAlchemy and Alembic | `postgresql+psycopg2://...` |
+| `SECRET_KEY` | JWT signing and local secret derivation | Required; generate a random value |
+| `REDIS_URL` | Short-lived consent-decision cache | `redis://localhost:6379/0` |
+| `VITE_API_BASE_URL` | Browser-facing API base | `http://localhost:8000/api` |
+| `VITE_USE_HEALTHCARE_MOCKS` | `false` calls the healthcare backend; any other value uses synthetic demo data | Demo mode enabled |
+| `AI_PROVIDER` | Existing Vajra provider switch | `vertex` or `bedrock` |
+| `GOOGLE_CLOUD_PROJECT` | Google Cloud project for the current Vertex path | Required for Vertex |
+| `VERTEX_MODEL_ID` | Existing Vajra chat/vision model | `gemini-2.5-flash` |
+| `VERTEX_EMBED_MODEL_ID` | RAG embedding model | `gemini-embedding-001` |
+| `BEDROCK_MODEL_ID` | Optional AWS Bedrock chat model | Empty until configured |
+
+See [`backend/.env.example`](backend/.env.example) and [`frontend/.env.example`](frontend/.env.example) for the complete templates. Do not use the Gemini 2.5 configuration as evidence of Gemma 4 integration; the hackathon path must call a supported Gemma 4 model ID through the Gemini API.
+
+## Open-source tools and libraries
+
+The following is the complete direct dependency inventory declared by this repository. Exact versions are pinned in [`frontend/package.json`](frontend/package.json), [`frontend/pnpm-lock.yaml`](frontend/pnpm-lock.yaml), [`backend/requirements.txt`](backend/requirements.txt), and [`packages/vajra-python/pyproject.toml`](packages/vajra-python/pyproject.toml). Transitive packages are recorded in the lockfiles.
+
+### Application, data, and infrastructure
+
+| Tool | Role |
+| --- | --- |
+| [React](https://react.dev/) (`react`, `react-dom`), [TypeScript](https://www.typescriptlang.org/), [Vite](https://vite.dev/) | Browser application, static typing, and build system |
+| [FastAPI](https://fastapi.tiangolo.com/), [Uvicorn](https://www.uvicorn.org/), [Pydantic](https://docs.pydantic.dev/) | API framework, ASGI server, and request/config validation |
+| [PostgreSQL](https://www.postgresql.org/), [pgvector](https://github.com/pgvector/pgvector), [SQLAlchemy](https://www.sqlalchemy.org/), [Alembic](https://alembic.sqlalchemy.org/) | Relational storage, vector search, ORM, and migrations |
+| [Redis](https://redis.io/) | Short-lived consent-decision caching |
+| [Docker Compose](https://docs.docker.com/compose/) and [Nginx](https://nginx.org/) | Reproducible local services and production SPA serving |
+| [pnpm](https://pnpm.io/), [npm](https://www.npmjs.com/), [setuptools](https://setuptools.pypa.io/) | JavaScript workspace and Python SDK packaging |
+
+### Frontend runtime dependencies
+
+- **UI primitives and styling:** Emotion (`@emotion/react`, `@emotion/styled`), Material UI (`@mui/material`, `@mui/icons-material`), Popper (`@popperjs/core`, `react-popper`), all declared Radix UI React packages, `class-variance-authority`, `clsx`, `tailwind-merge`, `tw-animate-css`, `next-themes`, and the shadcn/ui-derived component layer.
+- **Interaction and layout:** `cmdk`, `embla-carousel-react`, `input-otp`, `motion`, `react-day-picker`, `react-dnd`, `react-dnd-html5-backend`, `react-hook-form`, `react-resizable-panels`, `react-responsive-masonry`, `react-slick`, `sonner`, `vaul`, and `canvas-confetti`.
+- **Navigation, content, and data display:** `react-router`, `react-markdown`, `remark-gfm`, `recharts`, `date-fns`, and `lucide-react`.
+- **Evidence exports and capture:** `html2canvas`, `modern-screenshot`, and `jspdf`.
+- **Frontend development:** Tailwind CSS (`tailwindcss`, `@tailwindcss/vite`), `@vitejs/plugin-react`, `terser`, `@types/canvas-confetti`, `@types/node`, `@types/react`, `@types/react-dom`, `@types/react-slick`, Knip, and depcheck.
+
+For completeness, the Radix declarations are: `@radix-ui/react-accordion`, `@radix-ui/react-alert-dialog`, `@radix-ui/react-aspect-ratio`, `@radix-ui/react-avatar`, `@radix-ui/react-checkbox`, `@radix-ui/react-collapsible`, `@radix-ui/react-context-menu`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-hover-card`, `@radix-ui/react-label`, `@radix-ui/react-menubar`, `@radix-ui/react-navigation-menu`, `@radix-ui/react-popover`, `@radix-ui/react-progress`, `@radix-ui/react-radio-group`, `@radix-ui/react-scroll-area`, `@radix-ui/react-select`, `@radix-ui/react-separator`, `@radix-ui/react-slider`, `@radix-ui/react-slot`, `@radix-ui/react-switch`, `@radix-ui/react-tabs`, `@radix-ui/react-toggle`, `@radix-ui/react-toggle-group`, and `@radix-ui/react-tooltip`.
+
+### Backend and SDK dependencies
+
+- **API and validation:** `fastapi`, `uvicorn[standard]`, `pydantic`, `pydantic-settings`, `email-validator`, `python-multipart`, `python-dotenv`, and `httpx`.
+- **Persistence:** `sqlalchemy`, `alembic`, `psycopg2-binary`, `pgvector`, and `redis`.
+- **Authentication and cryptography:** `python-jose[cryptography]`, `cryptography`, `passlib[bcrypt]`, and `bcrypt`.
+- **PII discovery and anonymisation:** Microsoft Presidio (`presidio-analyzer`, `presidio-anonymizer`) and spaCy with `en_core_web_sm`.
+- **Document ingestion and generation:** `openpyxl`, `pypdf`, `python-docx`, `reportlab`, and `python-pptx`.
+- **AI SDKs:** Google's `google-genai` and AWS's `boto3`.
+- **Database/data-source connectors:** `pymysql`, `pymongo`, `oracledb`, `pymssql`, `paramiko`, `azure-storage-blob`, `azure-identity`, `azure-monitor-query`, `google-cloud-storage`, `google-cloud-logging`, `google-auth`, and `playwright` with Chromium.
+- **Messaging:** `twilio`; email delivery uses standard SMTP.
+- **Python SDK:** `setuptools`, `python-jose[cryptography]`, optional `fastapi`, and `pytest` for development.
+- **Code-quality tools:** Vulture and deptry (documented developer installs).
+
+### External APIs and hosted services
+
+These services are not presented as open-source dependencies. They are listed because the rulebook also requires APIs used by the project:
+
+- **Gemini API** — planned hosted access to `gemma-4-26b-a4b-it` for the hackathon AI workflows.
+- **Google Cloud Vertex AI** — the existing Vajra AI provider path and Gemini embedding service.
+- **AWS Bedrock** — optional alternate AI provider.
+- **Twilio and SMTP** — optional SMS/email notification delivery.
+- **Google Cloud Storage/Logging and Azure Blob/Monitor** — optional enterprise data-source connectors.
+
+### Datasets and demo data
+
+No external training or benchmark dataset is bundled or used. The healthcare demo records (including the fictional patient **Priya Sharma**) are synthetic and live in the frontend mock adapter. Gemma 4 is consumed as a hosted pre-trained model; this project does not train or fine-tune it on patient information.
+
+See [`ATTRIBUTIONS.md`](ATTRIBUTIONS.md) for UI and media attribution notes. Package authors retain their own copyrights and licenses; the MIT license for Vajra does not replace third-party terms.
+
+## AI-assisted development disclosure
+
+Hackathon rules allow AI build tools but require exact disclosure. The following tools are evidenced in this repository/session:
+
+| Tool | What it produced or assisted with |
+| --- | --- |
+| **OpenAI Codex** | Repository/rulebook audit, dependency inventory, README structure and wording, MIT license-file addition, and verification commands. The team remains responsible for reviewing and explaining every change. |
+| **Figma Make** | Earlier UI/component scaffolding and design composition; the retained shadcn/ui and Unsplash attributions are documented in `ATTRIBUTIONS.md`. |
+
+If another coding assistant, chat assistant, or image generator was used, add it here **before submission**, together with the specific files or assets it produced. Omitting a build tool can disqualify the project under the event rules.
+
+## Provenance and hack-day scope
+
+Vajra Health is the healthcare-focused hack-day layer in this repository. It builds on the previously existing public [DPDPA Shield](https://github.com/nikit-cyberultron/dpdpa_shield) compliance platform. The new scope is the patient/clinician/DPO healthcare journey, the consent-aware clinical policy contract, the synthetic FHIR-aligned demo, and the Gemma 4 integration described above.
+
+This attribution is deliberate: it separates prior platform work from the work demonstrated at the event. Git history remains the source of truth for when each file was created or changed.
+
+## Team members
+
+- [Shrey Vashistha](https://github.com/shreyv7)
+- [Nikit Potdar](https://github.com/nikit-cyberultron)
+- [pvashisth-07](https://github.com/pvashisth-07)
+
+Every submitted team member must also be individually registered and checked in for the event. Update this list if the registered hack-day roster differs from the repository contributor list.
+
+## Useful commands
 
 ```bash
+# Frontend checks
+pnpm --dir frontend typecheck
+pnpm --dir frontend build
+
+# Backend import/startup smoke check
 cd backend
-py -m venv .venv
-.venv\Scripts\Activate.ps1   # Windows PowerShell
-pip install -r requirements.txt
-copy .env.example .env
-uvicorn app.main:app --reload
-```
+.venv/bin/python -c "import app.main"
 
-See [backend/README.md](backend/README.md) for database setup, Alembic migrations, and Docker options.
-
-## Dead-code analysis
-
-Run periodically to catch unused code before it accumulates:
-
-```bash
-# Frontend (from repo root)
-pnpm dead-code:frontend    # knip + depcheck via npx
-
-# Backend (requires venv with vulture + deptry installed)
+# Dead-code checks
+pnpm dead-code:frontend
 pnpm dead-code:backend
-
-# Latest audit report
-docs/internal/dead-code-audit-20260727.md
 ```
 
-Install backend tooling once:
+## Documentation
 
-```bash
-cd backend && .venv/bin/pip install vulture deptry
-```
+- [Hackathon system requirements](SRS2.md)
+- [Implementation plan](IMPLEMENTATION_PLAN.md)
+- [Backend and AI track](TRACK_A_BACKEND_AI.md)
+- [Frontend and UX track](TRACK_B_FRONTEND_UI.md)
+- [Backend setup](backend/README.md)
+- [Frontend setup](frontend/README.md)
+- [Security policy](SECURITY.md)
 
-## Environment variables
+## License
 
-| Package | Template | Local file (gitignored) |
-|---------|----------|-------------------------|
-| Backend | `backend/.env.example` | `backend/.env` |
-| Frontend | `frontend/.env.example` | `frontend/.env.local` |
+Vajra is released under the [MIT License](LICENSE). Gemma models remain governed by Google's linked model terms, and all third-party libraries and services remain governed by their own licenses and terms.
 
-Use **your own** database password and SMTP credentials in local `.env` files only. Do not put real passwords in `.env.example` or any committed file.
-
-## Development
-
-- **Design reference:** Figma export may be kept locally in `.figma-export/` (gitignored).
-
-
-graph TD
-    %% Styling and Configuration
-    classDef uiBox fill:#f9f9fb,stroke:#333,stroke-width:2px,color:#000;
-    classDef actionBtn fill:#2563eb,stroke:#1e40af,stroke-width:1px,color:#fff;
-    classDef rejectBtn fill:#ef4444,stroke:#991b1b,stroke-width:1px,color:#fff;
-    classDef textLink fill:#f3f4f6,stroke:#4b5563,stroke-dasharray: 5 5,color:#1f2937;
-    classDef system fill:#059669,stroke:#065f46,stroke-width:2px,color:#fff;
-
-    %% --- SCREEN 1: THE INITIAL BANNER ---
-    subgraph S1 [UI SCREEN 1: Primary Consent Banner Layer]
-        S1_Title["<b>Privacy Preference Center</b><br/>(Mandatory DPDPA Section 5 Notice Overview)"] 
-        --> S1_Lang["🌐 [Dropdown: Select Language (Default: English / 22 Schedule VIII Languages)]"]
-        --> S1_Desc["'We process data based on your specific selections below. You can change choices or withdraw consent at any time.'"]
-        
-        %% Granular Choices
-        subgraph S1_Choices [Granular Purpose Selection]
-            S1_C1["[ ] <b>Health Data Processing</b><br/>Purpose: Provide prescription tracking & telehealth."]
-            S1_C2["[ ] <b>Marketing Analytics</b><br/>Purpose: Site optimization and behavioral metrics."]
-        end
-        
-        %% Links and Buttons
-        S1_Link["🔗 <u>View Rights Portal & DPO Contact</u>"] :::textLink
-        S1_BtnReject["[ REJECT ALL ]"] :::rejectBtn
-        S1_BtnAccept["[ ACCEPT SELECTED ]"] :::actionBtn
-    end
-    class S1,S1_Choices uiBox;
-
-    %% --- SCREEN 2: EXPANDED RIGHTS & DPO PORTAL ---
-    subgraph S2 [UI SCREEN 2: Rights & Privacy Portal Layer]
-        S2_Title["<b>Data Principal Rights Dashboard</b>"]
-        --> S2_DPO["<b>Central Grievance Redressal</b><br/>Unified DPO Office: dpo@yourcompany.com<br/>(Internal routing handles Health vs Marketing teams behind the scenes)"]
-        --> S2_DPBI["<b>Statutory Right:</b> If unresolved, you may lodge a complaint directly with the <u>Data Protection Board of India (DPBI)</u>."]
-        --> S2_Withdraw["<b>Consent Management:</b> Clear 'Withdraw Consent' toggles for previously accepted items."]
-        --> S2_BtnBack["[ ← Return to Banner ]"] :::actionBtn
-    end
-    class S2 uiBox;
-
-    %% --- SYSTEM LOGGING LAYER ---
-    subgraph S3 [Backend System Layer - Audit Trail]
-        S3_Log["<b>Immutable Consent Registry</b><br/>Logs: Timestamp, Lang Selected, Checkbox States, Notice Version Verbatim."] :::system
-    end
-
-    %% --- INTERACTION & USER FLOW LOGIC ---
-    S1_Link -->|User clicks link| S2
-    S2_BtnBack -->|User returns| S1
-
-    S1_BtnReject -->|Action: Blocks all non-essential scripts| S3_Log
-    S1_BtnAccept -->|Action: Evaluates which checkboxes are explicitly active| S1_Eval{Evaluating<br/>State}
-    
-    S1_Eval -->|Only Box 1 Checked| Act_Health["Activate Health Services Data Pipeline<br/>(Marketing remains blocked)"]
-    S1_Eval -->|Only Box 2 Checked| Act_Mktg["Activate Web Analytics Cookies<br/>(Health remains blocked)"]
-    S1_Eval -->|Both Checked| Act_Both["Activate Both Data Pipelines"]
-
-    Act_Health & Act_Mktg & Act_Both -->|Triggers Legal Receipt generation| S3_Log
+Security issues should be reported through [`SECURITY.md`](SECURITY.md), not a public issue.

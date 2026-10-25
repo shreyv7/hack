@@ -1,5 +1,5 @@
 """
-Vertex AI client for Shield AI.
+Vertex AI client for Vajra AI.
 
 Uses the Google Gen AI SDK against Vertex AI. Credentials come from
 Application Default Credentials (ADC) — no API key.

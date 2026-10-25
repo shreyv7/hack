@@ -17,7 +17,7 @@ const FLOW_NODES = [
   {
     id: 'cmp',
     label: 'cmp.js on your site',
-    description: 'Loads config + window.ZeroShield API',
+    description: 'Loads config + window.Vajra API',
     icon: Code,
   },
   {
@@ -89,11 +89,11 @@ export function BannerIntegrationMappingDiagram(): ReactElement {
         <div className="p-3 rounded-lg bg-[var(--surface-raised)] text-[var(--text-secondary)]">
           <span className="font-semibold text-[var(--text-primary)]">Developer Mode path: </span>
           When enabled, step 3 (cmp.js) does not auto-show the banner. Your app calls{' '}
-          <code className="font-mono text-[10px]">window.ZeroShield.showBanner()</code> when ready.
+          <code className="font-mono text-[10px]">window.Vajra.showBanner()</code> when ready.
         </div>
         <div className="p-3 rounded-lg bg-[var(--surface-raised)] text-[var(--text-secondary)]">
           <span className="font-semibold text-[var(--text-primary)]">Webhook path: </span>
-          After consent (step 4), ZeroShield POSTs a JSON event to your webhook URL (step 6) in
+          After consent (step 4), Vajra POSTs a JSON event to your webhook URL (step 6) in
           addition to sealing the Proof Vault receipt.
         </div>
       </div>

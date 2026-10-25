@@ -1,4 +1,4 @@
-# DPDPA Shield — Bank Identifier Settings Technical Specification
+# Vajra — Bank Identifier Settings Technical Specification
 
 This document covers the **Bank Identifier Settings** page (`/consent/banking/identifiers`) within the Advanced Consent Management cluster.
 

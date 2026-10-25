@@ -20,7 +20,7 @@ import {
 import { cn } from '@/lib/utils';
 import { MarkdownMessage } from '@/app/components/common/MarkdownMessage';
 import { featureRouteToPath } from '@/lib/compliance/featureRoutes';
-import { fetchShieldAiStatus, shieldAiChat, type ShieldAiStatus } from '@/lib/api/shieldAi';
+import { fetchVajraAiStatus, vajraAiChat, type VajraAiStatus } from '@/lib/api/vajraAi';
 import { fetchComplianceMapCrosswalk, type FrameworkCrosswalkResponse } from '@/lib/api/compliance';
 import { ApiError } from '@/lib/api/client';
 
@@ -95,7 +95,7 @@ const SECTION_DETAILS: Record<string, SectionDetail> = {
 };
 
 /**
- * Statutory compliance map linking DPDPA sections to ZeroShield features.
+ * Statutory compliance map linking DPDPA sections to Vajra features.
  */
 export function DPDPAComplianceMap(): ReactElement {
   const navigate = useNavigate();
@@ -117,11 +117,11 @@ export function DPDPAComplianceMap(): ReactElement {
   const [selectedSection, setSelectedSection] = useState('2-6');
   const [auditorMode, setAuditorMode] = useState(false);
   const [detail, setDetail] = useState<ComplianceMapSectionDetail | null>(null);
-  const [shieldAiQuery, setShieldAiQuery] = useState('');
-  const [shieldAiReply, setShieldAiReply] = useState<string | null>(null);
-  const [shieldAiLoading, setShieldAiLoading] = useState(false);
-  const [shieldAiError, setShieldAiError] = useState<string | null>(null);
-  const [shieldAiStatus, setShieldAiStatus] = useState<ShieldAiStatus | null>(null);
+  const [vajraAiQuery, setVajraAiQuery] = useState('');
+  const [vajraAiReply, setVajraAiReply] = useState<string | null>(null);
+  const [vajraAiLoading, setVajraAiLoading] = useState(false);
+  const [vajraAiError, setVajraAiError] = useState<string | null>(null);
+  const [vajraAiStatus, setVajraAiStatus] = useState<VajraAiStatus | null>(null);
   const [frameworkOverlay, setFrameworkOverlay] = useState<'none' | 'rbi' | 'iso27001' | 'nist'>('none');
   const [crosswalk, setCrosswalk] = useState<FrameworkCrosswalkResponse | null>(null);
 
@@ -135,9 +135,9 @@ export function DPDPAComplianceMap(): ReactElement {
 
   useEffect(() => {
     if (!hasOrg) return;
-    void fetchShieldAiStatus()
-      .then(setShieldAiStatus)
-      .catch(() => setShieldAiStatus({ configured: false, model_id: null, region: null }));
+    void fetchVajraAiStatus()
+      .then(setVajraAiStatus)
+      .catch(() => setVajraAiStatus({ configured: false, model_id: null, region: null }));
   }, [hasOrg]);
 
   useEffect(() => {
@@ -153,9 +153,9 @@ export function DPDPAComplianceMap(): ReactElement {
   const activeCrosswalkSection = crosswalk?.sections.find((s) => s.section_key === selectedSection);
 
   useEffect(() => {
-    setShieldAiQuery('');
-    setShieldAiReply(null);
-    setShieldAiError(null);
+    setVajraAiQuery('');
+    setVajraAiReply(null);
+    setVajraAiError(null);
   }, [selectedSection]);
 
   const toggleChapter = (chapter: number): void => {
@@ -173,7 +173,7 @@ export function DPDPAComplianceMap(): ReactElement {
     navigate(featureRouteToPath(route));
   };
 
-  const openShieldAi = (query: string): void => {
+  const openVajraAi = (query: string): void => {
     navigate('/ai/copilot', { state: { query } });
   };
 
@@ -219,7 +219,7 @@ export function DPDPAComplianceMap(): ReactElement {
     return displayDetail.title;
   }, [selectedSectionMeta, displayDetail.title]);
 
-  const shieldAiContext = useMemo(() => {
+  const vajraAiContext = useMemo(() => {
     const featureLines = displayDetail.features
       .slice(0, 15)
       .map((f) => `- ${f.name} (${f.evidence_count} evidence items)`);
@@ -229,14 +229,14 @@ export function DPDPAComplianceMap(): ReactElement {
       `DPDPA section: ${displayDetail.title}`,
       `Section key: ${selectedSection}`,
       displayDetail.penalty ? `Maximum penalty: ${displayDetail.penalty}` : null,
-      featureLines.length ? `Mapped ZeroShield features:\n${featureLines.join('\n')}` : null,
+      featureLines.length ? `Mapped Vajra features:\n${featureLines.join('\n')}` : null,
       `Statute excerpt:\n${displayDetail.statute.slice(0, 1000)}`,
     ]
       .filter(Boolean)
       .join('\n\n');
   }, [orgName, orgIdParam, displayDetail, selectedSection]);
 
-  const shieldAiQuickPrompts = useMemo(
+  const vajraAiQuickPrompts = useMemo(
     () => [
       {
         label: `Show me ${sectionShortLabel} gaps`,
@@ -244,7 +244,7 @@ export function DPDPAComplianceMap(): ReactElement {
       },
       {
         label: `Explain ${sectionShortLabel} requirements`,
-        query: `Explain the key DPDPA requirements in ${sectionShortLabel} and how the mapped ZeroShield features help satisfy them.`,
+        query: `Explain the key DPDPA requirements in ${sectionShortLabel} and how the mapped Vajra features help satisfy them.`,
       },
       {
         label: `Generate ${sectionShortLabel} evidence pack`,
@@ -254,30 +254,30 @@ export function DPDPAComplianceMap(): ReactElement {
     [sectionShortLabel, orgName],
   );
 
-  const askShieldAi = async (query: string): Promise<void> => {
+  const askVajraAi = async (query: string): Promise<void> => {
     const trimmed = query.trim();
     if (!trimmed) return;
 
-    if (!shieldAiStatus?.configured) {
-      notify('Shield AI is not configured. Please contact your administrator.');
-      openShieldAi(trimmed);
+    if (!vajraAiStatus?.configured) {
+      notify('Vajra AI is not configured. Please contact your administrator.');
+      openVajraAi(trimmed);
       return;
     }
 
-    setShieldAiLoading(true);
-    setShieldAiError(null);
-    setShieldAiReply(null);
-    setShieldAiQuery(trimmed);
+    setVajraAiLoading(true);
+    setVajraAiError(null);
+    setVajraAiReply(null);
+    setVajraAiQuery(trimmed);
 
     try {
-      const { reply } = await shieldAiChat([{ role: 'user', content: trimmed }], shieldAiContext);
-      setShieldAiReply(reply);
+      const { reply } = await vajraAiChat([{ role: 'user', content: trimmed }], vajraAiContext);
+      setVajraAiReply(reply);
     } catch (err) {
-      setShieldAiError(
-        err instanceof ApiError ? err.message : 'Could not reach Shield AI. Please try again.',
+      setVajraAiError(
+        err instanceof ApiError ? err.message : 'Could not reach Vajra AI. Please try again.',
       );
     } finally {
-      setShieldAiLoading(false);
+      setVajraAiLoading(false);
     }
   };
 
@@ -299,7 +299,7 @@ export function DPDPAComplianceMap(): ReactElement {
             <div>
               <h1 className="text-3xl font-semibold mb-2 text-[var(--text-primary)]">DPDPA 2023 Compliance Map</h1>
               <p className="text-base text-[var(--text-secondary)]">
-                Every ZeroShield feature mapped to its statutory anchor
+                Every Vajra feature mapped to its statutory anchor
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -493,7 +493,7 @@ export function DPDPAComplianceMap(): ReactElement {
 
             <div className="rounded-xl p-6 bg-[var(--surface-primary)] border border-[var(--border-default)]">
               <h3 className="text-lg font-semibold mb-4 text-[var(--text-primary)]">
-                How ZeroShield satisfies this section
+                How Vajra satisfies this section
               </h3>
 
               <div className="space-y-3">
@@ -552,50 +552,50 @@ export function DPDPAComplianceMap(): ReactElement {
                   <Sparkles className="w-6 h-6 flex-shrink-0 text-violet-500" strokeWidth={1.5} />
                   <div className="flex-1 min-w-0">
                     <h3 className="text-sm font-semibold text-[var(--text-primary)]">
-                      Ask Shield AI about {sectionShortLabel}
+                      Ask Vajra AI about {sectionShortLabel}
                     </h3>
                     <p className="text-xs text-[var(--text-secondary)] mt-1">
-                      {shieldAiStatus?.configured
+                      {vajraAiStatus?.configured
                         ? 'Get tailored guidance for this section'
-                        : 'Shield AI is not configured — contact your administrator'}
+                        : 'Vajra AI is not configured — contact your administrator'}
                     </p>
                   </div>
                 </div>
                 <button
                   type="button"
                   onClick={() =>
-                    openShieldAi(
-                      shieldAiQuery ||
+                    openVajraAi(
+                      vajraAiQuery ||
                         `How does ${orgName} comply with DPDPA ${sectionShortLabel}, and what gaps remain?`,
                     )
                   }
                   className="px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap shrink-0 hover:opacity-90 bg-violet-500/10 text-violet-600 cursor-pointer"
                 >
-                  Open Shield AI →
+                  Open Vajra AI →
                 </button>
               </div>
 
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  void askShieldAi(shieldAiQuery);
+                  void askVajraAi(vajraAiQuery);
                 }}
                 className="flex gap-2 mb-3"
               >
                 <input
                   type="text"
-                  value={shieldAiQuery}
-                  onChange={(e) => setShieldAiQuery(e.target.value)}
+                  value={vajraAiQuery}
+                  onChange={(e) => setVajraAiQuery(e.target.value)}
                   placeholder={`e.g., "Are we DPDPA ${sectionShortLabel} compliant?"`}
-                  disabled={shieldAiLoading}
+                  disabled={vajraAiLoading}
                   className="flex-1 min-w-0 px-4 py-2 rounded-lg border text-sm border-violet-500/30 text-[var(--text-primary)] bg-[var(--surface-raised)] disabled:opacity-60"
                 />
                 <button
                   type="submit"
-                  disabled={shieldAiLoading || !shieldAiQuery.trim()}
+                  disabled={vajraAiLoading || !vajraAiQuery.trim()}
                   className="px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap shrink-0 hover:opacity-90 bg-violet-600 text-white disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                 >
-                  {shieldAiLoading ? (
+                  {vajraAiLoading ? (
                     <span className="inline-flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin" />
                       Asking…
@@ -606,31 +606,31 @@ export function DPDPAComplianceMap(): ReactElement {
                 </button>
               </form>
 
-              {shieldAiError ? (
-                <p className="text-sm text-amber-700 mb-3">{shieldAiError}</p>
+              {vajraAiError ? (
+                <p className="text-sm text-amber-700 mb-3">{vajraAiError}</p>
               ) : null}
 
-              {shieldAiReply ? (
+              {vajraAiReply ? (
                 <div className="mb-3 p-4 rounded-lg bg-[var(--surface-raised)] border border-violet-500/20">
-                  <p className="text-xs font-medium text-violet-600 mb-2">Shield AI</p>
-                  <MarkdownMessage>{shieldAiReply}</MarkdownMessage>
+                  <p className="text-xs font-medium text-violet-600 mb-2">Vajra AI</p>
+                  <MarkdownMessage>{vajraAiReply}</MarkdownMessage>
                   <button
                     type="button"
-                    onClick={() => openShieldAi(shieldAiQuery)}
+                    onClick={() => openVajraAi(vajraAiQuery)}
                     className="mt-3 text-xs font-medium text-violet-600 hover:underline cursor-pointer"
                   >
-                    Continue in Shield AI →
+                    Continue in Vajra AI →
                   </button>
                 </div>
               ) : null}
 
               <div className="flex flex-wrap gap-2">
-                {shieldAiQuickPrompts.map((prompt) => (
+                {vajraAiQuickPrompts.map((prompt) => (
                   <button
                     key={prompt.label}
                     type="button"
-                    disabled={shieldAiLoading}
-                    onClick={() => void askShieldAi(prompt.query)}
+                    disabled={vajraAiLoading}
+                    onClick={() => void askVajraAi(prompt.query)}
                     className="px-3 py-1.5 rounded-lg text-xs font-medium hover:opacity-90 bg-violet-500/10 text-violet-500 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
                   >
                     {prompt.label}

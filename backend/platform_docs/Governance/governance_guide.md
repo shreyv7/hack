@@ -1,4 +1,4 @@
-# DPDPA Shield — Governance Guide
+# Vajra — Governance Guide
 
 This guide provides an onboarding path for the **Governance** module cluster, helping organizations establish accountability frameworks, document processing activities, and manage third-party risks.
 
@@ -6,7 +6,7 @@ This guide provides an onboarding path for the **Governance** module cluster, he
 
 ---
 
-## 1. What is Governance in DPDPA Shield?
+## 1. What is Governance in Vajra?
 
 The Governance cluster provides the structural accountability layer for DPDPA compliance — documenting *who* processes data, *why*, *with whom*, and *under what safeguards*.
 
@@ -31,7 +31,7 @@ The Governance cluster provides the structural accountability layer for DPDPA co
 ### Step 1: Records of Processing Activities (RoPA)
 Start with **RoPA Module** — the foundation of governance:
 1. Review auto-discovered processing activities from Data Inventory.
-2. Accept or dismiss Shield AI suggestions.
+2. Accept or dismiss Vajra AI suggestions.
 3. Document each activity: purpose, data categories, lawful basis, recipients, retention.
 4. Link activities to Data Inventory assets and Purpose Registry entries.
 
@@ -45,13 +45,13 @@ Move to **Vendor Risk Intelligence**:
 ### Step 3: Data Protection Impact Assessments
 Use **DPIA Module** for high-risk processing:
 1. Identify processing activities requiring DPIA (children's data, large-scale profiling, sensitive data).
-2. Complete DPIA templates with Shield AI assistance.
+2. Complete DPIA templates with Vajra AI assistance.
 3. Document mitigation measures and residual risks.
 4. Obtain DPO sign-off on completed assessments.
 
 ### Step 4: Policy Management
 **Policy Manager**:
-1. Generate privacy policy draft from RoPA (Shield AI assisted).
+1. Generate privacy policy draft from RoPA (Vajra AI assisted).
 2. Review and customize with legal counsel.
 3. Publish policy versions with acknowledgment tracking.
 4. Schedule periodic policy reviews.
@@ -65,7 +65,7 @@ Use **DPIA Module** for high-risk processing:
 
 ## 4. RoPA Auto-Discovery
 
-Shield AI can suggest RoPA entries by analyzing:
+Vajra AI can suggest RoPA entries by analyzing:
 *   Data Inventory assets and field classifications
 *   Connected data sources and their types
 *   PII Scanner findings
@@ -78,10 +78,10 @@ Review suggestions in the RoPA Module → "AI Suggestions" panel. Accept relevan
 
 ## 5. Policy Generation from RoPA
 
-Shield AI can draft governance policies from your RoPA:
+Vajra AI can draft governance policies from your RoPA:
 1. Open Policy Manager → "Generate from RoPA".
 2. Select policy type (Privacy Policy, Cookie Policy, Retention Schedule, etc.).
-3. Shield AI drafts a complete policy document based on your processing activities.
+3. Vajra AI drafts a complete policy document based on your processing activities.
 4. Review, edit, and publish with legal counsel approval.
 
 Supported policy types: Privacy Policy, Cookie Policy, Children's Privacy Notice, Employee Data Protection Policy, Data Retention & Erasure Schedule, Incident Response Plan, Vendor DPA, Acceptable Use Policy.
@@ -137,7 +137,7 @@ A: While DPDPA doesn't use the term "RoPA" explicitly, Section 8(1) requires fid
 **Q: When is a DPIA required?**
 A: For Significant Data Fiduciaries (Section 10), and recommended for high-risk processing: children's data, large-scale sensitive data, systematic profiling, cross-border transfers to non-approved countries.
 
-**Q: How does Shield AI help with governance?**
+**Q: How does Vajra AI help with governance?**
 A: RoPA auto-discovery, policy drafting from RoPA, DPIA recommendation cards, and vendor risk suggestions — all powered by workspace context and platform documentation.
 
 **Q: Can I export governance documents for regulators?**

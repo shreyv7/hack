@@ -1,4 +1,4 @@
-"""Shield AI — persisted conversations and messages."""
+"""Vajra AI — persisted conversations and messages."""
 
 from sqlalchemy import Column, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import JSON, UUID

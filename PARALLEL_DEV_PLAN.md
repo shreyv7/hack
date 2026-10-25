@@ -1,4 +1,4 @@
-# 🤝 Open-DPDPA HealthShield — 2-Developer Parallel Execution Plan
+# 🤝 Vajra Health — 2-Developer Parallel Execution Plan
 
 **Objective:** Split the implementation cleanly across 2 developers / 2 laptops with AI agents so both work concurrently with **zero merge conflicts** and a **guaranteed clean merge**.
 

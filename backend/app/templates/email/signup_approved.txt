@@ -3,7 +3,7 @@
 
 Hello {{ full_name }},
 
-A DPDPA Shield administrator has approved your workspace. You can sign in with
+A Vajra administrator has approved your workspace. You can sign in with
 the email and password you chose at signup.
 
 SIGN IN

@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 def send_otp_sms(to_phone: str, otp_code: str) -> bool:
     """Send OTP via SMS. Logs when no SMS provider is configured (dev)."""
     message = (
-        f"Your DPDPA Shield verification code is {otp_code}. "
+        f"Your Vajra verification code is {otp_code}. "
         "Expires in 15 minutes. Do not share this code."
     )
     logger.warning(
@@ -23,7 +23,7 @@ def send_otp_sms(to_phone: str, otp_code: str) -> bool:
 
 def send_request_accepted_sms(to_phone: str, tracking_id: str) -> bool:
     message = (
-        f"DPDPA Shield: Your request has been accepted. Request ID: {tracking_id}. "
+        f"Vajra: Your request has been accepted. Request ID: {tracking_id}. "
         "Keep this ID to check status."
     )
     logger.warning("SMS provider not configured — acceptance SMS to %s: %s", to_phone, message)
@@ -31,14 +31,14 @@ def send_request_accepted_sms(to_phone: str, tracking_id: str) -> bool:
 
 
 def send_status_update_sms(to_phone: str, tracking_id: str, status_message: str) -> bool:
-    message = f"DPDPA Shield update for {tracking_id}: {status_message}"
+    message = f"Vajra update for {tracking_id}: {status_message}"
     logger.warning("SMS provider not configured — status SMS to %s: %s", to_phone, message)
     return False
 
 
 def send_closure_sms(to_phone: str, tracking_id: str) -> bool:
     message = (
-        f"DPDPA Shield: Your request {tracking_id} has been closed. "
+        f"Vajra: Your request {tracking_id} has been closed. "
         "A closure letter has been sent to your email."
     )
     logger.warning("SMS provider not configured — closure SMS to %s: %s", to_phone, message)

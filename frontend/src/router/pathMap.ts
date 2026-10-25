@@ -26,6 +26,24 @@ export const ROUTE_ENTRIES: RouteEntry[] = [
     section: 'Overview',
     breadcrumbs: ['Overview', 'Automation Coverage'],
   },
+  {
+    label: 'Patient Consent Portal',
+    path: '/healthcare/patient',
+    section: 'Vajra Healthcare',
+    breadcrumbs: ['Vajra Healthcare', 'Patient Consent Portal'],
+  },
+  {
+    label: 'Clinician Access View',
+    path: '/healthcare/clinician',
+    section: 'Vajra Healthcare',
+    breadcrumbs: ['Vajra Healthcare', 'Clinician Access View'],
+  },
+  {
+    label: 'DPO Audit Dashboard',
+    path: '/healthcare/audit',
+    section: 'Vajra Healthcare',
+    breadcrumbs: ['Vajra Healthcare', 'DPO Audit Dashboard'],
+  },
   { label: 'Create Consent', path: '/consent/banner', section: 'Consent Management', breadcrumbs: ['Consent Management', 'Create Consent'] },
   {
     label: 'Consent Notices Manager',
@@ -322,7 +340,7 @@ export const ROUTE_ENTRIES: RouteEntry[] = [
     breadcrumbs: ['Administration', 'Team & Users'],
     roles: ['admin', 'superadmin'],
   },
-  { label: 'Shield AI', path: '/ai/copilot', section: 'Shield AI', breadcrumbs: ['Shield AI'], hideTopBar: true },
+  { label: 'Vajra AI', path: '/ai/copilot', section: 'Vajra AI', breadcrumbs: ['Vajra AI'], hideTopBar: true },
 ];
 
 const EXTRA_BREADCRUMBS: { pattern: RegExp; breadcrumbs: string[]; hideTopBar?: boolean }[] = [
@@ -335,7 +353,7 @@ const EXTRA_BREADCRUMBS: { pattern: RegExp; breadcrumbs: string[]; hideTopBar?: 
   { pattern: /^\/breach\/[^/]+\/wizard/, breadcrumbs: ['Compliance', 'Breach Disclosure Wizard', 'Wizard'] },
   { pattern: /^\/breach\/[^/]+/, breadcrumbs: ['Compliance', 'Breach Disclosure Wizard', 'Incident Detail'] },
   { pattern: /^\/scanner\/cookies$/, breadcrumbs: ['Consent Management', 'Cookie & Tracker Manager', 'Cookie Scanner'] },
-  { pattern: /^\/ai\/copilot/, breadcrumbs: ['Shield AI'], hideTopBar: true },
+  { pattern: /^\/ai\/copilot/, breadcrumbs: ['Vajra AI'], hideTopBar: true },
   {
     pattern: /^\/governance\/legitimate-use/,
     breadcrumbs: ['Advanced Governance', 'Legitimate Use Registry'],

@@ -1,7 +1,7 @@
 # 🛡️ Data Protection Module — Complete Guide
 
 > Plain-language documentation of everything built in the **Data Protection**
-> section of DPDPA Shield. Written so that someone with **no technical background**
+> section of Vajra. Written so that someone with **no technical background**
 > can follow it. Last updated: 2026-06-11.
 
 ---

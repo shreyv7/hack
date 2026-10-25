@@ -1,4 +1,4 @@
-"""Seed one sample user per DPDPA RBAC role for local development."""
+"""Seed one active Vajra demo user per RBAC role for local development."""
 
 from app.core.database import SessionLocal
 from app.core.security import hash_password
@@ -6,22 +6,26 @@ from app.models.organization import Organization
 from app.models.user import User, UserRole, UserStatus
 
 ROLE_SAMPLES: list[tuple[UserRole, str, str]] = [
-    (UserRole.ciso, "CISO Demo", "ciso@zeroshield.in"),
-    (UserRole.legal_head, "Legal Head Demo", "legal.head@zeroshield.in"),
-    (UserRole.legal_counsel, "Legal Counsel Demo", "legal.counsel@zeroshield.in"),
-    (UserRole.compliance_officer, "Compliance Officer Demo", "compliance@zeroshield.in"),
-    (UserRole.grievance_officer, "Grievance Officer Demo", "grievance@zeroshield.in"),
-    (UserRole.security_analyst, "Security Analyst Demo", "security@zeroshield.in"),
-    (UserRole.data_steward, "Data Steward Demo", "steward@zeroshield.in"),
-    (UserRole.auditor, "Auditor Demo", "auditor@zeroshield.in"),
-    (UserRole.dpo, "DPO Demo", "dpo@zeroshield.in"),
-    (UserRole.it_admin, "IT Admin Demo", "itadmin@zeroshield.in"),
+    (UserRole.superadmin, "Vajra Superadmin", "superadmin@vajra.dev"),
+    (UserRole.admin, "Vajra Admin", "admin@vajra.dev"),
+    (UserRole.user, "Vajra Operations User", "user@vajra.dev"),
+    (UserRole.ciso, "Vajra CISO", "ciso@vajra.dev"),
+    (UserRole.legal_head, "Vajra Legal Head", "legal.head@vajra.dev"),
+    (UserRole.legal_counsel, "Vajra Legal Counsel", "legal.counsel@vajra.dev"),
+    (UserRole.compliance_officer, "Vajra Compliance Officer", "compliance@vajra.dev"),
+    (UserRole.grievance_officer, "Vajra Grievance Officer", "grievance@vajra.dev"),
+    (UserRole.security_analyst, "Vajra Security Analyst", "security@vajra.dev"),
+    (UserRole.data_steward, "Vajra Data Steward", "steward@vajra.dev"),
+    (UserRole.auditor, "Vajra Auditor", "auditor@vajra.dev"),
+    (UserRole.dpo, "Vajra DPO", "dpo@vajra.dev"),
+    (UserRole.it_admin, "Vajra IT Admin", "itadmin@vajra.dev"),
+    (UserRole.branch_operator, "Vajra Branch Operator", "branch.operator@vajra.dev"),
 ]
 
-DEFAULT_PASSWORD = "RoleDemo@12345"
+DEFAULT_PASSWORD = "Vajra@2026Demo!"
 
 
-def seed_rbac_users(org_slug: str = "zeroshield-sandbox-org") -> None:
+def seed_rbac_users(org_slug: str = "vajra-sandbox-org") -> None:
     db = SessionLocal()
     try:
         org = db.query(Organization).filter(Organization.slug == org_slug).first()
@@ -33,7 +37,7 @@ def seed_rbac_users(org_slug: str = "zeroshield-sandbox-org") -> None:
             user = db.query(User).filter(User.email == email).first()
             if user is None:
                 user = User(
-                    organization_id=org.id,
+                    organization_id=None if role == UserRole.superadmin else org.id,
                     email=email,
                     password_hash=hash_password(DEFAULT_PASSWORD),
                     full_name=full_name,
@@ -44,7 +48,8 @@ def seed_rbac_users(org_slug: str = "zeroshield-sandbox-org") -> None:
                 db.add(user)
                 print(f"Created {role.value}: {email}")
             else:
-                user.organization_id = org.id
+                user.organization_id = None if role == UserRole.superadmin else org.id
+                user.full_name = full_name
                 user.role = role
                 user.status = UserStatus.active
                 user.must_change_password = False

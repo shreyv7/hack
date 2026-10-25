@@ -1,5 +1,5 @@
 """
-Smoke-test the active Shield AI provider (Vertex or Bedrock).
+Smoke-test the active Vajra AI provider (Vertex or Bedrock).
 
 Usage (from backend/ with the venv active):
     python -m app.scripts.test_ai_provider
@@ -13,7 +13,7 @@ import sys
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Smoke-test Shield AI via the active provider")
+    parser = argparse.ArgumentParser(description="Smoke-test Vajra AI via the active provider")
     parser.add_argument(
         "--prompt",
         default="Reply with exactly: vertex-ok",
@@ -22,7 +22,7 @@ def main() -> int:
     args = parser.parse_args()
 
     from app.core.config import settings
-    from app.services.shield_ai_service import ShieldAIError, converse
+    from app.services.vajra_ai_service import VajraAIError, converse
 
     print(f"AI_PROVIDER     = {settings.ai_provider}")
     print(f"configured      = {settings.ai_configured}")
@@ -33,7 +33,7 @@ def main() -> int:
 
     if not settings.ai_configured:
         print(
-            "\nShield AI is not configured.\n"
+            "\nVajra AI is not configured.\n"
             "  Vertex:  set GOOGLE_CLOUD_PROJECT and run "
             "`gcloud auth application-default login`\n"
             "  Bedrock: set BEDROCK_MODEL_ID and AWS credentials\n",
@@ -48,7 +48,7 @@ def main() -> int:
             max_tokens=64,
             temperature=0.0,
         )
-    except ShieldAIError as exc:
+    except VajraAIError as exc:
         print(f"\nFAILED: {exc}", file=sys.stderr)
         return 1
 

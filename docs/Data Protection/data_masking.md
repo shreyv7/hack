@@ -1,4 +1,4 @@
-# DPDPA Shield — Data Masking Technical Specification
+# Vajra — Data Masking Technical Specification
 
 This document is the **single source of truth** for the **Data Masking** module. It covers DPDPA mapping, API contracts, frontend UX, and operational safety for in-place PII transforms on connected databases.
 

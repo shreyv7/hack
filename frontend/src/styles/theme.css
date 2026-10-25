@@ -1,9 +1,49 @@
 @custom-variant dark (&:is(.dark *));
 
+@keyframes vajra-auth-float-left {
+  0%,
+  100% {
+    transform: perspective(1100px) rotateY(9deg) rotateZ(-1.2deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: perspective(1100px) rotateY(6deg) rotateZ(-0.4deg) translate3d(5px, -12px, 22px);
+  }
+}
+
+@keyframes vajra-auth-float-right {
+  0%,
+  100% {
+    transform: perspective(1100px) rotateY(-9deg) rotateZ(1.2deg) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: perspective(1100px) rotateY(-6deg) rotateZ(0.4deg) translate3d(-5px, -10px, 22px);
+  }
+}
+
+.vajra-auth-art-left {
+  animation: vajra-auth-float-left 11s ease-in-out infinite;
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.vajra-auth-art-right {
+  animation: vajra-auth-float-right 12s ease-in-out 0.8s infinite;
+  transform-origin: right center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vajra-auth-art-left,
+  .vajra-auth-art-right {
+    animation: none;
+    will-change: auto;
+  }
+}
+
 :root {
   --font-size: 16px;
 
-  /* ConsentIQ Brand Colors */
+  /* Vajra Brand Colors */
   --brand-primary: #4F46E5;
   --brand-deep: #1E1B4B;
 

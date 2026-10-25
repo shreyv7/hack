@@ -7,26 +7,26 @@ function withOrg(path: string, orgId?: string): string {
   return `${path}${sep}org_id=${encodeURIComponent(orgId)}`;
 }
 
-export interface ShieldAiChatMessage {
+export interface VajraAiChatMessage {
   role: 'user' | 'assistant';
   content: string;
 }
 
-export interface ShieldAiStatus {
+export interface VajraAiStatus {
   configured: boolean;
   provider?: string | null;
   model_id: string | null;
   region: string | null;
 }
 
-/** Whether Shield AI is configured on the backend. */
-export function fetchShieldAiStatus(): Promise<ShieldAiStatus> {
+/** Whether Vajra AI is configured on the backend. */
+export function fetchVajraAiStatus(): Promise<VajraAiStatus> {
   return apiFetch('/ai/status');
 }
 
 /** Multi-turn chat for the Consent Copilot. */
-export function shieldAiChat(
-  messages: ShieldAiChatMessage[],
+export function vajraAiChat(
+  messages: VajraAiChatMessage[],
   context?: string,
 ): Promise<{ reply: string }> {
   return apiFetch('/ai/chat', {
@@ -35,8 +35,8 @@ export function shieldAiChat(
   });
 }
 
-/** Short, actionable recommendation bullets for the Shield AI cards. */
-export function shieldAiRecommendations(params: {
+/** Short, actionable recommendation bullets for the Vajra AI cards. */
+export function vajraAiRecommendations(params: {
   topic: string;
   context?: string;
   count?: number;
@@ -48,7 +48,7 @@ export function shieldAiRecommendations(params: {
 }
 
 /** Free-text generation (banner/notice copy, drafts, summaries). */
-export function shieldAiGenerate(params: {
+export function vajraAiGenerate(params: {
   task: string;
   context?: string;
   max_tokens?: number;
@@ -61,14 +61,14 @@ export function shieldAiGenerate(params: {
 
 // --- Workspace context -------------------------------------------------------
 
-export interface ShieldAiContextItem {
+export interface VajraAiContextItem {
   id: string;
   label: string;
   value: string;
 }
 
 /** Real "Current data access" snapshot for the context panel. */
-export function fetchShieldAiContext(orgId?: string): Promise<{ items: ShieldAiContextItem[] }> {
+export function fetchVajraAiContext(orgId?: string): Promise<{ items: VajraAiContextItem[] }> {
   return apiFetch(withOrg('/ai/context', orgId));
 }
 

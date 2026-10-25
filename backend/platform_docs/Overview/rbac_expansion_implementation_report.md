@@ -1,6 +1,6 @@
 # RBAC Expansion — Implementation Report
 
-**Project:** DPDPA Shield / ZeroShield  
+**Project:** Vajra
 **Date:** 6 July 2026  
 **Status:** Implemented and migrated on local dev database
 
@@ -222,19 +222,25 @@ Database had duplicate rows in `alembic_version`; resolved via `alembic stamp 0d
 ## Dev seed users
 
 **Script:** `python -m app.scripts.seed_rbac_users`  
-**Organization:** `zeroshield-sandbox-org`  
-**Password (all demo users):** `RoleDemo@12345`
+**Organization:** `vajra-sandbox-org`
+**Password (all demo users):** `Vajra@2026Demo!`
 
 | Role | Email |
 |------|-------|
-| CISO | `ciso@zeroshield.in` |
-| Legal Head | `legal.head@zeroshield.in` |
-| Legal Counsel | `legal.counsel@zeroshield.in` |
-| Compliance Officer | `compliance@zeroshield.in` |
-| Grievance Redressal Officer | `grievance@zeroshield.in` |
-| Security Analyst | `security@zeroshield.in` |
-| Data Steward | `steward@zeroshield.in` |
-| Auditor | `auditor@zeroshield.in` |
+| Superadmin | `superadmin@vajra.dev` |
+| Admin | `admin@vajra.dev` |
+| User | `user@vajra.dev` |
+| CISO | `ciso@vajra.dev` |
+| Legal Head | `legal.head@vajra.dev` |
+| Legal Counsel | `legal.counsel@vajra.dev` |
+| Compliance Officer | `compliance@vajra.dev` |
+| Grievance Redressal Officer | `grievance@vajra.dev` |
+| Security Analyst | `security@vajra.dev` |
+| Data Steward | `steward@vajra.dev` |
+| Auditor | `auditor@vajra.dev` |
+| DPO | `dpo@vajra.dev` |
+| IT Admin | `itadmin@vajra.dev` |
+| Branch Operator | `branch.operator@vajra.dev` |
 
 ---
 

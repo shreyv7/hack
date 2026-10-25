@@ -1,6 +1,6 @@
-# DPDPA Shield — Security Safeguards Technical Specification
+# Vajra — Security Safeguards Technical Specification
 
-This document serves as the **single source of truth** for the **Security Safeguards Hub** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the safeguards controls interface.
+This document serves as the **single source of truth** for the **Security Safeguards Hub** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain the safeguards controls interface.
 
 ---
 

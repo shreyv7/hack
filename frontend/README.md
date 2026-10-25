@@ -1,4 +1,4 @@
-# DPDPA Shield — Frontend
+# Vajra — Frontend
 
 Vite + React 18 + TypeScript + Tailwind CSS v4.
 

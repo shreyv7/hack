@@ -1,6 +1,6 @@
-# DPDPA Shield — Industry Config Technical Specification
+# Vajra — Industry Config Technical Specification
 
-This document serves as the **single source of truth** for the **Industry Config** page of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this settings pane.
+This document serves as the **single source of truth** for the **Industry Config** page of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this settings pane.
 
 ---
 

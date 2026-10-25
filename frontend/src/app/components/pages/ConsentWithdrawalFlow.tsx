@@ -40,7 +40,7 @@ export function ConsentWithdrawalFlow(): ReactElement {
       <div className="bg-[var(--status-info-bg)] border border-[var(--status-info)] rounded-lg p-4 mb-6">
         <div className="text-sm text-foreground">
           <strong>DPDPA Section 6(3) Requirement:</strong> Withdrawal of consent must be as easy as giving consent.
-          ZeroShield enforces UI parity automatically to ensure compliance.
+          Vajra enforces UI parity automatically to ensure compliance.
         </div>
       </div>
 

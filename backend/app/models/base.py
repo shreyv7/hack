@@ -1,7 +1,7 @@
 """
 Reusable model building blocks.
 
-Most tables in DPDPA Shield share three things:
+Most tables in Vajra share three things:
   * a primary key,
   * created_at / updated_at timestamps,
   * a tenant_id (the platform is multi-tenant).

@@ -32,7 +32,7 @@ export const INTEGRATION_GUIDES: Record<IntegrationGuideId, IntegrationGuide> = 
   website: {
     id: 'website',
     title: 'Website Integration Whitepaper',
-    subtitle: 'A complete user + developer guide to deploying the ZeroShield JavaScript Consent SDK on any website.',
+    subtitle: 'A complete user + developer guide to deploying the Vajra JavaScript Consent SDK on any website.',
     audience: ['Web Developers', 'DPOs & Compliance', 'Marketing Ops'],
     dpdpaRefs: ['§6(1)', '§6(3)', '§6(3)(a)', '§8(5)'],
     readingTime: '12 min read',
@@ -46,7 +46,7 @@ export const INTEGRATION_GUIDES: Record<IntegrationGuideId, IntegrationGuide> = 
 
 1. **Renders** the consent banner using the active, legal-approved notice version and language.
 2. **Blocks** non-essential third-party scripts (analytics, advertising, functional) until the data principal grants consent.
-3. **Records** every decision as a tamper-evident entry in the ZeroShield Proof Vault.
+3. **Records** every decision as a tamper-evident entry in the Vajra Proof Vault.
 
 > **In one sentence:** engineering adds one script, and the platform handles notice display, cookie gating, preference persistence, and audit logging — with no per-tag code changes.
 
@@ -67,15 +67,15 @@ export const INTEGRATION_GUIDES: Record<IntegrationGuideId, IntegrationGuide> = 
 | **DPOs / Compliance** | How each feature maps to DPDPA sections, where evidence is stored, and how withdrawal is honoured. |
 | **Marketing / Analytics Ops** | How tracking categories are gated so campaigns stay compliant without losing legitimate signal. |
 
-No prior ZeroShield knowledge is assumed. Sections are ordered from concept → setup → reference → troubleshooting.`,
+No prior Vajra knowledge is assumed. Sections are ordered from concept → setup → reference → troubleshooting.`,
       },
       {
         id: 'architecture',
         title: 'Architecture Overview',
-        markdown: `The SDK acts as a **gatekeeper** sitting between the browser, third-party trackers, and the ZeroShield backend.
+        markdown: `The SDK acts as a **gatekeeper** sitting between the browser, third-party trackers, and the Vajra backend.
 
 \`\`\`
-Browser ──loads──▶ ZeroShield SDK
+Browser ──loads──▶ Vajra SDK
    │                   │ 1. MutationObserver intercepts <script> nodes
    │                   │ 2. Reads cached consent (localStorage + cookie)
    │                   │ 3. Fetches notice.json from the CDN (if needed)
@@ -86,7 +86,7 @@ Browser ──loads──▶ ZeroShield SDK
    └◀──unblocks──  Approved scripts execute
                        │ 5. Sealed log POSTed to Proof Vault
                        ▼
-                  api.zeroshield.in
+                  api.vajra.in
 \`\`\`
 
 **Key components**
@@ -120,14 +120,14 @@ Browser ──loads──▶ ZeroShield SDK
         markdown: `### Step 1 — Register your domain
 1. Click **Add Property** on this page.
 2. Enter your domain (e.g. \`www.example.com\`) and pick the environment (production / staging).
-3. Save. ZeroShield issues a unique **Property ID** and **client token**.
+3. Save. Vajra issues a unique **Property ID** and **client token**.
 
 ### Step 2 — Install the loader snippet
 Open the property card → **Installation** tab, then paste the snippet as the **first** element in \`<head>\`, before GTM or any pixel:
 
 \`\`\`html
 <script async
-  src="https://cdn.zeroshield.in/loader.js"
+  src="https://cdn.vajra.in/loader.js"
   data-zs-property="YOUR_PROPERTY_ID"></script>
 \`\`\`
 
@@ -168,7 +168,7 @@ Refactor existing tags so the SDK can control execution:
       {
         id: 'interception',
         title: 'Script Interception Engine',
-        markdown: `Compliance requires trackers to **never** fire before consent. ZeroShield uses a dual-layer engine.
+        markdown: `Compliance requires trackers to **never** fire before consent. Vajra uses a dual-layer engine.
 
 ### Layer 1 — Static node rewriting
 Browsers ignore \`<script type="text/plain">\`. The SDK parses these nodes and flips the type to \`text/javascript\` only after the matching purpose is granted.
@@ -184,8 +184,8 @@ To catch scripts injected by other libraries at runtime, the SDK overrides the D
     if (tag.toLowerCase() === 'script') {
       Object.defineProperty(el, 'src', {
         set(url) {
-          const purpose = window.ZeroShield.matchPurpose(url);
-          if (purpose && !window.ZeroShield.hasConsent(purpose)) {
+          const purpose = window.Vajra.matchPurpose(url);
+          if (purpose && !window.Vajra.hasConsent(purpose)) {
             el.setAttribute('data-zs-blocked-src', url);
             el.setAttribute('type', 'text/plain');
             return; // execution prevented
@@ -238,8 +238,8 @@ The backend returns a **block receipt** confirming the entry was sealed in the P
 - Add to your CSP header:
 
 \`\`\`
-script-src https://cdn.zeroshield.in;
-connect-src https://api.zeroshield.in;
+script-src https://cdn.vajra.in;
+connect-src https://api.vajra.in;
 \`\`\``,
       },
       {
@@ -257,7 +257,7 @@ connect-src https://api.zeroshield.in;
 | Banner not appearing | Ensure snippet is first in \`<head>\`; verify Property ID. |
 | Scripts fire before consent | Add \`type="text/plain"\` + \`data-zs-purpose\`. |
 | Stale notice text | Publish a new notice version (CDN purges automatically). |
-| CSP blocking SDK | Whitelist \`cdn.zeroshield.in\` and \`api.zeroshield.in\`. |`,
+| CSP blocking SDK | Whitelist \`cdn.vajra.in\` and \`api.vajra.in\`. |`,
       },
     ],
   },
@@ -298,7 +298,7 @@ The guide moves from architecture → install → API reference → QA.`,
         markdown: `The SDK manages consent inside the platform's secure sandbox.
 
 \`\`\`
-App launch ──init──▶ ZeroShield SDK
+App launch ──init──▶ Vajra SDK
                         │ 1. Read cache (UserDefaults / SharedPreferences)
             cache hit ──┤
                         │      └▶ onConsentReady(consents) → app starts trackers
@@ -343,24 +343,24 @@ App launch ──init──▶ ZeroShield SDK
 ### Step 2 — Add the dependency
 **iOS (Swift Package Manager):**
 \`\`\`
-https://github.com/zeroshield/ios-sdk
+https://github.com/vajra/ios-sdk
 \`\`\`
 **Android (Gradle):**
 \`\`\`kotlin
-implementation("io.zeroshield:android-sdk:4.2.1")
+implementation("io.vajra:android-sdk:4.2.1")
 \`\`\`
 
 ### Step 3 — Initialise on launch
 **iOS:**
 \`\`\`swift
-ZeroShield.initialize(
+Vajra.initialize(
   clientToken: "YOUR_CLIENT_TOKEN",
   fallbackPolicy: .cacheLast
 )
 \`\`\`
 **Android:**
 \`\`\`kotlin
-ZeroShield.initialize(
+Vajra.initialize(
   context = this,
   clientToken = "YOUR_CLIENT_TOKEN",
   fallbackPolicy = FallbackPolicy.CACHE_LAST
@@ -369,20 +369,20 @@ ZeroShield.initialize(
 
 ### Step 4 — Present the dialog
 \`\`\`swift
-if ZeroShield.shouldPromptUser() {
-  ZeroShield.presentConsentController()
+if Vajra.shouldPromptUser() {
+  Vajra.presentConsentController()
 }
 \`\`\`
 
 ### Step 5 — Gate your trackers
 \`\`\`swift
-ZeroShield.onConsentReady { consents in
+Vajra.onConsentReady { consents in
   if consents["analytics"] == true { FirebaseApp.configure() }
 }
 \`\`\`
 
 ### Step 6 — Add a Privacy Center entry
-Expose \`ZeroShield.showConsentCenter()\` from Settings so users can withdraw anytime.`,
+Expose \`Vajra.showConsentCenter()\` from Settings so users can withdraw anytime.`,
       },
       {
         id: 'api',
@@ -460,7 +460,7 @@ Preferences are encrypted at rest via platform key stores; tokens are never logg
   tag_manager: {
     id: 'tag_manager',
     title: 'Tag Manager Integration Whitepaper',
-    subtitle: 'A complete user + developer guide to syncing Google Tag Manager and other containers with ZeroShield consent.',
+    subtitle: 'A complete user + developer guide to syncing Google Tag Manager and other containers with Vajra consent.',
     audience: ['Marketing / Analytics Ops', 'Web Developers', 'DPOs & Compliance'],
     dpdpaRefs: ['§6(1)', '§6(3)(a)'],
     readingTime: '11 min read',
@@ -474,7 +474,7 @@ Preferences are encrypted at rest via platform key stores; tokens are never logg
 
 It works by pushing standardized \`dataLayer\` events that your container's triggers read, so marketing teams manage firing rules from one place while staying compliant.
 
-> **In one sentence:** map each tag to a purpose, and ZeroShield's \`dataLayer\` signals make GTM fire or block tags in real time as consent changes.`,
+> **In one sentence:** map each tag to a purpose, and Vajra's \`dataLayer\` signals make GTM fire or block tags in real time as consent changes.`,
       },
       {
         id: 'audience',
@@ -488,14 +488,14 @@ It works by pushing standardized \`dataLayer\` events that your container's trig
       {
         id: 'architecture',
         title: 'Architecture Overview',
-        markdown: `The integration is a bridge between the browser's \`dataLayer\` and the ZeroShield Web SDK.
+        markdown: `The integration is a bridge between the browser's \`dataLayer\` and the Vajra Web SDK.
 
 \`\`\`
-Browser ──loads──▶ GTM container + ZeroShield SDK
-   SDK ──push──▶ dataLayer: { event: "zeroshield_consent_init", ... }
+Browser ──loads──▶ GTM container + Vajra SDK
+   SDK ──push──▶ dataLayer: { event: "vajra_consent_init", ... }
    GTM ──reads──▶ consent variables → evaluates triggers
    User grants Analytics / denies Marketing
-   SDK ──push──▶ dataLayer: { event: "zeroshield_consent_update", ... }
+   SDK ──push──▶ dataLayer: { event: "vajra_consent_update", ... }
    GTM ──fires──▶ Analytics tag       (trigger matched)
    GTM ──blocks─▶ Meta Pixel tag      (trigger fails)
 \`\`\`
@@ -532,7 +532,7 @@ Complete the **Website Integration** guide first; Tag Manager enforcement depend
 3. Enter the **Container ID** (e.g. \`GTM-XXXXXXX\`) and link a property.
 4. Enable **Consent Mode** and **Auto Sync**.
 
-### Step 3 — Import the ZeroShield GTM template
+### Step 3 — Import the Vajra GTM template
 1. In GTM: **Templates → Import**.
 2. Download the \`.tpl\` from the Containers tab and import it.
 3. Create a **Custom Variable** for each purpose (analytics, marketing, functional).
@@ -540,8 +540,8 @@ Complete the **Website Integration** guide first; Tag Manager enforcement depend
 ### Step 4 — Configure tag triggers
 For each third-party tag:
 1. Trigger type → **Custom Event**.
-2. Event name → \`zeroshield_consent_init\` or \`zeroshield_consent_update\`.
-3. Condition → \`zeroshield_consent.analytics\` equals \`true\` (adjust per purpose).
+2. Event name → \`vajra_consent_init\` or \`vajra_consent_update\`.
+3. Condition → \`vajra_consent.analytics\` equals \`true\` (adjust per purpose).
 
 ### Step 5 — Map purposes to tags
 In the **Tags** tab, link each managed tag to its required purpose, set execution type (External Script / Inline) and priority.
@@ -557,16 +557,16 @@ Open **Trigger Simulator**, toggle purposes, run, and confirm the fire/block out
 **Initialization (on page load):**
 \`\`\`json
 {
-  "event": "zeroshield_consent_init",
-  "zeroshield_consent": { "analytics": false, "marketing": false, "functional": true }
+  "event": "vajra_consent_init",
+  "vajra_consent": { "analytics": false, "marketing": false, "functional": true }
 }
 \`\`\`
 
 **Live update (user changes preferences):**
 \`\`\`json
 {
-  "event": "zeroshield_consent_update",
-  "zeroshield_consent": { "analytics": true, "marketing": false, "functional": true }
+  "event": "vajra_consent_update",
+  "vajra_consent": { "analytics": true, "marketing": false, "functional": true }
 }
 \`\`\`
 
@@ -576,7 +576,7 @@ const queryPermission = require('queryPermission');
 const getWindowProperty = require('getWindowProperty');
 
 if (queryPermission('get', 'read_interface')) {
-  const zs = getWindowProperty('ZeroShield');
+  const zs = getWindowProperty('Vajra');
   if (zs && zs.consent) return zs.consent[data.purposeName] === true;
 }
 return false;
@@ -588,7 +588,7 @@ return false;
         markdown: `| DPDPA Section | Requirement | How Tag Manager satisfies it |
 | --- | --- | --- |
 | **§6(1)** | Specific & informed consent. | Triggers bound to per-purpose variables (e.g. \`zs_consent_marketing\`) prevent mixed firing. |
-| **§6(3)(a)** | Simple withdrawal. | On withdrawal, the SDK pushes \`zeroshield_consent_update\`, pausing affected tags immediately. |
+| **§6(3)(a)** | Simple withdrawal. | On withdrawal, the SDK pushes \`vajra_consent_update\`, pausing affected tags immediately. |
 
 Container IDs are mapped to notice revisions, ensuring fired tags correlate to the exact notice version the user saw — a tamper-evident audit trail.`,
       },
@@ -596,7 +596,7 @@ Container IDs are mapped to notice revisions, ensuring fired tags correlate to t
         id: 'qa',
         title: 'QA & Troubleshooting',
         markdown: `### QA matrix
-- **TC-01:** GTM Preview shows \`zeroshield_consent_init\` on load.
+- **TC-01:** GTM Preview shows \`vajra_consent_init\` on load.
 - **TC-02:** Granting Marketing fires the Meta Pixel trigger.
 - **TC-03:** First visit, no consent — analytics/marketing tags show "Not Fired".
 - **TC-04:** Withdraw Analytics → \`analytics: false\` pushed → tag stops.
@@ -604,7 +604,7 @@ Container IDs are mapped to notice revisions, ensuring fired tags correlate to t
 ### Troubleshooting
 | Symptom | Fix |
 | --- | --- |
-| Tags fire without consent | Verify trigger conditions reference \`zeroshield_consent.*\`. |
+| Tags fire without consent | Verify trigger conditions reference \`vajra_consent.*\`. |
 | dataLayer events missing | Ensure the SDK loads before the GTM container. |
 | Container sync failing | Re-run sync from Containers tab; re-check Container ID. |
 | Violations reported | Review the **Violations** tab for tags bypassing rules. |`,
@@ -615,7 +615,7 @@ Container IDs are mapped to notice revisions, ensuring fired tags correlate to t
   api_webhooks: {
     id: 'api_webhooks',
     title: 'API & Webhooks Whitepaper',
-    subtitle: 'A complete user + developer guide to the ZeroShield REST API and real-time consent webhooks.',
+    subtitle: 'A complete user + developer guide to the Vajra REST API and real-time consent webhooks.',
     audience: ['Backend Engineers', 'Integrators', 'Compliance Auditors'],
     dpdpaRefs: ['§6(3)(a)', '§6(10)', '§8(6)'],
     readingTime: '14 min read',
@@ -625,7 +625,7 @@ Container IDs are mapped to notice revisions, ensuring fired tags correlate to t
       {
         id: 'summary',
         title: 'Executive Summary',
-        markdown: `The **API & Webhooks** module is the programmatic gateway between ZeroShield and your backend systems (CRM, ERP, data warehouse). Use **REST API keys** to query consent and configuration, and register **webhook endpoints** to receive signed, real-time events the moment consent changes.
+        markdown: `The **API & Webhooks** module is the programmatic gateway between Vajra and your backend systems (CRM, ERP, data warehouse). Use **REST API keys** to query consent and configuration, and register **webhook endpoints** to receive signed, real-time events the moment consent changes.
 
 The headline use case: when a user withdraws consent, a signed \`consent.withdrawn\` event reaches your systems within seconds so downstream jobs can purge or mask records — enforcing DPDPA's "stop processing on withdrawal" requirement automatically.
 
@@ -689,7 +689,7 @@ Use the full key (shown once at creation) in the \`X-API-KEY\` header on every r
 
 ### Step 3 — Test the config endpoint
 \`\`\`bash
-curl -X GET "https://api.zeroshield.in/public/v1/integrations/sdk/config/PROPERTY_ID" \\
+curl -X GET "https://api.vajra.in/public/v1/integrations/sdk/config/PROPERTY_ID" \\
   -H "X-API-KEY: zsk_live_YOUR_KEY"
 \`\`\`
 
@@ -727,7 +727,7 @@ Use the **Delivery Log** to inspect payloads/latency and **Send Test Event** to 
 
 **Record-consent example:**
 \`\`\`bash
-curl -X POST "https://api.zeroshield.in/public/v1/integrations/sdk/consent" \\
+curl -X POST "https://api.vajra.in/public/v1/integrations/sdk/consent" \\
   -H "Content-Type: application/json" \\
   -H "X-API-KEY: zsk_live_YOUR_KEY" \\
   -d '{
@@ -746,7 +746,7 @@ curl -X POST "https://api.zeroshield.in/public/v1/integrations/sdk/consent" \\
         markdown: `### Signature steps
 1. Build the signed string: \`payload_string = timestamp + "." + raw_json\`.
 2. Compute \`hmac_sha256(payload_string, signing_secret)\`.
-3. Compare against \`X-ZeroShield-Signature\` using a **constant-time** comparison.
+3. Compare against \`X-Vajra-Signature\` using a **constant-time** comparison.
 
 > Always use the **raw request body** (not re-serialized JSON) — re-serialization changes byte order and breaks the signature.
 

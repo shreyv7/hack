@@ -1,5 +1,5 @@
-🛡️ DPDPA Shield — 4-Week Development Plan
-Project: DPDPA Shield — DPDPA 2023 Compliance Platform
+🛡️ Vajra — 4-Week Development Plan
+Project: Vajra — DPDPA 2023 Compliance Platform
 Stack: React (Frontend — already designed) + FastAPI (Backend) + PostgreSQL + Redis
 Duration: 4 Weeks
 Week 4: Dedicated to Testing & Deployment
@@ -64,7 +64,7 @@ AI
 
 OpenAI API / Azure OpenAI
 
-Shield AI chatbot
+Vajra AI chatbot
 
 Deployment
 
@@ -1889,7 +1889,7 @@ GET
 
 Pages Covered: CISOCommandCenter , MonitoringScheduling
 
-Day 19 — Shield AI (Compliance Chatbot)
+Day 19 — Vajra AI (Compliance Chatbot)
 #
 
 Task
@@ -1908,7 +1908,7 @@ created_at
 
 Chat endpoint
 
-POST /api/shield-ai/chat — sends message, gets AI
+POST /api/vajra-ai/chat — sends message, gets AI
 response
 
 3
@@ -1942,7 +1942,7 @@ Details
 
 Chat history API
 
-GET /api/shield-ai/conversations
+GET /api/vajra-ai/conversations
 
 7
 
@@ -1954,29 +1954,29 @@ AI generates consent notice text given purpose and data types
 APIs:
 POST
 
-/api/shield-ai/chat
+/api/vajra-ai/chat
 
 GET
 
-/api/shield-ai/conversations
+/api/vajra-ai/conversations
 
 GET
 
-/api/shield-ai/conversations/{id}
+/api/vajra-ai/conversations/{id}
 
 POST
 
-/api/shield-ai/generate-notice
+/api/vajra-ai/generate-notice
 
 POST
 
-/api/shield-ai/analyze-breach
+/api/vajra-ai/analyze-breach
 
 POST
 
-/api/shield-ai/suggest-fix
+/api/vajra-ai/suggest-fix
 
-Pages Covered: ConsentCopilot (Shield AI page)
+Pages Covered: ConsentCopilot (Vajra AI page)
 
 Day 20 — Dashboard & Remaining Pages
 #
@@ -2135,7 +2135,7 @@ Policy manager with versioning & acknowledgements
 Vendor risk intelligence with DPA tracking
 CISO command center (19-control grid)
 Monitoring & scheduling with Celery Beat
-Shield AI chatbot
+Vajra AI chatbot
 Dashboard with all widgets
 All 52 pages connected to backend
 
@@ -2544,7 +2544,7 @@ Week 2 Day 8 + Week 3 Day 16
 
 Split
 
-Shield AI
+Vajra AI
 
 Week 3
 
@@ -2602,7 +2602,7 @@ Mitigation
 AI integration delays (OpenAI
 API)
 
-Shield AI
+Vajra AI
 delayed
 
 Use mock responses first, integrate real API

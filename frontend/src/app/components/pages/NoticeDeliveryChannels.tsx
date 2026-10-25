@@ -792,7 +792,7 @@ export function NoticeDeliveryChannels(): ReactElement {
             <div className="flex items-center gap-3 border-b border-[var(--border-default)] pb-4">
               <FileText className="w-6 h-6 text-[var(--brand-primary)]" />
               <div>
-                <h2 className="text-lg font-bold">ZeroShield DPDPA Notice Delivery Setup Whitepaper</h2>
+                <h2 className="text-lg font-bold">Vajra DPDPA Notice Delivery Setup Whitepaper</h2>
                 <p className="text-xs text-[var(--text-secondary)]">Operational guide for DPOs, CISOs, and IT administrators to configure notice delivery adapters.</p>
               </div>
             </div>
@@ -801,18 +801,18 @@ export function NoticeDeliveryChannels(): ReactElement {
               <section className="space-y-2">
                 <h3 className="text-sm font-bold border-b border-[var(--border-default)] pb-1 uppercase tracking-wider text-[var(--text-secondary)]">1. Executive Summary</h3>
                 <p className="text-xs text-[var(--text-secondary)]">
-                  Under the Digital Personal Data Protection Act (DPDPA), 2023, organizations are legally mandated to deliver clear, granular, and multi-lingual privacy notices to data principals when collecting personal data. The <strong>ZeroShield Notice Delivery & Orchestration</strong> module provides a secure, reliable, and compliant infrastructure to automatically dispatch these notices across digital and physical channels, track delivery statuses, and store cryptographic evidence of notice receipt in the ZeroShield compliance proof vault.
+                  Under the Digital Personal Data Protection Act (DPDPA), 2023, organizations are legally mandated to deliver clear, granular, and multi-lingual privacy notices to data principals when collecting personal data. The <strong>Vajra Notice Delivery & Orchestration</strong> module provides a secure, reliable, and compliant infrastructure to automatically dispatch these notices across digital and physical channels, track delivery statuses, and store cryptographic evidence of notice receipt in the Vajra compliance proof vault.
                 </p>
               </section>
 
               <section className="space-y-2">
                 <h3 className="text-sm font-bold border-b border-[var(--border-default)] pb-1 uppercase tracking-wider text-[var(--text-secondary)]">2. Security & Encryption of Credentials</h3>
                 <p className="text-xs text-[var(--text-secondary)]">
-                  To protect sensitive keys, tokens, and passwords, ZeroShield employs a multi-tiered security model:
+                  To protect sensitive keys, tokens, and passwords, Vajra employs a multi-tiered security model:
                 </p>
                 <ul className="list-disc pl-5 text-xs text-[var(--text-secondary)] space-y-1">
-                  <li><strong>Encryption-at-Rest:</strong> All configuration keys and secret values entered into the ZeroShield Notice Delivery console are symmetrically encrypted before being committed to the database.</li>
-                  <li><strong>AES-128-CBC + HMAC (Fernet):</strong> ZeroShield uses standard, secure Fernet encryption. The cryptographic key is derived deterministically from the platform's root settings.</li>
+                  <li><strong>Encryption-at-Rest:</strong> All configuration keys and secret values entered into the Vajra Notice Delivery console are symmetrically encrypted before being committed to the database.</li>
+                  <li><strong>AES-128-CBC + HMAC (Fernet):</strong> Vajra uses standard, secure Fernet encryption. The cryptographic key is derived deterministically from the platform's root settings.</li>
                   <li><strong>Decryption-on-Use:</strong> Decryption only occurs in-memory at the time of API dispatch or connection testing. Secrets are never stored in plaintext log files.</li>
                 </ul>
               </section>

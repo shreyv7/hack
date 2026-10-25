@@ -32,14 +32,14 @@ class ReactAdapter(SnippetAdapter):
         language = "auto" if property_obj.auto_language else property_obj.default_language
         return (
             "// Install NPM package\n"
-            "npm install @zeroshield/react\n\n"
+            "npm install @vajra/react\n\n"
             "// In your application root file (e.g. index.js / App.js):\n"
             "import React from 'react';\n"
-            "import { ZeroShieldProvider } from '@zeroshield/react';\n"
+            "import { VajraProvider } from '@vajra/react';\n"
             "import MainLayout from './MainLayout';\n\n"
             "function App() {\n"
             "  return (\n"
-            "    <ZeroShieldProvider\n"
+            "    <VajraProvider\n"
             f"      propertyId=\"{property_obj.id}\"\n"
             f"      apiKey=\"{api_key_prefix}\"\n"
             "      options={{\n"
@@ -49,7 +49,7 @@ class ReactAdapter(SnippetAdapter):
             "      }}\n"
             "    >\n"
             "      <MainLayout />\n"
-            "    </ZeroShieldProvider>\n"
+            "    </VajraProvider>\n"
             "  );\n"
             "}"
         )
@@ -67,7 +67,7 @@ class NextjsAdapter(SnippetAdapter):
             "  return (\n"
             "    <html lang=\"en\">\n"
             "      <head>\n"
-            "        {/* Load ZeroShield compliance script */}\n"
+            "        {/* Load Vajra compliance script */}\n"
             "        <Script\n"
             f"          src=\"{cmp_script_url}\"\n"
             "          strategy=\"afterInteractive\"\n"
@@ -91,7 +91,7 @@ class AngularAdapter(SnippetAdapter):
         language = "auto" if property_obj.auto_language else property_obj.default_language
         banner_line = f"\n  s.setAttribute('data-banner-id', '{banner_id}');" if banner_id else ""
         return (
-            "// 1. Create a script file: src/assets/zeroshield.js\n"
+            "// 1. Create a script file: src/assets/vajra.js\n"
             "(function() {\n"
             "  var s = document.createElement('script');\n"
             "  s.async = true;\n"
@@ -104,7 +104,7 @@ class AngularAdapter(SnippetAdapter):
             "  document.head.appendChild(s);\n"
             "})();\n\n"
             "// 2. Add to angular.json scripts:\n"
-            "// \"scripts\": [ \"src/assets/zeroshield.js\" ]"
+            "// \"scripts\": [ \"src/assets/vajra.js\" ]"
         )
 
 
@@ -117,9 +117,9 @@ class VueAdapter(SnippetAdapter):
             "// main.js\n"
             "import { createApp } from 'vue';\n"
             "import App from './App.vue';\n"
-            "import ZeroShieldPlugin from '@zeroshield/vue';\n\n"
+            "import VajraPlugin from '@vajra/vue';\n\n"
             "const app = createApp(App);\n\n"
-            "app.use(ZeroShieldPlugin, {\n"
+            "app.use(VajraPlugin, {\n"
             f"  propertyId: '{property_obj.id}',\n"
             f"  apiKey: '{api_key_prefix}',\n"
             "  options: {\n"
@@ -140,7 +140,7 @@ class WordPressAdapter(SnippetAdapter):
         return (
             "<!-- Place this code in your active theme's header.php file inside the <head> tag -->\n"
             "<?php\n"
-            "  // ZeroShield WordPress Head Injection\n"
+            "  // Vajra WordPress Head Injection\n"
             "?>\n"
             f"<script async src=\"{cmp_script_url}\"\n"
             f"  data-property-id=\"{property_obj.id}\"\n"
@@ -159,7 +159,7 @@ class GTMAdapter(SnippetAdapter):
             "<!-- 1. Download custom GTM Template from link: -->\n"
             f"<!-- {gtm_template_url} -->\n\n"
             "<!-- 2. Import into GTM -> Templates -> Tag Templates. -->\n"
-            "<!-- 3. Create a Tag, select ZeroShield Consent Banner, and specify: -->\n"
+            "<!-- 3. Create a Tag, select Vajra Consent Banner, and specify: -->\n"
             f"Property ID: \"{property_obj.id}\"\n"
             f"API Key: \"{api_key_prefix}\""
         )
@@ -168,12 +168,12 @@ class GTMAdapter(SnippetAdapter):
 class ManualAdapter(SnippetAdapter):
     def generate(self, property_obj: IntegrationProperty, api_key_prefix: str, cmp_script_url: str, api_base_url: str, gtm_template_url: str, banner_id: str | None = None, sri_hash: str | None = None) -> str:
         return (
-            "// Check client purposes dynamically using ZeroShield JS SDK\n"
-            "if (window.ZeroShield && window.ZeroShield.hasConsent('analytics')) {\n"
+            "// Check client purposes dynamically using Vajra JS SDK\n"
+            "if (window.Vajra && window.Vajra.hasConsent('analytics')) {\n"
             "  // Safe to load Google Analytics, Facebook Pixel, etc.\n"
             "}\n\n"
             "// Register dynamic event listener for real-time consent updates\n"
-            "window.addEventListener('zeroshield_consent_changed', function(event) {\n"
+            "window.addEventListener('vajra_consent_changed', function(event) {\n"
             "  const purposes = event.detail.purposes; // object: { analytics: true, marketing: false, necessary: true }\n"
             "  \n"
             "  if (purposes.marketing) {\n"

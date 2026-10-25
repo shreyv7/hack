@@ -245,7 +245,7 @@ export function IntegrationSetupGuideButton({
 
                   <div className="flex items-center gap-2 text-xs text-[var(--text-tertiary)] pt-4 mt-2 border-t border-[var(--border-default)]">
                     <Code className="w-3.5 h-3.5" />
-                    ZeroShield DPDPA Platform · {guide.title} · {guide.version}
+                    Vajra DPDPA Platform · {guide.title} · {guide.version}
                   </div>
                 </div>
               </div>

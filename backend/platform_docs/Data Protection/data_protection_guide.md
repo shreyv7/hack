@@ -1,4 +1,4 @@
-# DPDPA Shield — Data Protection Guide
+# Vajra — Data Protection Guide
 
 This guide provides an onboarding path for the **Data Protection** module cluster, helping organizations establish visibility and control over personal data across their systems.
 
@@ -6,7 +6,7 @@ This guide provides an onboarding path for the **Data Protection** module cluste
 
 ---
 
-## 1. What is Data Protection in DPDPA Shield?
+## 1. What is Data Protection in Vajra?
 
 The Data Protection cluster answers three fundamental questions:
 1. **Where** is personal data stored? → **Data Sources**

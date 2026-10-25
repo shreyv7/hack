@@ -46,7 +46,7 @@ function buildReportLines(input: SubmissionReceiptInput): string[] {
   const submitted = input.submittedAt ?? new Date();
   const rightLabel = RIGHT_TYPE_LABELS[input.rightType];
   const lines = [
-    'DPDPA Shield — Data Rights Request Receipt',
+    'Vajra — Data Rights Request Receipt',
     '',
     `Organization: ${input.organizationName}`,
     `Tracking ID: ${input.trackingId}`,
@@ -72,7 +72,7 @@ function buildReportLines(input: SubmissionReceiptInput): string[] {
   lines.push(
     '',
     'This receipt is issued under the Digital Personal Data Protection Act, 2023 (India).',
-    'Powered by DPDPA Shield.'
+    'Powered by Vajra.'
   );
   return lines;
 }
@@ -100,7 +100,7 @@ export function downloadSubmissionReceiptPdf(input: SubmissionReceiptInput): str
       y += 3;
       continue;
     }
-    if (line.startsWith('DPDPA Shield') || line === 'What happens next') {
+    if (line.startsWith('Vajra') || line === 'What happens next') {
       doc.setFont('helvetica', 'bold');
     } else {
       doc.setFont('helvetica', 'normal');

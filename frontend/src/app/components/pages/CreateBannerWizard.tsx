@@ -580,28 +580,28 @@ export function CreateBannerWizard({
   data-api-url="${publicApiBase}">
 </script>`;
 
-  const developerApiSnippet = `// Programmatic control via window.ZeroShield (Developer Mode)
+  const developerApiSnippet = `// Programmatic control via window.Vajra (Developer Mode)
 function whenReady(cb) {
-  if (window.ZeroShield?.isReady()) cb();
+  if (window.Vajra?.isReady()) cb();
   else setTimeout(() => whenReady(cb), 100);
 }
 
 whenReady(() => {
   // Show banner when your app is ready (auto-show is disabled in Developer Mode)
-  window.ZeroShield.showBanner();
+  window.Vajra.showBanner();
 
   // React to consent changes
-  window.ZeroShield.onConsentChange((consent) => {
+  window.Vajra.onConsentChange((consent) => {
     console.log('Consent updated:', consent);
   });
 });
 
 // Other available methods:
-// window.ZeroShield.getConsent()
-// window.ZeroShield.acceptAll()
-// window.ZeroShield.rejectAll()
-// window.ZeroShield.openPreferences()
-// window.ZeroShield.hideBanner()`;
+// window.Vajra.getConsent()
+// window.Vajra.acceptAll()
+// window.Vajra.rejectAll()
+// window.Vajra.openPreferences()
+// window.Vajra.hideBanner()`;
 
   const copyDeveloperSnippet = (text: string, label: string) => {
     void navigator.clipboard.writeText(text);
@@ -1473,7 +1473,7 @@ whenReady(() => {
                       <textarea
                         value={customCss}
                         onChange={(e) => setCustomCss(e.target.value)}
-                        placeholder="/* Override styles without modifying ZeroShield core. Use sparingly. */"
+                        placeholder="/* Override styles without modifying Vajra core. Use sparingly. */"
                         rows={6}
                         className="w-full px-4 py-3 rounded-lg border text-sm font-mono resize-none"
                         style={{
@@ -1486,7 +1486,7 @@ whenReady(() => {
                         <p style={{ color: isCustomCssTooLong ? 'var(--status-danger)' : 'var(--text-tertiary)' }}>
                           {isCustomCssTooLong
                             ? `Custom CSS must be 2500 characters or fewer. Remove ${customCssLength - MAX_CUSTOM_CSS_LENGTH} characters to continue.`
-                            : 'Override styles without modifying ZeroShield core. Use sparingly. Max 2500 characters.'}
+                            : 'Override styles without modifying Vajra core. Use sparingly. Max 2500 characters.'}
                         </p>
                         <span style={{ color: isCustomCssTooLong ? 'var(--status-danger)' : 'var(--text-tertiary)' }}>
                           {customCssLength}/{MAX_CUSTOM_CSS_LENGTH}
@@ -1839,7 +1839,7 @@ whenReady(() => {
                     >
                       <AlertTriangle className="w-5 h-5 flex-shrink-0" style={{ color: 'var(--status-warning)' }} strokeWidth={1.5} />
                       <p className="text-xs text-[var(--status-warning)]">
-                        DPDPA Section 6(3) requires Reject and Accept to have equal visual prominence. ZeroShield enforces button parity automatically.
+                        DPDPA Section 6(3) requires Reject and Accept to have equal visual prominence. Vajra enforces button parity automatically.
                       </p>
                     </div>
                   </div>
@@ -1944,7 +1944,7 @@ whenReady(() => {
                           <Shield className="w-5 h-5 flex-shrink-0 mt-0.5 animate-pulse" style={{ color: 'var(--status-info)' }} strokeWidth={1.5} />
                           <div className="flex-1">
                             <p className="text-sm text-[var(--text-primary)]">
-                              <strong>Scanning in progress...</strong> ZeroShield is detecting cookies and trackers on {domain}.
+                              <strong>Scanning in progress...</strong> Vajra is detecting cookies and trackers on {domain}.
                             </p>
                             <button
                               type="button"
@@ -1966,7 +1966,7 @@ whenReady(() => {
                           <Shield className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--status-info)' }} strokeWidth={1.5} />
                           <div className="flex-1">
                             <p className="text-sm text-[var(--text-primary)]">
-                              <strong>{trackersList.length} trackers detected</strong> on {domain}. ZeroShield has auto-grouped them into categories. Edit below or accept defaults.
+                              <strong>{trackersList.length} trackers detected</strong> on {domain}. Vajra has auto-grouped them into categories. Edit below or accept defaults.
                             </p>
                             <button
                               type="button"
@@ -2010,7 +2010,7 @@ whenReady(() => {
                           <Shield className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: 'var(--status-info)' }} strokeWidth={1.5} />
                           <div className="flex-1">
                             <p className="text-sm text-[var(--text-primary)]">
-                              Run scan to detect trackers on {domain}. ZeroShield will automatically group them into categories.
+                              Run scan to detect trackers on {domain}. Vajra will automatically group them into categories.
                             </p>
                             <button
                               type="button"
@@ -2191,10 +2191,10 @@ whenReady(() => {
                       <Sparkles className="w-6 h-6 flex-shrink-0 text-[var(--brand-primary)]" strokeWidth={1.5} />
                       <div className="flex-1">
                         <h3 className="text-sm font-semibold mb-1 text-[var(--text-primary)]" >
-                          Shield AI Language Engine Active
+                          Vajra AI Language Engine Active
                         </h3>
                         <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
-                          All 22 constitutional languages are automatically active and pre-translated on our servers. When you save or update the banner text, Shield AI generates high-fidelity compliance-reviewed translations.
+                          All 22 constitutional languages are automatically active and pre-translated on our servers. When you save or update the banner text, Vajra AI generates high-fidelity compliance-reviewed translations.
                         </p>
                       </div>
                     </div>
@@ -2356,7 +2356,7 @@ whenReady(() => {
                       Webhook Integration
                     </h3>
                     <p className="text-xs text-[var(--text-secondary)]">
-                      ZeroShield POSTs a JSON consent event to your endpoint whenever a user accepts,
+                      Vajra POSTs a JSON consent event to your endpoint whenever a user accepts,
                       rejects, or updates preferences. Use the Test button to send a sample payload.
                     </p>
                     <div>
@@ -2634,7 +2634,7 @@ whenReady(() => {
                       <div className="space-y-4 pt-4 border-t border-[var(--border-default)]">
                         <p className="text-xs text-[var(--text-secondary)]">
                           When enabled, the banner will not auto-appear on page load. Your site controls
-                          it via <code className="font-mono text-[11px]">window.ZeroShield</code> on the
+                          it via <code className="font-mono text-[11px]">window.Vajra</code> on the
                           live property.
                         </p>
 

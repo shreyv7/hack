@@ -185,7 +185,7 @@ export function CISOCommandCenter(): ReactElement {
   const [isExceptionModalOpen, setIsExceptionModalOpen] = useState(false);
   const [isOrgControlModalOpen, setIsOrgControlModalOpen] = useState(false);
 
-  // Shield AI State
+  // Vajra AI State
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [isAiLoading, setIsAiLoading] = useState(false);
 
@@ -391,45 +391,45 @@ export function CISOCommandCenter(): ReactElement {
       let responseText = '';
       switch (action) {
         case 'explain':
-          responseText = `### Shield AI Technical & Business Blueprint: ${selectedControl.control_key}\n\n` +
+          responseText = `### Vajra AI Technical & Business Blueprint: ${selectedControl.control_key}\n\n` +
             `**Statutory Context:** Directly maps to personal data protection regulations requiring reasonable safeguards to prevent security breaches.\n\n` +
             `**Technical Objective:** Implement continuous monitoring of all cloud infrastructure and endpoints to flag configuration drift.\n\n` +
             `**Operational Impact:** Restricts threat profiles and builds verifiable audit registries for external verifiers.`;
           break;
         case 'checklist':
-          responseText = `### Shield AI HARDENING CHECKLIST for ${selectedControl.control_key}\n\n` +
+          responseText = `### Vajra AI HARDENING CHECKLIST for ${selectedControl.control_key}\n\n` +
             `1. [ ] Enforce IAM Least Privilege access bounds on database systems.\n` +
             `2. [ ] Enable CloudTrail / VPC Flow Logs continuous analysis.\n` +
             `3. [ ] Schedule weekly vulnerability scanning jobs on backend containers.`;
           break;
         case 'sop':
-          responseText = `### Shield AI Standard Operational Procedure (SOP)\n\n` +
+          responseText = `### Vajra AI Standard Operational Procedure (SOP)\n\n` +
             `**1. Purpose:** Enforce automated evidence gathering routines.\n` +
             `**2. Actions:** System administrators must upload verified security policy proofs on a monthly schedule.\n` +
             `**3. Escalation:** If compliance degrades to Critical, remediation tasks must be dispatched within a 24-hour SLA window.`;
           break;
         case 'remediation':
-          responseText = `### Shield AI Remediation Guidance (CAPA)\n\n` +
+          responseText = `### Vajra AI Remediation Guidance (CAPA)\n\n` +
             `**Root Cause:** Missing verified evidence files for continuous backups.\n` +
             `**Resolution Path:** Update cron tables for backup verifications. Capture JSON logs and post to Proof Vault API.\n` +
             `**Validation:** Set control status back to Healthy once logs verify 100% completion.`;
           break;
         case 'capa':
-          responseText = `### Shield AI Corrective & Preventive Action (CAPA)\n\n` +
+          responseText = `### Vajra AI Corrective & Preventive Action (CAPA)\n\n` +
             `**Action Plan:** Automate compliance testing for default software configurations.\n` +
             `**Timeline:** SLA to resolve: 5 Days. Assigned to Security Operations Team.\n` +
             `**Prevention:** Conduct monthly posture assessments.`;
           break;
         case 'executive':
-          responseText = `### Shield AI Executive Summary excerpt\n\n` +
+          responseText = `### Vajra AI Executive Summary excerpt\n\n` +
             `Compliance status of ${selectedControl.control_key} is configured as ${selectedControl.status.toUpperCase()}. Evidence score stands at 90% coverage with zero critical exceptions outstanding. Recommended action: allocate security budgets for backup automation.`;
           break;
         case 'audit':
-          responseText = `### Shield AI Compliance Audit Notes\n\n` +
+          responseText = `### Vajra AI Compliance Audit Notes\n\n` +
             `Control maps directly to ISO 27001 clauses and DPDPA requirements. Evidence files are cryptographically hashed using SHA-256 and stored inside immutable storage buckets. System configuration has not mutated since the last review.`;
           break;
         default:
-          responseText = `Shield AI generated report for ${selectedControl.control_key}`;
+          responseText = `Vajra AI generated report for ${selectedControl.control_key}`;
           break;
       }
       setAiAnalysis(responseText);
@@ -939,7 +939,7 @@ export function CISOCommandCenter(): ReactElement {
                   { key: 'dpia', label: 'DPIA' },
                   { key: 'audit', label: 'Audit & Review' },
                   { key: 'history', label: 'History' },
-                  { key: 'ai', label: 'Shield AI' },
+                  { key: 'ai', label: 'Vajra AI' },
                 ] as const
               ).map((t) => (
                 <button
@@ -1586,13 +1586,13 @@ export function CISOCommandCenter(): ReactElement {
                 </div>
               )}
 
-              {/* 12. SHIELD AI COPILOT */}
+              {/* 12. VAJRA AI COPILOT */}
               {detailTab === 'ai' && (
                 <div className="grid grid-cols-3 gap-6">
                   <div className="p-6 rounded-xl border bg-violet-50/30 border-violet-100/60 space-y-4">
                     <h3 className="font-bold flex items-center gap-2 text-violet-900">
                       <Sparkles className="w-5 h-5 text-violet-600 animate-pulse" />
-                      Shield AI Actions
+                      Vajra AI Actions
                     </h3>
                     <p className="text-xs text-violet-700 leading-relaxed">
                       Select a compliance utility to dynamically draft system configuration checklists, SOP documents, CAPA remediation guidelines, or executive reports.
@@ -1625,7 +1625,7 @@ export function CISOCommandCenter(): ReactElement {
                     {isAiLoading ? (
                       <div className="flex-1 flex flex-col justify-center items-center gap-2">
                         <RefreshCw className="w-8 h-8 text-violet-600 animate-spin" />
-                        <span className="text-xs text-violet-800 font-semibold animate-pulse">Consulting Shield AI Engine...</span>
+                        <span className="text-xs text-violet-800 font-semibold animate-pulse">Consulting Vajra AI Engine...</span>
                       </div>
                     ) : aiAnalysis ? (
                       <div className="flex-1 text-xs leading-relaxed text-gray-800 font-mono whitespace-pre-wrap bg-white p-4 rounded-lg border border-gray-100 overflow-y-auto max-h-[350px]">
@@ -1702,7 +1702,7 @@ export function CISOCommandCenter(): ReactElement {
                 </div>
                 <h2 className="text-3xl font-extrabold text-[var(--text-primary)] tracking-tight">CISO Governance Command Hub</h2>
                 <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  Welcome to the ZeroShield GRC Operating System. Select a specialized module node below to audit configurations, orchestrate risk response, or compile posture compliance reports.
+                  Welcome to the Vajra GRC Operating System. Select a specialized module node below to audit configurations, orchestrate risk response, or compile posture compliance reports.
                 </p>
               </div>
 

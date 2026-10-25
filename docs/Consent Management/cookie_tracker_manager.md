@@ -1,6 +1,6 @@
-# DPDPA Shield — Cookie & Tracker Manager Technical Specification
+# Vajra — Cookie & Tracker Manager Technical Specification
 
-This document serves as the **single source of truth** for the **Cookie & Tracker Manager** module of the ZeroShield DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
+This document serves as the **single source of truth** for the **Cookie & Tracker Manager** module of the Vajra DPDPA compliance platform. It provides the detailed frontend, backend, database, integration, and compliance specifications required to build, test, and maintain this module.
 
 ---
 
@@ -26,13 +26,13 @@ graph TD
     DB -->|2. Inventory List| UI[Admin UI Manager]
     UI -->|3. Save Custom Overrides| DB
     DB -->|4. Generate Rules| Rules[Rule Compiler]
-    Rules -->|5. Block List JSON| SDK[ZeroShield SDK in Browser]
+    Rules -->|5. Block List JSON| SDK[Vajra SDK in Browser]
     SDK -->|6. Intercept Scripts| Scripts[Third-Party Scripts]
 ```
 
 ### 1.5 Target Users
 *   **DPOs & Compliance Managers**: Audit cookie lists, review categorizations, and verify compliance scores.
-*   **Web Developers**: Integrate the ZeroShield SDK, configure blocking overrides, and verify that analytics/marketing tags align with user preferences.
+*   **Web Developers**: Integrate the Vajra SDK, configure blocking overrides, and verify that analytics/marketing tags align with user preferences.
 
 ---
 
@@ -279,7 +279,7 @@ erDiagram
         "name": "_ga",
         "type": "cookie",
         "category": "analytics",
-        "domain": ".zeroshield.in",
+        "domain": ".vajra.in",
         "path": "/",
         "expiry": "730 days",
         "description": "Google Analytics identifier",

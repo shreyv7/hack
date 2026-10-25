@@ -228,7 +228,7 @@ export function CookieTrackerManager(): ReactElement {
           <div>
             <h3 className="text-lg font-semibold text-indigo-900 dark:text-indigo-100 mb-2">Consent Enforcement Engine</h3>
             <p className="text-sm text-indigo-700 dark:text-indigo-300 max-w-2xl">
-              ZeroShield SDK automatically intercepts and blocks unrecognized scripts. Strict Mode ensures zero trackers fire before active consent is obtained under DPDPA Section 6.
+              Vajra SDK automatically intercepts and blocks unrecognized scripts. Strict Mode ensures zero trackers fire before active consent is obtained under DPDPA Section 6.
             </p>
           </div>
           <div className="bg-white dark:bg-gray-900 rounded-lg shadow-sm border border-indigo-100 dark:border-indigo-900 p-4">

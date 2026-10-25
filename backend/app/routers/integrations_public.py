@@ -920,7 +920,7 @@ def create_bank_consent_session(
     rate_limiter.check_rate_limit(request, "bank_consent_session", max_requests=120, window_seconds=60)
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
     return ConsentCaptureSessionService(db).create_session(
         property_obj, payload, ip_hash=ip_hash, user_agent=user_agent
     )
@@ -937,7 +937,7 @@ def verify_bank_consent_otp(
 ) -> ConsentCaptureSessionRead:
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
     return ConsentCaptureSessionService(db).verify_otp(
         property_obj,
         session_id,
@@ -958,7 +958,7 @@ def resend_bank_consent_otp(
 ) -> ConsentCaptureSessionRead:
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
     return ConsentCaptureSessionService(db).resend_otp(
         property_obj, session_id, ip_hash=ip_hash, user_agent=user_agent
     )
@@ -974,7 +974,7 @@ def complete_bank_consent_session(
 ) -> ConsentCaptureSessionRead:
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
     return ConsentCaptureSessionService(db).complete_session(
         property_obj, session_id, ip_hash=ip_hash, user_agent=user_agent
     )
@@ -990,7 +990,7 @@ def sync_offline_bank_consent_sessions(
 ) -> OfflineSessionSyncResponse:
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
     results = ConsentCaptureSessionService(db).sync_offline_batch(
         property_obj, payload.sessions, ip_hash=ip_hash, user_agent=user_agent
     )
@@ -1018,7 +1018,7 @@ def save_bank_consent_receipt(
             OtpService.validate_verified_token(payload.otp_verified_token, str(token_session_id))
             client_ip = request.client.host if request.client else "unknown"
             ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-            user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+            user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
             session_read = ConsentCaptureSessionService(db).complete_session(
                 property_obj, token_session_id, ip_hash=ip_hash, user_agent=user_agent
             )
@@ -1031,7 +1031,7 @@ def save_bank_consent_receipt(
 
     client_ip = request.client.host if request.client else "unknown"
     ip_hash = hashlib.sha256(f"{client_ip}-{datetime.now(timezone.utc).date()}".encode()).hexdigest()
-    user_agent = request.headers.get("user-agent", "ZeroShield-Bank-API")[:1024]
+    user_agent = request.headers.get("user-agent", "Vajra-Bank-API")[:1024]
 
     result = ConsentCaptureService(db).create_receipt(
         property_obj=property_obj,
@@ -1269,7 +1269,7 @@ def sdk_consent(
         consented_purposes=body.consented_purposes,
         language=body.language,
         ip_hash="mobile-sdk",
-        user_agent=body.device_info or "ZeroShield Mobile SDK",
+        user_agent=body.device_info or "Vajra Mobile SDK",
         principal_email=body.principal_email,
         principal_phone=body.principal_phone,
         journey_key=body.journey_key,
@@ -1288,7 +1288,7 @@ def sdk_consent(
         event_type="consent_given" if len(body.consented_purposes) > 0 else "consent_denied",
         session_id=body.session_id,
         ip_hash="mobile-sdk",
-        user_agent=body.device_info or "ZeroShield Mobile SDK",
+        user_agent=body.device_info or "Vajra Mobile SDK",
         payload={
             "deployment_id": str(body.deployment_id),
             "consented_purposes": body.consented_purposes,
@@ -1306,7 +1306,7 @@ def sdk_consent(
             receipt=receipt,
             live_version=result.live_version,
             channel=channel_label,
-            source=body.device_info or "ZeroShield Mobile SDK",
+            source=body.device_info or "Vajra Mobile SDK",
         )
     except Exception as e:
         print(f"Failed to seal SDK consent receipt in Proof Vault: {e}")

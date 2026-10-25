@@ -260,7 +260,7 @@ def deliver_purpose_updated_webhooks(
             url,
             payload,
             event_type="consent.purpose_updated",
-            user_agent="ZeroShield-ConsentWebhook/1.0",
+            user_agent="Vajra-ConsentWebhook/1.0",
             signing_secret=signing_secret,
             bearer_token=bearer_token,
         )
@@ -305,7 +305,7 @@ def _log_delivery(
             event_type=delivery_event_type,
             session_id=session_id,
             ip_hash=None,
-            user_agent="ZeroShield Webhook Dispatcher",
+            user_agent="Vajra Webhook Dispatcher",
             url=url[:2048],
             payload={
                 "consent_event_type": event_type,
@@ -456,7 +456,7 @@ def deliver_consent_webhook(
         url,
         payload,
         event_type=event_type,
-        user_agent="ZeroShield-ConsentWebhook/1.0",
+        user_agent="Vajra-ConsentWebhook/1.0",
         signing_secret=signing_secret,
         bearer_token=bearer_token,
     )
@@ -512,7 +512,7 @@ def redeliver_from_log(db: Session, *, delivery_log_id: UUID) -> dict[str, Any]:
         url,
         payload,
         event_type=event_type,
-        user_agent="ZeroShield-ConsentWebhook/1.0",
+        user_agent="Vajra-ConsentWebhook/1.0",
     )
     _log_delivery(
         db,

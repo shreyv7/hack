@@ -8,7 +8,7 @@
 
 ## Executive summary
 
-DPDPA Shield previously rendered pages by storing a `Page` string in React state inside `App.tsx` and switching on ~80 cases. Sidebar and TopBar were coupled to that enum.
+Vajra previously rendered pages by storing a `Page` string in React state inside `App.tsx` and switching on ~80 cases. Sidebar and TopBar were coupled to that enum.
 
 The application now uses **URL-based navigation** via React Router v7’s data router (`createBrowserRouter`, `RouterProvider`, `Outlet`, `Navigate`). Every major screen has a bookmarkable path. Authentication, role checks, and special auth states (forced password change, pending approval) are enforced at the route layer instead of inline conditionals in `App.tsx`.
 
@@ -288,7 +288,7 @@ flowchart TD
 | `/settings/role-mapping` | `DPDPRoleMapping`    |
 
 
-#### Shield AI
+#### Vajra AI
 
 
 | Path          | Component             | UI note       |
@@ -513,4 +513,4 @@ Use this list to verify routing in a running dev server (`npm run dev` in `front
 
 ---
 
-*Document generated to record the Route-Based Navigation plan and its implementation in the DPDPA Shield frontend.*
+*Document generated to record the Route-Based Navigation plan and its implementation in the Vajra frontend.*

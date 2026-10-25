@@ -128,7 +128,7 @@ class UserService:
             self.db,
             organization_id=target_org_id,
             recipient_id=user.id,
-            title="Welcome to DPDPA Shield",
+            title="Welcome to Vajra",
             message="Your account has been created. Check your email for login credentials and change your password on first sign-in.",
             category=NotificationCategory.system,
             action_url="/dashboard",

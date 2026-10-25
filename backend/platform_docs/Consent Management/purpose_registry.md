@@ -1,6 +1,6 @@
-# DPDPA Shield — Purpose Registry Technical Specification
+# Vajra — Purpose Registry Technical Specification
 
-This document serves as the **single source of truth** for the **Purpose Registry** module of the ZeroShield DPDPA compliance platform.
+This document serves as the **single source of truth** for the **Purpose Registry** module of the Vajra DPDPA compliance platform.
 
 ---
 

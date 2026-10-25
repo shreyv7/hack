@@ -1,5 +1,5 @@
 # ============================================================
-# DPDPA Shield — Backend dependencies
+# Vajra — Backend dependencies
 # Install with:  pip install -r requirements.txt
 # ============================================================
 
@@ -55,17 +55,18 @@ python-docx>=1.1  # .docx documents
 # --- Config ---
 python-dotenv==1.0.1
 
-# --- Shield AI (Vertex AI via ADC, plus AWS Bedrock kept as a switch) ---
+# --- Vajra AI (Vertex AI via ADC, plus AWS Bedrock kept as a switch) ---
 # google-genai talks to Vertex / Gemini. ADC supplies credentials.
 google-genai>=1.40.0,<2
 # >=1.40 is required so the SDK understands newer models' reasoning content
 # blocks (otherwise they arrive as SDK_UNKNOWN_MEMBER and can't be read).
 boto3>=1.40.0
-pgvector>=0.3.0       # PostgreSQL vector similarity search (Shield AI RAG)
+pgvector>=0.3.0       # PostgreSQL vector similarity search (Vajra AI RAG)
 
 # --- PDF generation (CISO board reports, DPIA exports) ---
 reportlab>=4.2
 python-pptx>=1.0.0
+Jinja2>=3.1,<4      # existing cross-border transfer report templates
 
 # --- Notice Delivery SDK / HTTP Client ---
 httpx==0.28.1
