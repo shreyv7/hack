@@ -43,21 +43,7 @@ The hack-day experience focuses on three people:
 
 The healthcare UI lives in [`frontend/src/app/healthcare`](frontend/src/app/healthcare), its typed API adapter is [`frontend/src/lib/api/healthcare.ts`](frontend/src/lib/api/healthcare.ts), and the broader compliance platform remains available around the hack-day workflow.
 
-## Five-minute demo
 
-1. Open `/healthcare/patient` and review Priya Sharma's purpose-specific consent.
-2. Withhold mental-health, reproductive-health, and HIV/STD records, then save the choice.
-3. Upload a paper consent image and review the AI-produced structured draft before accepting it.
-4. Open `/healthcare/clinician`, request records for treatment, and show that protected categories remain redacted.
-5. Ask the access advisor why psychiatric notes are unavailable.
-6. Trigger **Break the Glass**, enter an emergency justification, and show the temporary disclosure.
-7. Open `/healthcare/audit`, review the emergency event, and run **Verify Proof Vault Integrity**.
-
-### Current integration status
-
-The healthcare frontend runs in **synthetic demo mode by default** so the complete user journey can be shown without patient data or external credentials. Set `VITE_USE_HEALTHCARE_MOCKS=false` to make the adapter call `/api/v1/healthcare/*`.
-
-The repository's existing AI backend currently defaults to Vertex AI with `gemini-2.5-flash`. The hackathon Gemma 4 client and healthcare API routes must be connected before presenting this branch as a live **Best Use of Gemma 4** integration. A valid submission should show the actual `gemma-4-26b-a4b-it` request in code or in the running demo, not only the UI badge or this README.
 
 ## How it works
 
@@ -111,7 +97,6 @@ The model is open-weight, not OSI-licensed application code. Vajra's source code
 └── LICENSE                   MIT license for this repository
 ```
 
-## Run the demo
 
 ### Fastest path: frontend with synthetic data
 
@@ -254,19 +239,6 @@ Hackathon rules allow AI build tools but require exact disclosure. The following
 
 If another coding assistant, chat assistant, or image generator was used, add it here **before submission**, together with the specific files or assets it produced. Omitting a build tool can disqualify the project under the event rules.
 
-## Provenance and hack-day scope
-
-Vajra Health is the healthcare-focused hack-day layer in this repository. It builds on the previously existing public [DPDPA Shield](https://github.com/nikit-cyberultron/dpdpa_shield) compliance platform. The new scope is the patient/clinician/DPO healthcare journey, the consent-aware clinical policy contract, the synthetic FHIR-aligned demo, and the Gemma 4 integration described above.
-
-This attribution is deliberate: it separates prior platform work from the work demonstrated at the event. Git history remains the source of truth for when each file was created or changed.
-
-## Team members
-
-- [Shrey Vashistha](https://github.com/shreyv7)
-- [Nikit Potdar](https://github.com/nikit-cyberultron)
-- [pvashisth-07](https://github.com/pvashisth-07)
-
-Every submitted team member must also be individually registered and checked in for the event. Update this list if the registered hack-day roster differs from the repository contributor list.
 
 ## Useful commands
 
@@ -279,20 +251,8 @@ pnpm --dir frontend build
 cd backend
 .venv/bin/python -c "import app.main"
 
-# Dead-code checks
-pnpm dead-code:frontend
-pnpm dead-code:backend
 ```
 
-## Documentation
-
-- [Hackathon system requirements](SRS2.md)
-- [Implementation plan](IMPLEMENTATION_PLAN.md)
-- [Backend and AI track](TRACK_A_BACKEND_AI.md)
-- [Frontend and UX track](TRACK_B_FRONTEND_UI.md)
-- [Backend setup](backend/README.md)
-- [Frontend setup](frontend/README.md)
-- [Security policy](SECURITY.md)
 
 ## License
 
