@@ -90,10 +90,18 @@ class Settings(BaseSettings):
     # bedrock = existing AWS Bedrock Converse path. Flip this one value to switch.
     AI_PROVIDER: str = "gemma"
     GEMINI_API_KEY: str = ""
+    GEMINI_BACKUP_API_KEYS: str = ""
     GEMMA_MODEL_ID: str = "gemma-4-31b-it"
     # Existing Shield AI/RAG remains on Vertex or Bedrock; Gemma healthcare
     # calls use the dedicated gateway and do not supply embedding vectors.
     SHIELD_AI_PROVIDER: str = ""
+
+    @property
+    def all_gemini_api_keys(self) -> list[str]:
+        keys = [self.GEMINI_API_KEY.strip()]
+        if self.GEMINI_BACKUP_API_KEYS:
+            keys.extend([k.strip() for k in self.GEMINI_BACKUP_API_KEYS.split(",") if k.strip()])
+        return [k for k in keys if k]
 
     # --- Vajra AI (Google Cloud Vertex AI) ---
     # ADC supplies credentials: local `gcloud auth application-default login`,
